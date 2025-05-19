@@ -27,12 +27,19 @@ different backgrounds + maps (map selection screen or random map)
 little storyline for boss mode -- fight smaller monsters before reaching Boss
 - when you reach the end of the screen, you tp back to the left and map refreshes until you reach the boss (1-3 map changes?)
 
-revive feature in boss mode when your character dies and your teammate is alive 
+revive feature in boss mode when your character dies and your teammate is alive
 
 
 # Project Design
 
 UML Diagrams and descriptions of key algorithms, classes, and how things fit together.
+
+|  Key Stuff           |  description  |
+| :-------------: | :-------: |
+|  projectile class     |        |
+|  character class     |          |
+|  platform class     |         |
+|  jump power class     |         |
 
 
 
