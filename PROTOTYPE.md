@@ -9,8 +9,10 @@ Catformers
 Versus mode (two characters shoot bullets at each other and can jump from platform to platform)
 - you win by hitting the other person 2-3
 - bullets bounce (orbs) and goes away after 3-4 bounces
+
 Boss mode (1-2 characters fight a stationary boss (hp and damage scales on how many players) with multiple phases after reaching a certain health level while navigating platforms)
 - you win by killing the boss and lose by everyone dying (character dies after being hit 1-2 times)
+
 character selection (at least 3 total characters)
 characters hold down jump to jump higher
 start/end screen
