@@ -14,12 +14,20 @@ Boss mode (1-2 characters fight a stationary boss (hp and damage scales on how m
 - you win by killing the boss and lose by everyone dying (character dies after being hit 1-2 times)
 
 character selection (at least 3 total characters)
+
 characters hold down jump to jump higher
+
 start/end screen
-bgm + sound effects (cats possibly voiced by mr Ks cats with permission !!)
 
 ## Nice to Have Features
+bgm + sound effects (cats possibly voiced by mr Ks cats with permission !!)
 
+different backgrounds + maps (map selection screen or random map)
+
+little storyline for boss mode -- fight smaller monsters before reaching Boss
+- when you reach the end of the screen, you tp back to the left and map refreshes until you reach the boss (1-3 map changes?)
+
+revive feature in boss mode when your character dies and your teammate is alive 
 
 
 # Project Design
