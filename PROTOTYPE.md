@@ -39,7 +39,7 @@ UML Diagrams and descriptions of key algorithms, classes, and how things fit tog
 |  projectile class     |        |
 |  character class     |          |
 |  platform class     |         |
-|  jump power class     |         |
+|  jump power class     |        
 
 
 
