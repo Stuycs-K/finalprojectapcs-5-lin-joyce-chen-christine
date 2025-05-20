@@ -28,6 +28,7 @@ characters hold down jump to jump higher
 
 start/end screen
 - possibly their own classes
+- end screen will feature a replay button?
 
 ## Nice to Have Features
 bgm + sound effects (cats possibly voiced by mr Ks cats with permission !!)
@@ -56,6 +57,7 @@ UML Diagrams and descriptions of key algorithms, classes, and how things fit tog
 
 # Intended pacing:
 - More key things will be added as we figure them out in section 2!
+- order of the parts correspond with order in which they should be completed (from first to last)
 
 |  The part!           |  responsible person  |  expected completion date!  |
 | :------------------: | :------------------: |  :-----------------------:  |
@@ -63,3 +65,8 @@ UML Diagrams and descriptions of key algorithms, classes, and how things fit tog
 |  character class    |  TBA     |   TBA    |
 |  platform class     |  TBA     |   TBA    |
 |  jump power class   |  TBA     |   TBA    |
+|  character selection screen   |  TBA     |   TBA    |
+|  start screen   |  TBA     |   TBA    |
+|  end screen   |  TBA     |   TBA    |
+|  versus mode  |  TBA     |   TBA    |
+|  boss mode   |  TBA     |   TBA    |
