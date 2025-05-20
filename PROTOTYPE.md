@@ -55,6 +55,7 @@ revive feature in boss mode when your character dies and your teammate is alive
 
 ![UML](https://github.com/user-attachments/assets/37332c0b-36f2-4302-b1c4-f82e6f8b29b4)
 
+
 |  Key Stuff           |  Description  |
 
 | :------------------: | :-----------: |
