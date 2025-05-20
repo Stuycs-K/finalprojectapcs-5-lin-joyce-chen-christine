@@ -35,6 +35,10 @@ bullets have a 3 second delay before you can shoot your next one
 - set up a method that runs when bullet fired is true, decrementing a cooldown variable for the character by 1 every second and setting the bullet fired boolean to false after this reaches 0, resetting the variable to 3. (by creating a variable instead of using delay(3000), we can display the cooldown)
 - certain characters may have shorter cooldowns but slower projectile speed
 
+platform collision and movement
+- players can jump across platforms to dodge/reposition themselves.
+- each frame detect if character's bottom is about to pass through top of platform, if so, snap character to top. Set vertical velocty to 0 (gravity otherwise) and re-enable jumping once on ground.
+
 ## Nice to Have Features
 bgm + sound effects (cats possibly voiced by mr Ks cats with permission !!)
 
