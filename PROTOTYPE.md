@@ -24,7 +24,7 @@ character selection (at least 3 total characters)
 - character selection will take place one at a time on a character selection screen (image will be greyed out when selected and removed from the selectable ArrayList)
 
 characters hold down jump to jump higher
-- vectors!!
+- while jump key is held, a variable (the jump charge value) will increase over time. Convert the value into an upward velocity vector upon release according to coordinate system in Processing (smaller y values = upward, so velocity should be negative). Multiply the jump charge by a scale factor when setting the new vertical velocity.
 
 start/end screen
 - possibly their own classes
