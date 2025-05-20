@@ -54,7 +54,7 @@ UML Diagrams and descriptions of key algorithms, classes, and how things fit tog
 |  Key Stuff           |  Description  |
 | :------------------: | :-----------: |
 |  projectile class   |   Will include both player's bullets as well as boss projectiles. The constructor will take a "type" variable which will essentially be a String stating the type of projectile it is. These projectiles will then have a speed variable, size variable, and direction variable. For player projectiles, they will include a reload variable and a bounce variable. For special projectiles (such as those belonging to the boss), additional variables may be added (and some unnecessary variables may not be included).    |
-|  character class    |  Will hold the character as well as info as to whether this player is player 1 or player 2 (will dictate which sets of keys are associated with which character). The constructor will take a "type" variable which will be a String dictating the previous character selection that the player has made. These characters will have a remaining lives variable, a walking speed variable, bulletFired boolean, bulletCD variable, as well as a Pimage variable (for sprites). Additional variables will be added as needed.    |
+|  character class    |  Will hold the character as well as info as to whether this player is player 1 or player 2 (will dictate which sets of keys are associated with which character). The constructor will take a "type" variable which will be a String dictating the previous character selection that the player has made. These characters will have a remaining lives variable, a walking speed variable, bulletFired boolean, bulletCD variable, as well as a Pimage variable (for sprites). Movement/input-based behaviors will also be handled in this class, including jumping and aiming. Additional variables will be added as needed.    |
 |  platform class     |  Will include the platforms that the characters may jump on in order to traverse around the screen. These will be constructed using a length and xy coordinates corresponding with the leftmost point of the platform.       |
 |  game class    |  Stores current game mode ("menu"/"versus"/"boss") + references to players, boss, projectiles, and platforms. Updates/draws all objects depending on mode each frame; responsible for input handling and win/lose conditions.       |
 
@@ -69,7 +69,7 @@ UML Diagrams and descriptions of key algorithms, classes, and how things fit tog
 |  projectile class   |  TBA     |   TBA    |
 |  character class    |  TBA     |   TBA    |
 |  platform class     |  TBA     |   TBA    |
-|  jump power class   |  TBA     |   TBA    |
+|  game class   |  TBA     |   TBA    |
 |  character selection screen   |  TBA     |   TBA    |
 |  start screen   |  TBA     |   TBA    |
 |  end screen   |  TBA     |   TBA    |
