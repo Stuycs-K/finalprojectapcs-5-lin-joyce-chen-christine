@@ -71,12 +71,14 @@ revive feature in boss mode when your character dies and your teammate is alive
 
 |  The part!           |  responsible person  |  expected completion date!  |
 | :------------------: | :------------------: |  :-----------------------:  |
-|  projectile class   |  TBA     |   TBA    |
-|  character class    |  TBA     |   TBA    |
-|  platform class     |  TBA     |   TBA    |
-|  game class   |  TBA     |   TBA    |
-|  character selection screen   |  TBA     |   TBA    |
-|  start screen   |  TBA     |   TBA    |
-|  end screen   |  TBA     |   TBA    |
-|  versus mode  |  TBA     |   TBA    |
-|  boss mode   |  TBA     |   TBA    |
+|  projectile class   |  Christine/Joyce     |   5/22    |
+|  character class    |  Christine/Joyce     |   5/23    |
+|  platform class     |  Christine/Joyce     |   5/24    |
+|  game class   |  Christine/Joyce     |   5/26    |
+|  character selection screen   |  Christine/Joyce     |   5/27    |
+|  start screen   |  Christine/Joyce     |   5/28    |
+|  end screen   |  Christine/Joyce     |   5/29    |
+|  versus mode  |  Christine/Joyce     |   5/30    |
+|  boss mode   |  Christine/Joyce     |   5/31    |
+|  sprites   |  Christine     |   6/01    |
+|  animation   |  Joyce     |   6/01    |
