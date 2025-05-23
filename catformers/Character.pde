@@ -52,7 +52,8 @@ public class Character {
     projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, xPos, yPos));
   }
   
-  // change to only aim in certain direction not 360? Also need to change enemy starting direction!
+  // change to only aim in certain direction not 360/flip 180 when switching direction when moving? 
+  // also need to change enemy starting direction!
   void aim(boolean goUp) {
     if (goUp) {
       aimAngle += 2.0;
@@ -91,9 +92,10 @@ public class Character {
     
     yVelocity += g;
     onGround = false; // check for platform collisions
+    float margin = 5.0; // margin of tolerance 
     for (Platforms p : platforms) {
       if (yVelocity >= 0 && yPos + hitboxLength/2 <= p.yPos && yPos + hitboxLength/2 + yVelocity >= p.yPos &&
-      xPos + hitboxWidth/2 > p.xPos && xPos - hitboxWidth/2 < p.xPos + p.width) {
+      xPos + hitboxWidth/2 - margin > p.xPos && xPos - hitboxWidth/2 + margin < p.xPos + p.width) {
           yPos = p.yPos - hitboxLength / 2;
           yVelocity = 0;
           onGround = true;
