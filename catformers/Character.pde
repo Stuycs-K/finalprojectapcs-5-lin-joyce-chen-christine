@@ -5,7 +5,7 @@ public class Character {
   int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD; 
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifFalling; 
+  boolean onGround, bulletFired, ifFalling;
   PImage sprite;
   
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
@@ -49,9 +49,10 @@ public class Character {
   }
   
   void shoot() {
-    projectiles.add(new Projectiles(this, aimAngle, bulletspeed, xPos, yPos));
+    projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, xPos, yPos));
   }
   
+  // change to only aim in certain direction not 360? Also need to change enemy starting direction!
   void aim(boolean goUp) {
     if (goUp) {
       aimAngle += 2.0;
@@ -137,6 +138,11 @@ public class Character {
   
   void display() {
     rect(xPos, yPos, hitboxWidth, hitboxLength);
+    
+    // line to check aim angles 
+    float angle = radians(aimAngle);
+    float len = 40;
+    line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
   }
   
   void setAnimation() { // sets sprite to either jumping or walking animation --> jumping takes priority over walk
