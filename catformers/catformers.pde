@@ -16,12 +16,12 @@ void setup() {
   chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
   chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
 
-  platforms.add(new Platforms(100, 600, 300, 20)); // I testttt
-  platforms.add(new Platforms(500, 400, 100, 20));
-  platforms.add(new Platforms(200, 300, 100, 20));
-  platforms.add(new Platforms(700, 200, 100, 20));
-  platforms.add(new Platforms(300, 500, 300, 20));
-  platforms.add(new Platforms(800, 250, 100, 20));
+  platforms.add(new Platforms(100, 600, 300)); // I testttt
+  platforms.add(new Platforms(500, 400, 100));
+  platforms.add(new Platforms(200, 300, 100));
+  platforms.add(new Platforms(700, 200, 100));
+  platforms.add(new Platforms(300, 500, 300));
+  platforms.add(new Platforms(800, 250, 100));
 
 }
 

@@ -49,9 +49,9 @@ public class Projectiles {
     
     // ==== Platform collisions ====
     for (Platforms p : platforms) {
-      if (xPos + size/2 > p.xPos && xPos - size/2 < p.xPos + p.width && 
-      yPos + size/2 > p.yPos && yPos - size/2 < p.yPos + p.height) {
-        if (yPos < p.yPos || yPos > p.yPos + p.height) {
+      if (xPos + size/2 > p.xPos && xPos - size/2 < p.xPos + p.platformWidth && 
+      yPos + size/2 > p.yPos && yPos - size/2 < p.yPos + p.platformHeight) {
+        if (yPos < p.yPos || yPos > p.yPos + p.platformHeight) {
           yVelocity *= -1;
         } else {
           xVelocity *= -1;
