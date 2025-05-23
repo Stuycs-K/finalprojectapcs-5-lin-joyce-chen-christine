@@ -101,11 +101,13 @@ public class Character {
   }
   
   boolean checkNoPlatform() {
-    for (Platforms p : platforms) {
-      if (yPos + (hitboxLength/2) + yVelocity >= p.yPos-(p.yPos*0.03) && 
-            yPos + (hitboxLength/2) + yVelocity <= p.yPos+(p.yPos*0.03) &&
-            xPos >= p.xPos && xPos <= p.xPos+p.platformWidth) {
-        return false;
+    if (yVelocity > 0) {
+      for (Platforms p : platforms) {
+        if (yPos + (hitboxLength/2) + yVelocity >= p.yPos-(p.yPos*0.03) && 
+              yPos + (hitboxLength/2) + yVelocity <= p.yPos &&
+              xPos >= p.xPos && xPos <= p.xPos+p.platformWidth) {
+          return false;
+        }
       }
     }
     return true;
