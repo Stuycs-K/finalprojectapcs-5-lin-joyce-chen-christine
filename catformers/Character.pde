@@ -43,7 +43,7 @@ public class Character {
   
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
-    if (jumpCharge < 20) { // change maximum based on base jump power!
+    if (jumpCharge < 30) { // change maximum based on base jump power!
       jumpCharge += 1;
     }
   }
