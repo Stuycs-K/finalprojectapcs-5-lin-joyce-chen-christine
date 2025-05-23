@@ -7,7 +7,6 @@ public class Character {
   float xVelocity, yVelocity, xPos, yPos;
   boolean onGround, bulletFired, ifMoving; 
   PImage sprite;
-  ArrayList<Projectiles> projectiles;
   
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
     // basic character info
@@ -26,7 +25,6 @@ public class Character {
     jumpCharge = 1.0;
     
     // projectile info
-    projectiles = new ArrayList<Projectiles>();
     this.bulletspeed = bulletspeed;
     this.maxBulletCD = maxBulletCD;
     bulletCD = 0;
@@ -83,7 +81,7 @@ public class Character {
   void applyMovement() {
     // in the game itself, keep walking animation until freeze is called (horizontal movement)
     ifMoving = false;
-    if (xPos + (hitboxWidth/2) + xVelocity < width && xPos - (hitboxWidth/2) + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
+    if (xPos + (hitboxWidth/2) + xVelocity < width && xPos + (hitboxWidth/2) + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
       xVelocity = 0.0;
     }

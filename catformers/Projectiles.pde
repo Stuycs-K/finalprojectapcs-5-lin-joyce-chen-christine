@@ -2,7 +2,7 @@ public class Projectiles {
   // add types when we start making different types of projectiles (i.e. with different types of effects)
   // String type;
   float xVelocity, yVelocity, xPos, yPos;
-  int bounceCount;
+  int bounceCount, size;
   Character player;
   
   public Projectiles (/*String type,*/ Character player, float angle, float speed, float xPos, float yPos) {
@@ -14,20 +14,20 @@ public class Projectiles {
     xVelocity = speed * cos(angle);
     yVelocity = speed * sin(angle);
     
+    size = 20;
     bounceCount = 0;
   }
   
   void move() {
     if (checkBounce()) {
-      bounceCount++;
+      bounceCount+=1;
     }
-    if (bounceCount < 3) { // change max count if too littlke
-      xPos += xVelocity;
-      yPos += yVelocity;
-    }
-    else {
-      player.projectiles.remove(this);
-    }
+    xPos += xVelocity;
+    yPos += yVelocity;
+  }
+  
+  void display() {
+    circle(xPos,yPos,size);
   }
   
   boolean checkHit() {
@@ -36,11 +36,11 @@ public class Projectiles {
   
   boolean checkBounce() {
     boolean bounce = false;
-    if (yPos + yVelocity < height && yPos + yVelocity > 0) { // check for vertical collisions
+    if (yPos + yVelocity > height || yPos + yVelocity < 0) { // check for vertical collisions
       yVelocity *= -1;
       bounce = true;
     }
-    if (xPos + xVelocity < width && xPos + xVelocity > 0) { // check for horizontal collisions
+    if (xPos + xVelocity > width || xPos + xVelocity < 0) { // check for horizontal collisions
       xVelocity *= -1;
       bounce = true;
     }

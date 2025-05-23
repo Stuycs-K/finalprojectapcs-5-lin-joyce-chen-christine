@@ -1,14 +1,16 @@
 ArrayList<Character> chars;
+ArrayList<Projectiles> projectiles;
 //ArrayList<Platforms> platforms;
 String currmode;
 
 static float g = 9.81;
 
 void setup() {
-  size(1200, 500); // change size of screen if we need to
+  size(1200, 700); // change size of screen if we need to
   currmode = "Menu";
   
   chars = new ArrayList<Character>();
+  projectiles = new ArrayList<Projectiles>();
   //platforms = new ArrayList<Platforms>();
   
   chars.add(new Character(20.0, 20.0, 5, 200.0, 200.0)); // temp for testing
@@ -21,8 +23,19 @@ void draw() {
     c.display();
     
     c.ifMoving = false;
-    
   }
+  
+  for (int x = 0; x < projectiles.size(); x++) {
+    if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
+      projectiles.get(x).move();
+      projectiles.get(x).display();
+    }
+    else {
+      projectiles.remove(x);
+      x--;
+    }
+  }
+  
   if (keyPressed) {
     if (key == 'd') {
       chars.get(0).move(true);
@@ -32,6 +45,12 @@ void draw() {
       chars.get(0).move(false);
       chars.get(0).ifMoving = true;
     }
+  }
+}
+
+void keyPressed() {
+  if (key == 'r') {
+    chars.get(0).shoot();
   }
 }
 
