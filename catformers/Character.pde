@@ -88,7 +88,7 @@ public class Character {
       xVelocity = 0.0;
     }
     
-    if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
+    if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0 && checkNoPlatform()) { //check for platforms and anything else that would block vertical movement
       yPos += yVelocity;
       ifFalling = true;
       if (jumpCharge > 0) {
@@ -98,6 +98,17 @@ public class Character {
         yVelocity = g;
       }
     }
+  }
+  
+  boolean checkNoPlatform() {
+    for (Platforms p : platforms) {
+      if (yPos + (hitboxLength/2) + yVelocity >= p.yPos-(p.yPos*0.03) && 
+            yPos + (hitboxLength/2) + yVelocity <= p.yPos+(p.yPos*0.03) &&
+            xPos >= p.xPos && xPos <= p.xPos+p.platformWidth) {
+        return false;
+      }
+    }
+    return true;
   }
   
   void display() {
