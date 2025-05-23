@@ -13,8 +13,8 @@ void setup() {
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
   
-  chars.add(new Character(20.0, 20.0, 5, 200.0, 200.0)); // temp for testing
-  chars.add(new Character(20.0, 20.0, 5, 900.0, 200.0));
+  chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+  chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
   
   platforms.add(new Platforms(100, 600, 300, 20)); // I testttt
   platforms.add(new Platforms(500, 400, 100, 20));
@@ -28,6 +28,9 @@ void setup() {
 void draw() {
   background(255);
   for (Character c : chars) {
+    if (c.bulletCD > 0) {
+      c.bulletCD--;
+    }
     c.applyMovement();
     c.display();
     

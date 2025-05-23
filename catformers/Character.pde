@@ -49,7 +49,10 @@ public class Character {
   }
   
   void shoot() {
-    projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, xPos, yPos));
+    if (bulletCD == 0) {
+      projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, xPos, yPos));
+      bulletCD = maxBulletCD;
+    }
   }
   
   // change to only aim in certain direction not 360/flip 180 when switching direction when moving? 
