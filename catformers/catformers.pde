@@ -3,7 +3,7 @@ ArrayList<Projectiles> projectiles;
 //ArrayList<Platforms> platforms;
 String currmode;
 
-static float g = 9.81;
+static float g = 9.81; // change gravity based on how fast we want them to fall!
 
 void setup() {
   size(1200, 700); // change size of screen if we need to
@@ -45,12 +45,21 @@ void draw() {
       chars.get(0).move(false);
       chars.get(0).ifMoving = true;
     }
+    if (key == 'w') {
+      chars.get(0).addJumpCharge();
+    }
   }
 }
 
 void keyPressed() {
   if (key == 'r') {
     chars.get(0).shoot();
+  }
+}
+
+void keyReleased() {
+  if (key == 'w') {
+    chars.get(0).jump();
   }
 }
 

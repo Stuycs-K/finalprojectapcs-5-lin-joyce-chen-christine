@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Character {
   int hitboxWidth, hitboxLength;
-  int lives, bulletCD, maxBulletCD; 
-  float bulletspeed, walkspeed, jumpCharge, aimAngle;
+  int lives, jumpCharge, bulletCD, maxBulletCD; 
+  float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
   boolean onGround, bulletFired, ifMoving; 
   PImage sprite;
@@ -22,7 +22,7 @@ public class Character {
     
     // vertical movement
     yVelocity = g;
-    jumpCharge = 1.0;
+    jumpCharge = 0;
     
     // projectile info
     this.bulletspeed = bulletspeed;
@@ -37,13 +37,15 @@ public class Character {
   }
   
   void jump() {
-    // replace the zero later with base jump power!!
-    yVelocity = 0 * jumpCharge;
+    // replace the number later with base jump power!!
+    yVelocity = -15;
   }
   
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
-    jumpCharge += 0.1;
+    if (jumpCharge < 20) { // change maximum based on base jump power!
+      jumpCharge += 1;
+    }
   }
   
   void shoot() {
@@ -89,6 +91,12 @@ public class Character {
     if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
       yPos += yVelocity;
       ifMoving = true;
+      if (jumpCharge > 0) {
+        jumpCharge--;
+      }
+      else {
+        yVelocity = g;
+      }
     }
   }
   
