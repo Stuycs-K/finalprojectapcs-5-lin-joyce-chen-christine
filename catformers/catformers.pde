@@ -1,5 +1,4 @@
 ArrayList<Character> chars;
-ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 String currmode;
 
@@ -10,7 +9,6 @@ void setup() {
   currmode = "Menu";
   
   chars = new ArrayList<Character>();
-  projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
 }
 

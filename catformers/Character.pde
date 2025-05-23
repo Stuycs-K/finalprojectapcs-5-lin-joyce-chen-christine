@@ -9,19 +9,31 @@ public class Character {
   double aimAngle;
   boolean onGround, bulletFired, ifMoving; 
   PImage sprite;
+  ArrayList<Projectiles> projectiles;
   
   public Character (String type, float walkspeed, float bulletspeed, int maxBulletCD, PImage sprite, float xPos, float yPos) {
+    // basic character info
     this.type = type;
-    this.walkspeed = walkspeed;
-    this.bulletspeed = bulletspeed;
-    this.maxBulletCD = maxBulletCD;
     this.sprite = sprite;
     this.xPos = xPos;
     this.yPos = yPos;
-    yVelocity = -1 * g;
+    
+    // horizontal movement
+    this.walkspeed = walkspeed;
     xVelocity = 0.0;
-    bulletCD = 0;
+    
+    // vertical movement
+    yVelocity = -1 * g;
     jumpcharge = 1.0;
+    
+    // projectile info
+    projectiles = new ArrayList<Projectiles>();
+    this.bulletspeed = bulletspeed;
+    this.maxBulletCD = maxBulletCD;
+    bulletCD = 0;
+    aimAngle = 0.0;
+    
+    // booleans
     onGround = true;
     bulletFired = false; 
     ifMoving = false;
@@ -38,9 +50,22 @@ public class Character {
   }
   
   void shoot() {
+    projectiles.add(new Projectile(this, aimAngle, bulletspeed, xPos, yPos));
   }
   
-  void aim() {
+  void aim(boolean goUp) {
+    if (goUp) {
+      aimAngle += 0.1;
+      if (aimAngle == 360.0) {
+        aimAngle = 0.0;
+      }
+    }
+    else {
+      if (aimAngle == 0.0) {
+        aimAngle = 360.0;
+      }
+      aimAngle -= 0.1;
+    }
   }
   
   void move(boolean goRight) {
