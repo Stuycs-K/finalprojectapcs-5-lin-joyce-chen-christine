@@ -2,6 +2,7 @@ ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 String currmode;
+boolean versusInitialized;
 
 static float g = 3.8; // change gravity based on how fast we want them to fall!
 
@@ -12,6 +13,8 @@ void setup() {
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
+  
+  versusInitialized = false;
 
 }
 
@@ -55,9 +58,7 @@ void draw() {
 
   if (keyPressed) {
     if (currmode.equals("Menu")) { // for now go to versus, later create a second screen for character selection
-      if (keyCode == ENTER) {
-        currmode = "Versus";
-      }
+      currmode = "Versus";
     }
     else if (currmode.equals("Versus")) {
       // ===== Player 1 =====
@@ -129,18 +130,23 @@ void displayScreen() {
     text("hi",width/2,height/2.5);
    
     textSize(30);
-    text("press < ENTER > to start",width/2, height/1.7);
+    text("press any key to start",width/2, height/1.7);
   }
   else if (currmode.equals("Versus")) {
-    chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
-    chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
-  
-    platforms.add(new Platforms(100, 600, 300)); // I testttt
-    platforms.add(new Platforms(500, 400, 100));
-    platforms.add(new Platforms(200, 300, 100));
-    platforms.add(new Platforms(700, 200, 100));
-    platforms.add(new Platforms(300, 500, 300));
-    platforms.add(new Platforms(800, 250, 100));
+    background(255);
+    
+    if (!versusInitialized) {
+      versusInitialized = true;
+      chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+      chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
+    
+      platforms.add(new Platforms(100, 600, 300)); // I testttt
+      platforms.add(new Platforms(500, 400, 100));
+      platforms.add(new Platforms(200, 300, 100));
+      platforms.add(new Platforms(700, 200, 100));
+      platforms.add(new Platforms(300, 500, 300));
+      platforms.add(new Platforms(800, 250, 100));
+    }
   }
   else if (currmode.equals("Boss")) {
 
