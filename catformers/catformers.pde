@@ -28,10 +28,6 @@ void setup() {
 void draw() {
   background(255);
 
-  for (Platforms p : platforms) {
-    p.display();
-  }
-
   for (Character c : chars) {
     if (c.bulletCD > 0) {
       c.bulletCD--;
@@ -46,13 +42,18 @@ void draw() {
   }
 
   for (int x = 0; x < projectiles.size(); x++) {
-    if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
-      projectiles.get(x).move();
-      projectiles.get(x).display();
+    if (projectiles.get(x).checkHit()) {
+      projectiles.remove(x);
     }
     else {
-      projectiles.remove(x);
-      x--;
+      if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
+        projectiles.get(x).move();
+        projectiles.get(x).display();
+      }
+      else {
+        projectiles.remove(x);
+        x--;
+      }
     }
   }
 

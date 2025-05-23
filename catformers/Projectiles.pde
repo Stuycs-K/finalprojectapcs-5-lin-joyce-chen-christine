@@ -31,7 +31,15 @@ public class Projectiles {
   }
   
   boolean checkHit() {
-    return true;
+    float margin = 5.0;
+    for (Character c : chars) {
+      if (c != player && xPos >= c.xPos - margin && xPos <= c.xPos + margin &&
+            yPos >= c.yPos - margin && yPos <= c.yPos + margin) {
+        c.lives -= 1;
+        return true;
+      }
+    }
+    return false;
   }
   
   boolean checkBounce() {

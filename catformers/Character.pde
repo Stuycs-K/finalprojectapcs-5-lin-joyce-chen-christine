@@ -15,6 +15,7 @@ public class Character {
     this.yPos = yPos;
     hitboxWidth = 20;
     hitboxLength = 40;
+    lives = 3;
 
     // horizontal movement
     this.walkspeed = walkspeed;
@@ -126,32 +127,6 @@ public class Character {
       yPos = hitboxLength/2;
       yVelocity = 0;
     }
-
-    /*
-    if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
-      yPos += yVelocity;
-      ifFalling = true;
-      if (jumpCharge > 0) {
-        jumpCharge--;
-      }
-      else {
-        yVelocity = g;
-      }
-    }
-    */
-  }
-
-  boolean checkNoPlatform() {
-    if (yVelocity > 0) {
-      for (Platforms p : platforms) {
-        if (yPos + (hitboxLength/2) + yVelocity >= p.yPos-(p.yPos*0.03) &&
-              yPos + (hitboxLength/2) + yVelocity <= p.yPos &&
-              xPos >= p.xPos && xPos <= p.xPos+p.platformWidth) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 
   void display() {
