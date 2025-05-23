@@ -13,20 +13,10 @@ void setup() {
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
 
-  chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
-  chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
-
-  platforms.add(new Platforms(100, 600, 300)); // I testttt
-  platforms.add(new Platforms(500, 400, 100));
-  platforms.add(new Platforms(200, 300, 100));
-  platforms.add(new Platforms(700, 200, 100));
-  platforms.add(new Platforms(300, 500, 300));
-  platforms.add(new Platforms(800, 250, 100));
-
 }
 
 void draw() {
-  background(255);
+  displayScreen();
 
   for (Character c : chars) {
     if (c.bulletCD > 0) {
@@ -56,26 +46,39 @@ void draw() {
       }
     }
   }
+  
+  for (int x = 0; x < chars.size(); x++) { // just testing to see if characters die
+    if (chars.get(x).lives == 0) {
+      chars.remove(x);
+    }
+  }
 
   if (keyPressed) {
-    // ===== Player 1 =====
-    if (key == 'd') {
-      chars.get(0).move(true);
-    } else if (key == 'a') {
-      chars.get(0).move(false);
+    if (currmode.equals("Menu")) { // for now go to versus, later create a second screen for character selection
+      if (keyCode == ENTER) {
+        currmode = "Versus";
+      }
     }
-    if (!chars.get(0).ifFalling && key == 'w') {
-      chars.get(0).addJumpCharge();
-    }
-
-    // ===== Player 2 =====
-    if (keyCode == RIGHT) {
-      chars.get(1).move(true);
-    } else if (keyCode == LEFT) {
-      chars.get(1).move(false);
-    }
-    if (!chars.get(1).ifFalling && keyCode == UP) {
-      chars.get(1).addJumpCharge();
+    else if (currmode.equals("Versus")) {
+      // ===== Player 1 =====
+      if (key == 'd') {
+        chars.get(0).move(true);
+      } else if (key == 'a') {
+        chars.get(0).move(false);
+      }
+      if (!chars.get(0).ifFalling && key == 'w') {
+        chars.get(0).addJumpCharge();
+      }
+  
+      // ===== Player 2 =====
+      if (keyCode == RIGHT) {
+        chars.get(1).move(true);
+      } else if (keyCode == LEFT) {
+        chars.get(1).move(false);
+      }
+      if (!chars.get(1).ifFalling && keyCode == UP) {
+        chars.get(1).addJumpCharge();
+      }
     }
   }
 
@@ -105,23 +108,39 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  // ==== Player 1 ====
-  if (!chars.get(0).ifFalling && key == 'w') {
-    chars.get(0).jump();
-  }
-
-  // ==== Player 2 ====
-  if (!chars.get(1).ifFalling && keyCode == UP) {
-    chars.get(1).jump();
+  if (currmode.equals("Versus")) {
+    // ==== Player 1 ====
+    if (!chars.get(0).ifFalling && key == 'w') {
+      chars.get(0).jump();
+    }
+  
+    // ==== Player 2 ====
+    if (!chars.get(1).ifFalling && keyCode == UP) {
+      chars.get(1).jump();
+    }
   }
 }
 
 void displayScreen() {
   if (currmode.equals("Menu")) {
-
+    background(0);
+    textAlign(CENTER,CENTER);
+    textSize(200);
+    text("hi",width/2,height/2.5);
+   
+    textSize(30);
+    text("press < ENTER > to start",width/2, height/1.7);
   }
   else if (currmode.equals("Versus")) {
-
+    chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+    chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
+  
+    platforms.add(new Platforms(100, 600, 300)); // I testttt
+    platforms.add(new Platforms(500, 400, 100));
+    platforms.add(new Platforms(200, 300, 100));
+    platforms.add(new Platforms(700, 200, 100));
+    platforms.add(new Platforms(300, 500, 300));
+    platforms.add(new Platforms(800, 250, 100));
   }
   else if (currmode.equals("Boss")) {
 
