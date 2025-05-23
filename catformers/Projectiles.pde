@@ -3,9 +3,9 @@ public class Projectiles {
   // String type;
   float xVelocity, yVelocity, xPos, yPos;
   int bounceCount;
-  Character player
+  Character player;
   
-  public Projectiles (/*String type,*/ Character player, double angle, float speed, float xPos, float yPos) {
+  public Projectiles (/*String type,*/ Character player, float angle, float speed, float xPos, float yPos) {
     // this.type = type;
     this.player = player;
     
@@ -31,15 +31,16 @@ public class Projectiles {
   }
   
   boolean checkHit() {
+    return true;
   }
   
   boolean checkBounce() {
     boolean bounce = false;
-    if () { // check for vertical collisions
+    if (yPos + yVelocity < height && yPos + yVelocity > 0) { // check for vertical collisions
       yVelocity *= -1;
       bounce = true;
     }
-    if () { // check for horizontal collisions
+    if (xPos + xVelocity < width && xPos + xVelocity > 0) { // check for horizontal collisions
       xVelocity *= -1;
       bounce = true;
     }

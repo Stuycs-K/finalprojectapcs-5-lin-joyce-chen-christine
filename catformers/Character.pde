@@ -1,30 +1,29 @@
 import java.util.*;
 
 public class Character {
-  String type; 
   int hitboxWidth, hitboxLength;
   int lives, bulletCD, maxBulletCD; 
-  float bulletspeed, walkspeed, jumpCharge;
+  float bulletspeed, walkspeed, jumpCharge, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  double aimAngle;
   boolean onGround, bulletFired, ifMoving; 
   PImage sprite;
   ArrayList<Projectiles> projectiles;
   
-  public Character (String type, float walkspeed, float bulletspeed, int maxBulletCD, PImage sprite, float xPos, float yPos) {
+  public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
     // basic character info
-    this.type = type;
-    this.sprite = sprite;
+    //this.sprite = sprite;
     this.xPos = xPos;
     this.yPos = yPos;
+    hitboxWidth = 20;
+    hitboxLength = 40;
     
     // horizontal movement
     this.walkspeed = walkspeed;
     xVelocity = 0.0;
     
     // vertical movement
-    yVelocity = -1 * g;
-    jumpcharge = 1.0;
+    yVelocity = g;
+    jumpCharge = 1.0;
     
     // projectile info
     projectiles = new ArrayList<Projectiles>();
@@ -50,7 +49,7 @@ public class Character {
   }
   
   void shoot() {
-    projectiles.add(new Projectile(this, aimAngle, bulletspeed, xPos, yPos));
+    projectiles.add(new Projectiles(this, aimAngle, bulletspeed, xPos, yPos));
   }
   
   void aim(boolean goUp) {
@@ -82,19 +81,21 @@ public class Character {
   }
   
   void applyMovement() {
-    if () { //check for borders and anything else that would block horizontal movement
+    // in the game itself, keep walking animation until freeze is called (horizontal movement)
+    ifMoving = false;
+    if (xPos + (hitboxWidth/2) + xVelocity < width && xPos - (hitboxWidth/2) + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
-    }
-    else { // in the game itself, keep walking animation until freeze is called
       xVelocity = 0.0;
     }
     
-    if () { //check for platforms and anything else that would block vertical movement
+    if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
       yPos += yVelocity;
+      ifMoving = true;
     }
-    else {
-      yVelocity = -1 * g;
-    }
+  }
+  
+  void display() {
+    rect(xPos, yPos, hitboxWidth, hitboxLength);
   }
   
   void setAnimation() { // sets sprite to either jumping or walking animation --> jumping takes priority over walk
