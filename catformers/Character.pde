@@ -5,7 +5,7 @@ public class Character {
   int lives, jumpCharge, bulletCD, maxBulletCD; 
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifMoving; 
+  boolean onGround, bulletFired, ifFalling; 
   PImage sprite;
   
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
@@ -33,7 +33,7 @@ public class Character {
     // booleans
     onGround = true;
     bulletFired = false; 
-    ifMoving = false;
+    ifFalling = false;
   }
   
   void jump() {
@@ -82,7 +82,7 @@ public class Character {
   
   void applyMovement() {
     // in the game itself, keep walking animation until freeze is called (horizontal movement)
-    ifMoving = false;
+    ifFalling = false;
     if (xPos + (hitboxWidth/2) + xVelocity < width && xPos + (hitboxWidth/2) + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
       xVelocity = 0.0;
@@ -90,7 +90,7 @@ public class Character {
     
     if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
       yPos += yVelocity;
-      ifMoving = true;
+      ifFalling = true;
       if (jumpCharge > 0) {
         jumpCharge--;
       }

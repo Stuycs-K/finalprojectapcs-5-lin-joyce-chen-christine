@@ -22,7 +22,6 @@ void draw() {
     c.applyMovement();
     c.display();
     
-    c.ifMoving = false;
   }
   
   for (int x = 0; x < projectiles.size(); x++) {
@@ -39,13 +38,11 @@ void draw() {
   if (keyPressed) {
     if (key == 'd') {
       chars.get(0).move(true);
-      chars.get(0).ifMoving = true;
     }
     else if (key == 'a') {
       chars.get(0).move(false);
-      chars.get(0).ifMoving = true;
     }
-    if (key == 'w') {
+    if (!chars.get(0).ifFalling && key == 'w') {
       chars.get(0).addJumpCharge();
     }
   }
@@ -58,7 +55,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  if (key == 'w') {
+  if (!chars.get(0).ifFalling && key == 'w') {
     chars.get(0).jump();
   }
 }
