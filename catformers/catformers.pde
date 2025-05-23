@@ -1,6 +1,6 @@
 ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
-//ArrayList<Platforms> platforms;
+ArrayList<Platforms> platforms;
 String currmode;
 
 static float g = 9.81; // change gravity based on how fast we want them to fall!
@@ -11,9 +11,15 @@ void setup() {
   
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
-  //platforms = new ArrayList<Platforms>();
+  platforms = new ArrayList<Platforms>();
   
   chars.add(new Character(20.0, 20.0, 5, 200.0, 200.0)); // temp for testing
+  
+  platforms.add(new Platforms(100, 600, 300, 20)); // I testttt
+  platforms.add(new Platforms(500, 400, 100, 20));
+  platforms.add(new Platforms(200, 300, 100, 20));
+  platforms.add(new Platforms(700, 200, 100, 20));
+  
 }
 
 void draw() {
@@ -22,6 +28,10 @@ void draw() {
     c.applyMovement();
     c.display();
     
+  }
+  
+  for (Platforms p : platforms) {
+    p.display();
   }
   
   for (int x = 0; x < projectiles.size(); x++) {
