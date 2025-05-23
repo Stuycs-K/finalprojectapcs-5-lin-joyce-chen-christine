@@ -87,6 +87,22 @@ public class Character {
       xPos += xVelocity;
       xVelocity = 0.0;
     }
+   
+    onGround = false; // check for platform collisions
+    for (Platforms p : platforms) {
+      if (yPos + hitboxLength/2 <= p.yPos && yPos + hitboxLength/2 + yVelocity >= p.yPos &&
+      xPos + hitboxWidth/2 > p.xPos && xPos - hitboxWidth/2 < p.xPos + p.width) {
+          yPos = p.yPos - hitboxLength / 2;
+          yVelocity = 0;
+          onGround = true;
+          ifFalling = false;
+        }
+    }
+    if (!onGround) {
+      yVelocity = g;
+      yPos += yVelocity;
+      ifFalling = true;
+    }
     
     if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
       yPos += yVelocity;
