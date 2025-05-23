@@ -54,16 +54,16 @@ public class Character {
   
   void aim(boolean goUp) {
     if (goUp) {
-      aimAngle += 0.1;
-      if (aimAngle == 360.0) {
+      aimAngle += 2.0;
+      if (aimAngle >= 360.0) {
         aimAngle = 0.0;
       }
     }
     else {
-      if (aimAngle == 0.0) {
+      aimAngle -= 2.0;
+      if (aimAngle < 0.0) {
         aimAngle = 360.0;
       }
-      aimAngle -= 0.1;
     }
   }
   
