@@ -3,7 +3,7 @@ ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 String currmode;
 
-static float g = 9.81; // change gravity based on how fast we want them to fall!
+static float g = 4.2; // change gravity based on how fast we want them to fall!
 
 void setup() {
   size(1200, 700); // change size of screen if we need to

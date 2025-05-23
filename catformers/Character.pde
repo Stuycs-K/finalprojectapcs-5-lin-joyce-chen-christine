@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Character {
   int hitboxWidth, hitboxLength;
-  int lives, jumpCharge, bulletCD, maxBulletCD; 
+  int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD; 
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
   boolean onGround, bulletFired, ifFalling; 
@@ -38,7 +38,7 @@ public class Character {
   
   void jump() {
     // replace the number later with base jump power!!
-    yVelocity = -15;
+    yVelocity = -40;
   }
   
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
@@ -87,23 +87,41 @@ public class Character {
       xPos += xVelocity;
       xVelocity = 0.0;
     }
-   
+    
+    yVelocity += g;
     onGround = false; // check for platform collisions
     for (Platforms p : platforms) {
-      if (yPos + hitboxLength/2 <= p.yPos && yPos + hitboxLength/2 + yVelocity >= p.yPos &&
+      if (yVelocity >= 0 && yPos + hitboxLength/2 <= p.yPos && yPos + hitboxLength/2 + yVelocity >= p.yPos &&
       xPos + hitboxWidth/2 > p.xPos && xPos - hitboxWidth/2 < p.xPos + p.width) {
           yPos = p.yPos - hitboxLength / 2;
           yVelocity = 0;
           onGround = true;
           ifFalling = false;
-        }
+      }
     }
-    if (!onGround) {
-      yVelocity = g;
+    if (!onGround && yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) {
       yPos += yVelocity;
       ifFalling = true;
+      if (jumpCharge > 0) {
+        jumpCharge--;
+      } else {
+        yVelocity = g;
+      }
     }
     
+    if (yPos + (hitboxLength/2) > height) {
+      yPos = height - hitboxLength/2;
+      yVelocity = 0;
+      onGround = true;
+      ifFalling = false;
+    }
+    
+    if (yPos - (hitboxLength/2) < 0) {
+      yPos = hitboxLength/2;
+      yVelocity = 0;
+    }
+
+    /*
     if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) { //check for platforms and anything else that would block vertical movement
       yPos += yVelocity;
       ifFalling = true;
@@ -114,6 +132,7 @@ public class Character {
         yVelocity = g;
       }
     }
+    */
   }
   
   void display() {
