@@ -5,7 +5,7 @@ public class Character {
   int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifFalling, facingRight;
+  boolean onGround, bulletFired, ifFalling, facingRight, isAlive;
   PImage sprite;
 
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
@@ -35,17 +35,21 @@ public class Character {
     onGround = true;
     bulletFired = false;
     ifFalling = false;
+    facingRight = true;
+    isAlive = true;
   }
 
   void jump() {
     // replace the number later with base jump power!!
-    yVelocity = -40;
+    int power = max(jumpCharge, 15); // base jump
+    yVelocity = -power * 3;
+    jumpCharge = 0;
   }
 
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
-    if (jumpCharge < 30) { // change maximum based on base jump power!
-      jumpCharge += 1;
+    if (jumpCharge < 60) { // change maximum based on base jump power!
+      jumpCharge += 3;
     }
   }
 
