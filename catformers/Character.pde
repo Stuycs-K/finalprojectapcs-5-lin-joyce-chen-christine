@@ -2,12 +2,12 @@ import java.util.*;
 
 public class Character {
   int hitboxWidth, hitboxLength;
-  int lives, jumpCharge, bulletCD, maxBulletCD; 
+  int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifFalling; 
+  boolean onGround, bulletFired, ifFalling;
   PImage sprite;
-  
+
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
     // basic character info
     //this.sprite = sprite;
@@ -15,58 +15,64 @@ public class Character {
     this.yPos = yPos;
     hitboxWidth = 20;
     hitboxLength = 40;
-    
+    lives = 3;
+
     // horizontal movement
     this.walkspeed = walkspeed;
     xVelocity = 0.0;
-    
+
     // vertical movement
     yVelocity = g;
     jumpCharge = 0;
-    
+
     // projectile info
     this.bulletspeed = bulletspeed;
     this.maxBulletCD = maxBulletCD;
     bulletCD = 0;
     aimAngle = 0.0;
-    
+
     // booleans
     onGround = true;
-    bulletFired = false; 
+    bulletFired = false;
     ifFalling = false;
   }
-  
+
   void jump() {
     // replace the number later with base jump power!!
-    yVelocity = -15;
+    yVelocity = -40;
   }
-  
+
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
-    if (jumpCharge < 20) { // change maximum based on base jump power!
+    if (jumpCharge < 30) { // change maximum based on base jump power!
       jumpCharge += 1;
     }
   }
-  
+
   void shoot() {
-    projectiles.add(new Projectiles(this, aimAngle, bulletspeed, xPos, yPos));
+    if (bulletCD == 0) {
+      projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, xPos, yPos));
+      bulletCD = maxBulletCD;
+    }
   }
-  
+
+  // change to only aim in certain direction not 360/flip 180 when switching direction when moving?
+  // also need to change enemy starting direction!
   void aim(boolean goUp) {
     if (goUp) {
-      aimAngle += 0.1;
-      if (aimAngle == 360.0) {
+      aimAngle += 2.0;
+      if (aimAngle >= 360.0) {
         aimAngle = 0.0;
       }
     }
     else {
-      if (aimAngle == 0.0) {
+      aimAngle -= 2.0;
+      if (aimAngle < 0.0) {
         aimAngle = 360.0;
       }
-      aimAngle -= 0.1;
     }
   }
-  
+
   void move(boolean goRight) {
     if (goRight) {
       xVelocity = walkspeed;
@@ -75,11 +81,11 @@ public class Character {
       xVelocity = -1 * walkspeed;
     }
   }
-  
+
   void freeze() {
     xVelocity = 0.0;
   }
-  
+
   void applyMovement() {
     // in the game itself, keep walking animation until freeze is called (horizontal movement)
     ifFalling = false;
@@ -87,36 +93,52 @@ public class Character {
       xPos += xVelocity;
       xVelocity = 0.0;
     }
-    
-    if (yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0 && checkNoPlatform()) { //check for platforms and anything else that would block vertical movement
+
+    yVelocity += g;
+    onGround = false; // check for platform collisions
+    float margin = 5.0; // margin of tolerance
+    for (Platforms p : platforms) {
+      if (yVelocity >= 0 && yPos + hitboxLength/2 <= p.yPos && yPos + hitboxLength/2 + yVelocity >= p.yPos &&
+      xPos + hitboxWidth/2 - margin > p.xPos && xPos - hitboxWidth/2 + margin < p.xPos + p.platformWidth) {
+          yPos = p.yPos - hitboxLength / 2;
+          yVelocity = 0;
+          onGround = true;
+          ifFalling = false;
+      }
+    }
+    if (!onGround && yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) {
       yPos += yVelocity;
       ifFalling = true;
       if (jumpCharge > 0) {
         jumpCharge--;
-      }
-      else {
+      } else {
+        jumpCharge = 0;
         yVelocity = g;
       }
     }
-  }
-  
-  boolean checkNoPlatform() {
-    if (yVelocity > 0) {
-      for (Platforms p : platforms) {
-        if (yPos + (hitboxLength/2) + yVelocity >= p.yPos-(p.yPos*0.03) && 
-              yPos + (hitboxLength/2) + yVelocity <= p.yPos &&
-              xPos >= p.xPos && xPos <= p.xPos+p.platformWidth) {
-          return false;
-        }
-      }
+
+    if (yPos + (hitboxLength/2) > height) {
+      yPos = height - hitboxLength/2;
+      yVelocity = 0;
+      onGround = true;
+      ifFalling = false;
     }
-    return true;
+
+    if (yPos - (hitboxLength/2) < 0) {
+      yPos = hitboxLength/2;
+      yVelocity = 0;
+    }
   }
-  
+
   void display() {
     rect(xPos, yPos, hitboxWidth, hitboxLength);
+
+    // line to check aim angles
+    float angle = radians(aimAngle);
+    float len = 40;
+    line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
   }
-  
+
   void setAnimation() { // sets sprite to either jumping or walking animation --> jumping takes priority over walk
   }
 }

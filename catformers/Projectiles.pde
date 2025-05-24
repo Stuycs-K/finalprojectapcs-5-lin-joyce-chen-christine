@@ -31,11 +31,20 @@ public class Projectiles {
   }
   
   boolean checkHit() {
-    return true;
+    for (Character c : chars) {
+      if (c != player && xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+            yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+        c.lives -= 1;
+        return true;
+      }
+    }
+    return false;
   }
   
   boolean checkBounce() {
     boolean bounce = false;
+    
+    // ==== Wall collisions ==== 
     if (yPos + yVelocity > height || yPos + yVelocity < 0) { // check for vertical collisions
       yVelocity *= -1;
       bounce = true;
@@ -44,6 +53,20 @@ public class Projectiles {
       xVelocity *= -1;
       bounce = true;
     }
+    
+    // ==== Platform collisions ====
+    for (Platforms p : platforms) {
+      if (xPos + size/2 > p.xPos && xPos - size/2 < p.xPos + p.platformWidth && 
+      yPos + size/2 > p.yPos && yPos - size/2 < p.yPos + p.platformHeight) {
+        if (yPos < p.yPos || yPos > p.yPos + p.platformHeight) {
+          yVelocity *= -1;
+        } else {
+          xVelocity *= -1;
+        }
+        bounce = true;
+      }
+    }
+    
     return bounce;
   }
   
