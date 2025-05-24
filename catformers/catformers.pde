@@ -128,7 +128,6 @@ void keyReleased() {
 void mouseClicked() {
   if (selectScreen) {
     s.buttonClicked();
-    print(currmode);
   }
 }
 
