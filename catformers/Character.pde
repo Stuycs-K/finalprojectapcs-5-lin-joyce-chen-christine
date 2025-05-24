@@ -68,6 +68,24 @@ public class Character {
         aimAngle = 360.0;
       }
     }
+    
+    if (facingRight) {
+      if (aimAngle > 90 && aimAngle < 270) {
+        if (aimAngle < 180) {
+          aimAngle = 90;
+        } else {
+          aimAngle = 270;
+        }
+      }
+    } else {
+      if (aimAngle < 90 || aimAngle > 270) {
+        if (aimAngle > 180) {
+          aimAngle = 270;
+        } else {
+          aimAngle = 90;
+        }
+      }
+    }
   }
   
   // change to preserve aimm angle modifications or keep resetting? 
