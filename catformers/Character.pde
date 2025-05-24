@@ -5,7 +5,7 @@ public class Character {
   int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifFalling;
+  boolean onGround, bulletFired, ifFalling, facingRight;
   PImage sprite;
 
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
@@ -56,8 +56,6 @@ public class Character {
     }
   }
 
-  // change to only aim in certain direction not 360/flip 180 when switching direction when moving?
-  // also need to change enemy starting direction!
   void aim(boolean goUp) {
     if (goUp) {
       aimAngle += 2.0;
@@ -71,14 +69,40 @@ public class Character {
         aimAngle = 360.0;
       }
     }
+
+    if (facingRight) {
+      if (aimAngle > 90 && aimAngle < 270) {
+        if (aimAngle < 180) {
+          aimAngle = 90;
+        } else {
+          aimAngle = 270;
+        }
+      }
+    } else {
+      if (aimAngle < 90 || aimAngle > 270) {
+        if (aimAngle > 180) {
+          aimAngle = 270;
+        } else {
+          aimAngle = 90;
+        }
+      }
+    }
   }
 
+  // change to preserve aimm angle modifications or keep resetting?
   void move(boolean goRight) {
     if (goRight) {
       xVelocity = walkspeed;
-    }
-    else {
+      if (!facingRight) {
+        facingRight = true;
+        aimAngle = 0.0;
+      }
+    } else {
       xVelocity = -1 * walkspeed;
+      if (facingRight) {
+        facingRight = false;
+        aimAngle = 180.0;
+      }
     }
   }
 

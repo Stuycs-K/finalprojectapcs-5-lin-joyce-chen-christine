@@ -15,7 +15,7 @@ void setup() {
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
   s = new screenSelect();
-  
+
   versusInitialized = false;
   selectScreen = false;
 
@@ -52,7 +52,7 @@ void draw() {
       }
     }
   }
-  
+
   for (int x = 0; x < chars.size(); x++) { // just testing to see if characters die
     if (chars.get(x).lives == 0) {
       chars.remove(x);
@@ -73,7 +73,7 @@ void draw() {
       if (!chars.get(0).ifFalling && key == 'w') {
         chars.get(0).addJumpCharge();
       }
-  
+
       // ===== Player 2 =====
       if (keyCode == RIGHT) {
         chars.get(1).move(true);
@@ -117,7 +117,7 @@ void keyReleased() {
     if (!chars.get(0).ifFalling && key == 'w') {
       chars.get(0).jump();
     }
-  
+
     // ==== Player 2 ====
     if (!chars.get(1).ifFalling && keyCode == UP) {
       chars.get(1).jump();
@@ -138,7 +138,7 @@ void displayScreen() {
       textAlign(CENTER,CENTER);
       textSize(200);
       text("hi",width/2,height/2.5);
-     
+
       textSize(30);
       text("press any key to start",width/2, height/1.7);
     }
@@ -148,12 +148,16 @@ void displayScreen() {
   }
   else if (currmode.equals("Versus")) {
     background(255);
-    
+
     if (!versusInitialized) {
       versusInitialized = true;
       chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
-      chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
-    
+      Character p2 = (new Character(20.0, 20.0, 60, 900.0, 200.0));
+      p2.facingRight = false;
+      p2.aimAngle = 180.0;
+      chars.add(p2);
+      // add to character class instead?
+      
       platforms.add(new Platforms(100, 600, 300)); // I testttt
       platforms.add(new Platforms(500, 400, 100));
       platforms.add(new Platforms(200, 300, 100));
