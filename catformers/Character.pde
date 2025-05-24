@@ -112,6 +112,7 @@ public class Character {
       if (jumpCharge > 0) {
         jumpCharge--;
       } else {
+        jumpCharge = 0;
         yVelocity = g;
       }
     }

@@ -31,10 +31,9 @@ public class Projectiles {
   }
   
   boolean checkHit() {
-    float margin = 5.0;
     for (Character c : chars) {
-      if (c != player && xPos >= c.xPos - margin && xPos <= c.xPos + margin &&
-            yPos >= c.yPos - margin && yPos <= c.yPos + margin) {
+      if (c != player && xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+            yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
         c.lives -= 1;
         return true;
       }

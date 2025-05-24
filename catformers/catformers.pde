@@ -2,7 +2,8 @@ ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 String currmode;
-boolean versusInitialized;
+boolean versusInitialized, selectScreen;
+screenSelect s;
 
 static float g = 3.8; // change gravity based on how fast we want them to fall!
 
@@ -13,8 +14,10 @@ void setup() {
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
+  s = new screenSelect();
   
   versusInitialized = false;
+  selectScreen = false;
 
 }
 
@@ -58,7 +61,7 @@ void draw() {
 
   if (keyPressed) {
     if (currmode.equals("Menu")) { // for now go to versus, later create a second screen for character selection
-      currmode = "Versus";
+      selectScreen = true;
     }
     else if (currmode.equals("Versus")) {
       // ===== Player 1 =====
@@ -122,15 +125,27 @@ void keyReleased() {
   }
 }
 
+void mouseClicked() {
+  if (selectScreen) {
+    s.buttonClicked();
+    print(currmode);
+  }
+}
+
 void displayScreen() {
   if (currmode.equals("Menu")) {
     background(0);
-    textAlign(CENTER,CENTER);
-    textSize(200);
-    text("hi",width/2,height/2.5);
-   
-    textSize(30);
-    text("press any key to start",width/2, height/1.7);
+    if (!selectScreen) {
+      textAlign(CENTER,CENTER);
+      textSize(200);
+      text("hi",width/2,height/2.5);
+     
+      textSize(30);
+      text("press any key to start",width/2, height/1.7);
+    }
+    else {
+      s.display();
+    }
   }
   else if (currmode.equals("Versus")) {
     background(255);
