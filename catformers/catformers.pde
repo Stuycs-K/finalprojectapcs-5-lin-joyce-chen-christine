@@ -1,3 +1,5 @@
+import gifAnimation.*;
+
 ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
@@ -5,17 +7,26 @@ String currmode;
 boolean versusInitialized, selectScreen;
 screenSelect s;
 
+// things for graphics
+Gif start;
+PImage title;
+
 static float g = 3.8; // change gravity based on how fast we want them to fall!
 
 void setup() {
-  size(1200, 700); // change size of screen if we need to
+  size(1280, 720); // change size of screen if we need to
   currmode = "Menu";
 
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
   s = new screenSelect();
-
+  
+  // graphicsss
+  start = new Gif(this, "start.gif");
+  start.play();
+  title = loadImage("title.png");
+  
   versusInitialized = false;
   selectScreen = false;
 
@@ -134,14 +145,16 @@ void mouseClicked() {
 
 void displayScreen() {
   if (currmode.equals("Menu")) {
-    background(0);
     if (!selectScreen) {
+      background(start);
+      image(title,width/4.3,height/4);
+
       textAlign(CENTER,CENTER);
       textSize(200);
-      text("hi",width/2,height/2.5);
-
+      fill(0);
       textSize(30);
-      text("press any key to start",width/2, height/1.7);
+      text("press any key to start",width/2, height/1.8);
+      fill(255);
     }
     else {
       s.display();

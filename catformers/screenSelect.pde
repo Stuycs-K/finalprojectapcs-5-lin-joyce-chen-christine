@@ -20,6 +20,7 @@ public class screenSelect {
   }
   
   void display() {
+    background(0);
     if (modes.size() == 2) {
       for (Button b : modes) {
         b.display();
