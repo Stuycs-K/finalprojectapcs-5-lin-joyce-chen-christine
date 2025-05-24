@@ -87,7 +87,7 @@ public class Character {
       }
     }
   }
-  
+
   // change to preserve aimm angle modifications or keep resetting? 
   void move(boolean goRight) {
     if (goRight) {

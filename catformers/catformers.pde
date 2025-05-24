@@ -14,7 +14,11 @@ void setup() {
   platforms = new ArrayList<Platforms>();
   
   chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
-  chars.add(new Character(20.0, 20.0, 60, 900.0, 200.0));
+  Character p2 = (new Character(20.0, 20.0, 60, 900.0, 200.0));
+  p2.facingRight = false;
+  p2.aimAngle = 180.0;
+  chars.add(p2);
+  // add to character class instead? 
   
   platforms.add(new Platforms(100, 600, 300, 20)); // I testttt
   platforms.add(new Platforms(500, 400, 100, 20));
