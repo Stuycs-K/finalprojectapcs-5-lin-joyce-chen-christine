@@ -153,7 +153,7 @@ void displayScreen() {
       textSize(200);
       fill(0);
       textSize(30);
-      text("press any key to start",width/2, height/1.8);
+      text("< press any key to start >",width/2, height/1.8);
       fill(255);
     }
     else {

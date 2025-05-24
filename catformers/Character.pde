@@ -99,13 +99,23 @@ public class Character {
       xVelocity = walkspeed;
       if (!facingRight) {
         facingRight = true;
-        aimAngle = 0.0;
+        if (aimAngle <= 180) {
+          aimAngle = 180 - aimAngle;
+        }
+        else {
+          aimAngle = 360 - (aimAngle - 180);
+        }
       }
     } else {
       xVelocity = -1 * walkspeed;
       if (facingRight) {
         facingRight = false;
-        aimAngle = 180.0;
+        if (aimAngle <= 90) {
+          aimAngle = 180 - aimAngle;
+        }
+        else {
+          aimAngle = 180 + (360 - aimAngle);
+        }
       }
     }
   }
