@@ -21,6 +21,7 @@ public class Projectiles {
   void move() {
     if (checkBounce()) {
       bounceCount+=1;
+      unclip();
     }
     xPos += xVelocity;
     yPos += yVelocity;
@@ -43,8 +44,7 @@ public class Projectiles {
   
   boolean checkBounce() {
     boolean bounce = false;
-    
-    // ==== Wall collisions ==== 
+      // ==== Wall collisions ==== 
     if (yPos + yVelocity > height || yPos + yVelocity < 0) { // check for vertical collisions
       yVelocity *= -1;
       bounce = true;
@@ -68,6 +68,19 @@ public class Projectiles {
     }
     
     return bounce;
+  }
+  
+  void unclip() {
+    for (Platforms p : platforms) {
+      if (xPos + xVelocity > p.xPos && xPos + xVelocity < p.xPos + p.platformWidth && 
+              yPos + yVelocity > p.yPos && yPos + yVelocity < p.yPos + p.platformHeight) {
+        if (yPos < p.yPos || yPos > p.yPos + p.platformHeight) {
+          yVelocity *= -1;
+        } else {
+          xVelocity *= -1;
+        }
+      }
+    }
   }
   
 }
