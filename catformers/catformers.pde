@@ -25,12 +25,13 @@ void draw() {
   displayScreen();
 
   for (Character c : chars) {
-    if (c.bulletCD > 0) {
-      c.bulletCD--;
+    if (c.isAlive) {
+      if (c.bulletCD > 0) {
+        c.bulletCD--;
+      }
+      c.applyMovement();
+      c.display();
     }
-    c.applyMovement();
-    c.display();
-
   }
 
   for (Platforms p : platforms) {
@@ -53,9 +54,9 @@ void draw() {
     }
   }
 
-  for (int x = 0; x < chars.size(); x++) { // just testing to see if characters die
-    if (chars.get(x).lives == 0) {
-      chars.remove(x);
+  for (Character c : chars) {
+    if (c.lives <= 0) {
+      c.isAlive = false;
     }
   }
 

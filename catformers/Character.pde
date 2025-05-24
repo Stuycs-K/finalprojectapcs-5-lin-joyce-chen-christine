@@ -5,7 +5,7 @@ public class Character {
   int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifFalling, facingRight;
+  boolean onGround, bulletFired, ifFalling, facingRight, isAlive;
   PImage sprite;
 
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
@@ -35,6 +35,8 @@ public class Character {
     onGround = true;
     bulletFired = false;
     ifFalling = false;
+    facingRight = true;
+    isAlive = true;
   }
 
   void jump() {
