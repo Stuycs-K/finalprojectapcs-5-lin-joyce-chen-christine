@@ -41,13 +41,15 @@ public class Character {
 
   void jump() {
     // replace the number later with base jump power!!
-    yVelocity = -40;
+    int power = max(jumpCharge, 15); // base jump
+    yVelocity = -power * 3;
+    jumpCharge = 0;
   }
 
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
-    if (jumpCharge < 30) { // change maximum based on base jump power!
-      jumpCharge += 1;
+    if (jumpCharge < 60) { // change maximum based on base jump power!
+      jumpCharge += 3;
     }
   }
 
