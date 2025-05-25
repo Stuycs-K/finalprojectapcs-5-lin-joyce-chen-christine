@@ -8,13 +8,13 @@ public class Character {
   boolean onGround, bulletFired, ifFalling, facingRight, isAlive;
   PImage sprite;
 
-  public Character (float walkspeed, float bulletspeed, int maxBulletCD, /*PImage sprite,*/ float xPos, float yPos) {
+  public Character (float walkspeed, float bulletspeed, int maxBulletCD, PImage sprite, float xPos, float yPos) {
     // basic character info
-    //this.sprite = sprite;
+    this.sprite = sprite;
     this.xPos = xPos;
     this.yPos = yPos;
-    hitboxWidth = 20;
-    hitboxLength = 40;
+    hitboxWidth = 50;
+    hitboxLength = 70;
     lives = 3;
 
     // horizontal movement
@@ -169,12 +169,12 @@ public class Character {
   }
 
   void display() {
-    rect(xPos, yPos, hitboxWidth, hitboxLength);
-
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;
     line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
+    
+    image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
   }
 
   void setAnimation() { // sets sprite to either jumping or walking animation --> jumping takes priority over walk

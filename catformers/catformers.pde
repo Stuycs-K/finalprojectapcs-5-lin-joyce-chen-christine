@@ -165,8 +165,8 @@ void displayScreen() {
 
     if (!versusInitialized) {
       versusInitialized = true;
-      chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
-      Character p2 = (new Character(20.0, 20.0, 60, 900.0, 200.0));
+      chars.add(new Character(20.0, 20.0, 60, loadImage("cat1idle.png"), 200.0, 200.0)); // temp for testing
+      Character p2 = (new Character(20.0, 20.0, 60, loadImage("cat1idle.png"), 900.0, 200.0));
       p2.facingRight = false;
       p2.aimAngle = 180.0;
       chars.add(p2);
