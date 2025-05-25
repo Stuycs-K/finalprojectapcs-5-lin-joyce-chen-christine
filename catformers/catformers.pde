@@ -130,8 +130,7 @@ void keyPressed() {
   
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
-      gameEnd = false;
-      currmode = "Menu";
+      setup();
     }
   }
 

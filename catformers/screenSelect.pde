@@ -33,6 +33,7 @@ public class screenSelect {
       }
       selectScreen = false;
       currmode = selectedMode;
+      selectedMode = "";
     }
   }
   
@@ -48,6 +49,7 @@ public class screenSelect {
         selectScreen = false;
         currmode = selectedMode;
         numPlayer = "2";
+        selectedMode = "";
       }
       else {
         for (Button b : numPlayers) {
