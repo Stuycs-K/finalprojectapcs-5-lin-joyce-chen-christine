@@ -8,13 +8,12 @@ public class Character {
   boolean onGround, bulletFired, ifFalling, facingRight, isAlive;
   PImage sprite;
 
-  public Character (float walkspeed, float bulletspeed, int maxBulletCD, PImage sprite, float xPos, float yPos) {
+  public Character (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     // basic character info
-    this.sprite = sprite;
     this.xPos = xPos;
     this.yPos = yPos;
-    hitboxWidth = 50;
-    hitboxLength = 70;
+    hitboxWidth = 60;
+    hitboxLength = 84;
     lives = 3;
 
     // horizontal movement
@@ -127,7 +126,7 @@ public class Character {
   void applyMovement() {
     // in the game itself, keep walking animation until freeze is called (horizontal movement)
     ifFalling = false;
-    if (xPos + (hitboxWidth/2) + xVelocity < width && xPos + (hitboxWidth/2) + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
+    if (xPos + hitboxWidth + xVelocity < width && xPos + hitboxWidth + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
       xVelocity = 0.0;
     }
@@ -136,15 +135,15 @@ public class Character {
     onGround = false; // check for platform collisions
     float margin = 5.0; // margin of tolerance
     for (Platforms p : platforms) {
-      if (yVelocity >= 0 && yPos + hitboxLength/2 <= p.yPos && yPos + hitboxLength/2 + yVelocity >= p.yPos &&
-      xPos + hitboxWidth/2 - margin > p.xPos && xPos - hitboxWidth/2 + margin < p.xPos + p.platformWidth) {
-          yPos = p.yPos - hitboxLength / 2;
+      if (yVelocity >= 0 && yPos + hitboxLength <= p.yPos && yPos + hitboxLength + yVelocity >= p.yPos &&
+      xPos + hitboxWidth - margin > p.xPos && xPos - hitboxWidth + margin < p.xPos + p.platformWidth) {
+          yPos = p.yPos - hitboxLength;
           yVelocity = 0;
           onGround = true;
           ifFalling = false;
       }
     }
-    if (!onGround && yPos + (hitboxLength/2) + yVelocity < height && yPos - (hitboxLength/2) + yVelocity > 0) {
+    if (!onGround && yPos + hitboxLength + yVelocity < height && yPos - hitboxLength + yVelocity > 0) {
       yPos += yVelocity;
       ifFalling = true;
       if (jumpCharge > 0) {
@@ -155,15 +154,15 @@ public class Character {
       }
     }
 
-    if (yPos + (hitboxLength/2) > height) {
-      yPos = height - hitboxLength/2;
+    if (yPos + hitboxLength > height) {
+      yPos = height - hitboxLength;
       yVelocity = 0;
       onGround = true;
       ifFalling = false;
     }
 
-    if (yPos - (hitboxLength/2) < 0) {
-      yPos = hitboxLength/2;
+    if (yPos - hitboxLength < 0) {
+      yPos = hitboxLength;
       yVelocity = 0;
     }
   }
@@ -174,7 +173,7 @@ public class Character {
     float len = 40;
     line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
     
-    image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
+    rect(xPos, yPos, hitboxWidth, hitboxLength);
   }
 
   void setAnimation() { // sets sprite to either jumping or walking animation --> jumping takes priority over walk
