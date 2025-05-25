@@ -28,7 +28,7 @@ public class screenSelect {
         Button b = numPlayers.get(x);
         if (mouseX >= b.xPos && mouseX <= b.xPos + b.buttonWidth &&
               mouseY >= b.yPos && mouseY <= b.yPos + b.buttonHeight) {
-          // update this spot when we start creating boss mode
+          numPlayer = b.value;
         }
       }
       currmode = selectedMode;
@@ -45,6 +45,7 @@ public class screenSelect {
     else {
       if (selectedMode.equals("Versus")) {
         currmode = selectedMode;
+        numPlayer = "2";
       }
       else {
         for (Button b : numPlayers) {
