@@ -3,8 +3,8 @@ import gifAnimation.*;
 ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
-String currmode;
-boolean versusInitialized, selectScreen;
+String currmode, numPlayer;
+boolean modeInitialized, selectScreen;
 screenSelect s;
 
 // things for graphics
@@ -16,6 +16,7 @@ static float g = 3.8; // change gravity based on how fast we want them to fall!
 void setup() {
   size(1280, 720); // change size of screen if we need to
   currmode = "Menu";
+  numPlayer = "0";
 
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
@@ -27,7 +28,7 @@ void setup() {
   start.play();
   title = loadImage("title.png");
   
-  versusInitialized = false;
+  modeInitialized = false;
   selectScreen = false;
 
 }
@@ -75,7 +76,7 @@ void draw() {
     if (currmode.equals("Menu")) { // for now go to versus, later create a second screen for character selection
       selectScreen = true;
     }
-    else if (currmode.equals("Versus")) {
+    else if (currmode.equals("Versus") || currmode.equals("Boss")) {
       // ===== Player 1 =====
       if (key == 'd') {
         chars.get(0).move(true);
@@ -86,14 +87,16 @@ void draw() {
         chars.get(0).addJumpCharge();
       }
 
-      // ===== Player 2 =====
-      if (keyCode == RIGHT) {
-        chars.get(1).move(true);
-      } else if (keyCode == LEFT) {
-        chars.get(1).move(false);
-      }
-      if (!chars.get(1).ifFalling && keyCode == UP) {
-        chars.get(1).addJumpCharge();
+      if (numPlayer.equals("2")) {
+        // ===== Player 2 =====
+        if (keyCode == RIGHT) {
+          chars.get(1).move(true);
+        } else if (keyCode == LEFT) {
+          chars.get(1).move(false);
+        }
+        if (!chars.get(1).ifFalling && keyCode == UP) {
+          chars.get(1).addJumpCharge();
+        }
       }
     }
   }
@@ -111,28 +114,32 @@ void keyPressed() {
     chars.get(0).aim(false);
   }
 
-  // ==== Player 2 ====
-  if (key == '/') {
-    chars.get(1).shoot();
-  }
-  if (key == ',') {
-    chars.get(1).aim(true);
-  } else if (key == '.') {
-    chars.get(1).aim(false);
+  if (numPlayer.equals("2")) {
+    // ==== Player 2 ====
+    if (key == '/') {
+      chars.get(1).shoot();
+    }
+    if (key == ',') {
+      chars.get(1).aim(true);
+    } else if (key == '.') {
+      chars.get(1).aim(false);
+    }
   }
 
 }
 
 void keyReleased() {
-  if (currmode.equals("Versus")) {
+  if (currmode.equals("Versus") || currmode.equals("Boss")) {
     // ==== Player 1 ====
     if (!chars.get(0).ifFalling && key == 'w') {
       chars.get(0).jump();
     }
 
-    // ==== Player 2 ====
-    if (!chars.get(1).ifFalling && keyCode == UP) {
-      chars.get(1).jump();
+    if (numPlayer.equals("2")) {
+      // ==== Player 2 ====
+      if (!chars.get(1).ifFalling && keyCode == UP) {
+        chars.get(1).jump();
+      }
     }
   }
 }
@@ -163,10 +170,10 @@ void displayScreen() {
   else if (currmode.equals("Versus")) {
     background(255);
 
-    if (!versusInitialized) {
-      versusInitialized = true;
-      chars.add(new Character(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
-      Character p2 = (new Character(20.0, 20.0, 60, 900.0, 200.0));
+    if (!modeInitialized) {
+      modeInitialized = true;
+      chars.add(new firstcat(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+      Character p2 = (new firstcat(20.0, 20.0, 60, 900.0, 200.0));
       p2.facingRight = false;
       p2.aimAngle = 180.0;
       chars.add(p2);
@@ -181,7 +188,26 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Boss")) {
+    background(255);
 
+    if (!modeInitialized) {
+      modeInitialized = true;
+      chars.add(new firstcat(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+      if (numPlayer.equals("2")) {
+        Character p2 = (new firstcat(20.0, 20.0, 60, 900.0, 200.0));
+        p2.facingRight = false;
+        p2.aimAngle = 180.0;
+        chars.add(p2);
+      }
+      // add to character class instead?
+      
+      platforms.add(new Platforms(100, 600, 300)); // I testttt
+      platforms.add(new Platforms(500, 400, 100));
+      platforms.add(new Platforms(200, 300, 100));
+      platforms.add(new Platforms(700, 200, 100));
+      platforms.add(new Platforms(300, 500, 300));
+      platforms.add(new Platforms(800, 250, 100));
+    }
   }
   else if (currmode.equals("Loss")) {
 
