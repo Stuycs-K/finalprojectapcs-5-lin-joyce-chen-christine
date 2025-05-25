@@ -136,7 +136,7 @@ public class Character {
     float margin = 5.0; // margin of tolerance
     for (Platforms p : platforms) {
       if (yVelocity >= 0 && yPos + hitboxLength <= p.yPos && yPos + hitboxLength + yVelocity >= p.yPos &&
-      xPos + hitboxWidth - margin > p.xPos && xPos - hitboxWidth + margin < p.xPos + p.platformWidth) {
+      xPos + hitboxWidth - margin > p.xPos && xPos + margin < p.xPos + p.platformWidth) {
           yPos = p.yPos - hitboxLength;
           yVelocity = 0;
           onGround = true;
