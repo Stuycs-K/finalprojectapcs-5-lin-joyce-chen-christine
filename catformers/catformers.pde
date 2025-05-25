@@ -181,7 +181,7 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Boss")) {
-
+    background(0); // just to test that buttons work
   }
   else if (currmode.equals("Loss")) {
 
