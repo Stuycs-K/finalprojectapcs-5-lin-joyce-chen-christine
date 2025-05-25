@@ -4,7 +4,7 @@ ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 String currmode, numPlayer;
-boolean modeInitialized, selectScreen;
+boolean modeInitialized, selectScreen, gameEnd;
 screenSelect s;
 
 // things for graphics
@@ -30,6 +30,7 @@ void setup() {
   
   modeInitialized = false;
   selectScreen = false;
+  gameEnd = false; 
 
 }
 
@@ -69,6 +70,7 @@ void draw() {
   for (Character c : chars) {
     if (c.lives <= 0) {
       c.isAlive = false;
+      gameEnd = true;
     }
   }
 
@@ -123,6 +125,13 @@ void keyPressed() {
       chars.get(1).aim(true);
     } else if (key == '.') {
       chars.get(1).aim(false);
+    }
+  }
+  
+  if (currmode.equals("Victory") || currmode.equals("Loss")) {
+    if (keyCode == ENTER || keyCode == RETURN) {
+      gameEnd = false;
+      currmode = "Menu";
     }
   }
 
@@ -186,6 +195,10 @@ void displayScreen() {
       platforms.add(new Platforms(300, 500, 300));
       platforms.add(new Platforms(800, 250, 100));
     }
+    
+    if (gameEnd) {
+      currmode = "Victory";
+    }
   }
   else if (currmode.equals("Boss")) {
     background(255);
@@ -213,6 +226,23 @@ void displayScreen() {
 
   }
   else if (currmode.equals("Victory")) {
-
+    while (platforms.size() > 0) {
+      platforms.remove(0);
+    }
+    String winText = "Player ";
+    fill(0);
+    rect(width/3.25, height/3.25, 500, 300);
+    for (Character c : chars) {
+      if (c.isAlive) {
+        winText += chars.indexOf(c) + 1;
+      }
+    }
+    fill(255);
+    textSize(70);
+    text(winText,width/2, height/2.20);
+    text("wins!",width/2, height/1.80);
+    
+    textSize(20);
+    text("press [enter] to return to start screen",width/2, height/1.50);
   }
 }

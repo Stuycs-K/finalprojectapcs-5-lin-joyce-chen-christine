@@ -31,6 +31,7 @@ public class screenSelect {
           numPlayer = b.value;
         }
       }
+      selectScreen = false;
       currmode = selectedMode;
     }
   }
@@ -44,6 +45,7 @@ public class screenSelect {
     }
     else {
       if (selectedMode.equals("Versus")) {
+        selectScreen = false;
         currmode = selectedMode;
         numPlayer = "2";
       }
