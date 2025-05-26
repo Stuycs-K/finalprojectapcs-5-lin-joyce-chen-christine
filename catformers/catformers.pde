@@ -18,6 +18,11 @@ Gif cat1walkL;
 
 static float g = 3.8; // change gravity based on how fast we want them to fall!
 
+final int MAX_KEY = 128;
+final int MAX_KEYCODE = 256;
+boolean[] p1Keys = new boolean[MAX_KEY];
+boolean[] p2Keys = new boolean[MAX_KEYCODE];
+
 void setup() {
   size(1280, 720); // change size of screen if we need to
   currmode = "Menu";
@@ -99,28 +104,44 @@ void draw() {
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
       // ===== Player 1 =====
-      if (key == 'd') {
-        chars.get(0).move(true);
-        chars.get(0).isWalking = true;
-      } else if (key == 'a') {
+      if (p1Keys['a']) {
         chars.get(0).move(false);
         chars.get(0).isWalking = true;
+      } else if (p1Keys['d']) {
+        chars.get(0).move(true);
+        chars.get(0).isWalking = true;
       }
-      if (!chars.get(0).ifFalling && key == 'w') {
+      if (p1Keys['w'] && !chars.get(0).ifFalling) {
         chars.get(0).addJumpCharge();
       }
+      if (p1Keys['q']) {
+        chars.get(0).aim(true);
+      } else if (p1Keys['e']) {
+        chars.get(0).aim(false);
+      }
+      if (p1Keys['r']) {
+        chars.get(0).shoot();
+      }
 
+      // ===== Player 2 =====
       if (numPlayer.equals("2")) {
-        // ===== Player 2 =====
-        if (keyCode == RIGHT) {
-          chars.get(1).move(true);
-          chars.get(1).isWalking = true;
-        } else if (keyCode == LEFT) {
+        if (p2Keys[LEFT]) {
           chars.get(1).move(false);
           chars.get(1).isWalking = true;
+        } else if (p2Keys[RIGHT]) {
+          chars.get(1).move(true);
+          chars.get(1).isWalking = true;
         }
-        if (!chars.get(1).ifFalling && keyCode == UP) {
+        if (p2Keys[UP] && !chars.get(1).ifFalling) {
           chars.get(1).addJumpCharge();
+        }
+        if (p2Keys[',']) {
+          chars.get(1).aim(true);
+        } else if (p2Keys['/']) {
+          chars.get(1).aim(false);
+        }
+        if (p2Keys['.']) {
+          chars.get(1).shoot();
         }
       }
     }
@@ -129,27 +150,8 @@ void draw() {
 }
 
 void keyPressed() {
-  // ==== Player 1 ====
-  if (key == 'r') {
-    chars.get(0).shoot();
-  }
-  if (key == 'q') {
-    chars.get(0).aim(true);
-  } else if (key == 'e') {
-    chars.get(0).aim(false);
-  }
-
-  if (numPlayer.equals("2")) {
-    // ==== Player 2 ====
-    if (key == '/') {
-      chars.get(1).shoot();
-    }
-    if (key == ',') {
-      chars.get(1).aim(true);
-    } else if (key == '.') {
-      chars.get(1).aim(false);
-    }
-  }
+  if (key < MAX_KEY) p1Keys[key] = true;
+  if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
   
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
@@ -160,33 +162,30 @@ void keyPressed() {
 }
 
 void keyReleased() {
+  if (key < MAX_KEY) p1Keys[key] = false;
+  if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
+  
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
     // ==== Player 1 ====
     if (!chars.get(0).ifFalling && key == 'w') {
       chars.get(0).jump();
     }
-    
     // turn walking animation off
-    if (key == 'd') {
+    if (key == 'd' || key == 'a') {
       chars.get(0).isWalking = false;
     } 
-    if (key == 'a') {
-      chars.get(0).isWalking = false;
-    }
 
+    // ==== Player 2 ====
     if (numPlayer.equals("2")) {
-      // ==== Player 2 ====
       if (!chars.get(1).ifFalling && keyCode == UP) {
         chars.get(1).jump();
       }
-      
       // turn walking animation off
-      if (keyCode == RIGHT) {
+      if (keyCode == RIGHT || keyCode == LEFT) {
         chars.get(1).isWalking = false;
-      } else if (keyCode == LEFT) {
-        chars.get(1).isWalking = false;
-      }
+      } 
     }
+    
   }
 }
 
