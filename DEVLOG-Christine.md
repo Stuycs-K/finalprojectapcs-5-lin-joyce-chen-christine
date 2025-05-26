@@ -21,4 +21,5 @@ Future Improvements:
 - Allow bounces of bullets shot by player to damage that player?
 - Work on image for Versus button
 - Improve background image
-- !!! Fix bug where both players can not move/aim/act at the same time
+
+**!!!** Fix bug where both players can not move/aim/act at the same time **!!!**
