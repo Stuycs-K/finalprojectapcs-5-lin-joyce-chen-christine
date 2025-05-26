@@ -32,6 +32,10 @@ public class firstcat extends Character {
     float len = 40;
     line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
     
+    // display lives
+    for (int x = 0; x < lives; x++) {
+      image(loadImage("heart.png"), 90+35*x, 35+50*(chars.indexOf(this)), 30,30);
+    }
     flip();
     if (!isWalking) {
       image(sprite, xPos, yPos, hitboxWidth, hitboxLength);

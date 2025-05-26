@@ -206,7 +206,8 @@ void displayScreen() {
   }
   else if (currmode.equals("Versus")) {
     background(255);
-
+    image(loadImage("p1.png"), 20, 30, 60, 44.4);
+    image(loadImage("p2.png"), 20, 80, 60, 44.4);
     if (!modeInitialized) {
       modeInitialized = true;
       chars.add(new firstcat(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
