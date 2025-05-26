@@ -38,9 +38,7 @@ public class firstcat extends Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     line(mouthX, mouthY, mouthX + cos(angle) * len, mouthY + sin(angle) * len);
-    
-    rect(xPos, yPos, hitboxWidth, hitboxLength);
-    
+        
     // display lives
     for (int x = 0; x < lives; x++) {
       image(loadImage("heart.png"), 90+35*x, 35+50*(chars.indexOf(this)), 30,30);

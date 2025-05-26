@@ -10,6 +10,7 @@ screenSelect s;
 // things for graphics
 Gif start;
 PImage title;
+PImage bg;
 
 // walk animations
 Gif cat1walkR;
@@ -31,6 +32,7 @@ void setup() {
   start = new Gif(this, "start.gif");
   start.play();
   title = loadImage("title.png");
+  bg = loadImage("background1.png");
   
   // walking animation
   cat1walkR = new Gif(this,"cat1walkR.gif");
@@ -205,7 +207,7 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Versus")) {
-    background(255);
+    image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), 20, 80, 60, 44.4);
     if (!modeInitialized) {
