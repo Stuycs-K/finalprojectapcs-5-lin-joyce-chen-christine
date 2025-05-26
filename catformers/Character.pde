@@ -1,12 +1,11 @@
-import java.util.*;
-
 public class Character {
   int hitboxWidth, hitboxLength;
   int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
-  boolean onGround, bulletFired, ifFalling, facingRight, isAlive;
+  boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
   PImage sprite;
+  Gif walking;
 
   public Character (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     // basic character info
@@ -36,6 +35,7 @@ public class Character {
     ifFalling = false;
     facingRight = true;
     isAlive = true;
+    isWalking = false;
   }
 
   void jump() {
@@ -176,6 +176,4 @@ public class Character {
     rect(xPos, yPos, hitboxWidth, hitboxLength);
   }
 
-  void setAnimation() { // sets sprite to either jumping or walking animation --> jumping takes priority over walk
-  }
 }
