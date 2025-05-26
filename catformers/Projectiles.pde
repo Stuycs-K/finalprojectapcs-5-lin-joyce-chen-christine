@@ -33,10 +33,12 @@ public class Projectiles {
   
   boolean checkHit() {
     for (Character c : chars) {
-      if (c != player && xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
-            yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
-        c.lives -= 1;
-        return true;
+      if (!(c == player && bounceCount == 0)) { 
+        if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+        yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+          c.lives -= 1;
+          return true;
+        }
       }
     }
     return false;
