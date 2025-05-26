@@ -54,8 +54,16 @@ public class Character {
 
   void shoot() {
     if (bulletCD == 0) {
-      projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, xPos, yPos));
-      bulletCD = maxBulletCD;
+    float mouthX;
+    if (facingRight) {
+      mouthX = xPos + hitboxWidth * 0.8;
+    } else {
+      mouthX = xPos + hitboxWidth * 0.2;
+    }
+    float mouthY = yPos+ hitboxLength * 0.47;
+    
+    projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    bulletCD = maxBulletCD;
     }
   }
 
