@@ -141,10 +141,12 @@ public class Character {
 
     yVelocity += g;
     onGround = false; // check for platform collisions
-    float margin = 5.0; // margin of tolerance
+    float xMargin = 5.0; // margin of tolerance
+    float yMargin = 15.0;
     for (Platforms p : platforms) {
       if (yVelocity >= 0 && yPos + hitboxLength <= p.yPos && yPos + hitboxLength + yVelocity >= p.yPos &&
-      xPos + hitboxWidth - margin > p.xPos && xPos + margin < p.xPos + p.platformWidth) {
+      xPos + hitboxWidth - xMargin > p.xPos && xPos + xMargin < p.xPos + p.platformWidth && 
+      abs(p.yPos - (yPos + hitboxLength)) <= yMargin) {
           yPos = p.yPos - hitboxLength;
           yVelocity = 0;
           onGround = true;
