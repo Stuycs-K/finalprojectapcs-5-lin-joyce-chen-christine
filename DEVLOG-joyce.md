@@ -22,3 +22,10 @@ things to consider for next coding session
 - start creating a boss class (maybe leave for tuesday along with extra characters so planning can be done together)
 - more graphics!! (animating walking and creating backgrounds + something for the platforms)
 - start creating a victory/lose mechanic (maybe just have a pop up instead of changing the screen?)
+
+### 2025-05-25 - More Graphics and Screens!! - 2.5 hours
+A victory screen was implemented to appear after a player dies in versus mode and pressing enter/return allows the player to return to the start screen. Additionally walking animations for cat1 has been imported and now appears when horizontal movement is detected.
+
+things to consider for next coding session
+- create a square that displays bullet cooldowns (a countdown and maybe have it greyed out before the countdown is over)
+- hearts on the tops of the screen that displays remaining lives (get hit 3 times --> death)

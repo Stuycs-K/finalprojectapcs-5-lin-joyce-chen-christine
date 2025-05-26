@@ -11,6 +11,10 @@ screenSelect s;
 Gif start;
 PImage title;
 
+// walk animations
+Gif cat1walkR;
+Gif cat1walkL;
+
 static float g = 3.8; // change gravity based on how fast we want them to fall!
 
 void setup() {
@@ -27,6 +31,12 @@ void setup() {
   start = new Gif(this, "start.gif");
   start.play();
   title = loadImage("title.png");
+  
+  // walking animation
+  cat1walkR = new Gif(this,"cat1walkR.gif");
+  cat1walkL = new Gif(this,"cat1walkL.gif");
+  cat1walkR.play();
+  cat1walkL.play();
   
   modeInitialized = false;
   selectScreen = false;
@@ -82,8 +92,10 @@ void draw() {
       // ===== Player 1 =====
       if (key == 'd') {
         chars.get(0).move(true);
+        chars.get(0).isWalking = true;
       } else if (key == 'a') {
         chars.get(0).move(false);
+        chars.get(0).isWalking = true;
       }
       if (!chars.get(0).ifFalling && key == 'w') {
         chars.get(0).addJumpCharge();
@@ -93,8 +105,10 @@ void draw() {
         // ===== Player 2 =====
         if (keyCode == RIGHT) {
           chars.get(1).move(true);
+          chars.get(1).isWalking = true;
         } else if (keyCode == LEFT) {
           chars.get(1).move(false);
+          chars.get(1).isWalking = true;
         }
         if (!chars.get(1).ifFalling && keyCode == UP) {
           chars.get(1).addJumpCharge();
@@ -130,8 +144,7 @@ void keyPressed() {
   
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
-      gameEnd = false;
-      currmode = "Menu";
+      setup();
     }
   }
 
@@ -143,11 +156,26 @@ void keyReleased() {
     if (!chars.get(0).ifFalling && key == 'w') {
       chars.get(0).jump();
     }
+    
+    // turn walking animation off
+    if (key == 'd') {
+      chars.get(0).isWalking = false;
+    } 
+    if (key == 'a') {
+      chars.get(0).isWalking = false;
+    }
 
     if (numPlayer.equals("2")) {
       // ==== Player 2 ====
       if (!chars.get(1).ifFalling && keyCode == UP) {
         chars.get(1).jump();
+      }
+      
+      // turn walking animation off
+      if (keyCode == RIGHT) {
+        chars.get(1).isWalking = false;
+      } else if (keyCode == LEFT) {
+        chars.get(1).isWalking = false;
       }
     }
   }

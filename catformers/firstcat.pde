@@ -17,6 +17,15 @@ public class firstcat extends Character {
     }
   }
   
+  void setAnimation() {
+    if (facingRight) {
+      image(cat1walkR, xPos, yPos, hitboxWidth, hitboxLength);
+    }
+    else {
+      image(cat1walkL, xPos, yPos, hitboxWidth, hitboxLength);
+    }
+  }
+  
   void display() {
     // line to check aim angles
     float angle = radians(aimAngle);
@@ -24,7 +33,12 @@ public class firstcat extends Character {
     line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
     
     flip();
-    image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
+    if (!isWalking) {
+      image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
+    }
+    else {
+      setAnimation();
+    }
   }
   
 }
