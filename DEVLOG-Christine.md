@@ -22,4 +22,7 @@ Future Improvements:
 - Work on image for Versus button
 - Improve background image
 
-**!!!** Fix bug where both players can not move/aim/act at the same time **!!!**
+**!!!** Fix bug where both players can not move/aim/act at the same time **!!!**. Fix bug where aiming controls are flipped upon changing direction. 
+
+### 2025-05-26 - ..
+Worked for 40 minutes + .. . Modified input to track keys using boolean arrays p1Keys and p2Keys to fix simultaneous movement bug in Versus mode.
