@@ -30,7 +30,16 @@ public class firstcat extends Character {
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;
-    line(xPos, yPos, xPos + cos(angle) * len, yPos + sin(angle) * len);
+    float mouthX;
+    if (facingRight) {
+      mouthX = xPos + hitboxWidth * 0.8;
+    } else {
+      mouthX = xPos + hitboxWidth * 0.2;
+    }
+    float mouthY = yPos+ hitboxLength * 0.47;
+    line(mouthX, mouthY, mouthX + cos(angle) * len, mouthY + sin(angle) * len);
+    
+    rect(xPos, yPos, hitboxWidth, hitboxLength);
     
     // display lives
     for (int x = 0; x < lives; x++) {
