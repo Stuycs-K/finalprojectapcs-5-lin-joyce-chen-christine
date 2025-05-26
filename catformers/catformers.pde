@@ -219,6 +219,7 @@ void displayScreen() {
       chars.add(p2);
       // add to character class instead?
       
+      platforms.add(new Platforms(0, height - 20, width)); // floor
       platforms.add(new Platforms(100, 600, 300)); // I testttt
       platforms.add(new Platforms(500, 400, 100));
       platforms.add(new Platforms(200, 300, 100));
@@ -245,6 +246,7 @@ void displayScreen() {
       }
       // add to character class instead?
       
+      platforms.add(new Platforms(0, height - 20, width)); // floor!
       platforms.add(new Platforms(100, 600, 300)); // I testttt
       platforms.add(new Platforms(500, 400, 100));
       platforms.add(new Platforms(200, 300, 100));
