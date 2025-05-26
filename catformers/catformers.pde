@@ -48,13 +48,16 @@ void setup() {
 
 void draw() {
   displayScreen();
-
+  
+  boolean gameOver = currmode.equals("Victory") || currmode.equals("Loss");
   for (Character c : chars) {
     if (c.isAlive) {
-      if (c.bulletCD > 0) {
+      if (!gameOver && c.bulletCD > 0) {
         c.bulletCD--;
       }
-      c.applyMovement();
+      if (!gameOver) {
+        c.applyMovement();
+      }
       c.display();
     }
   }
@@ -64,17 +67,21 @@ void draw() {
   }
 
   for (int x = 0; x < projectiles.size(); x++) {
-    if (projectiles.get(x).checkHit()) {
+    if (!gameOver && projectiles.get(x).checkHit()) {
       projectiles.remove(x);
+      x--;
     }
     else {
-      if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
-        projectiles.get(x).move();
-        projectiles.get(x).display();
+      if (!gameOver) {
+        if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
+          projectiles.get(x).move();
+        } else {
+          projectiles.remove(x);
+          x--;
+        }
       }
-      else {
-        projectiles.remove(x);
-        x--;
+      if (x >= 0 && x < projectiles.size()) {
+        projectiles.get(x).display();
       }
     }
   }
