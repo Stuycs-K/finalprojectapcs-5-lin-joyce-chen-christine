@@ -143,7 +143,7 @@ public class Character {
 
     yVelocity += g;
     onGround = false; // check for platform collisions
-    float xMargin = 2.0; // margin of tolerance
+    float xMargin = 2.0; // margin to ignore for bigger hitbox
     
     float maxChange = 1.0;
     float remaining = yVelocity;
@@ -167,7 +167,7 @@ public class Character {
       for (int i = 0; i < platforms.size(); i++) {
         Platforms p = platforms.get(i);
         if (yVelocity >= 0 && yPos + hitboxLength >= p.yPos && yPos + hitboxLength <= p.yPos + abs(move) &&
-        xPos + hitboxWidth > p.xPos - xMargin && xPos < p.xPos + p.platformWidth + xMargin) {
+        xPos + hitboxWidth - xMargin > p.xPos && xPos + xMargin < p.xPos + p.platformWidth) {
             yPos = p.yPos - hitboxLength;
             yVelocity = 0;
             onGround = true;
