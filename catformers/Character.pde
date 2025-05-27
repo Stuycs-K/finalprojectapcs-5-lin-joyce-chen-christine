@@ -1,5 +1,5 @@
 public class Character {
-  int hitboxWidth, hitboxLength;
+  int hitboxWidth, hitboxLength, maxLength;
   int lives, jumpCharge, bulletCD, maxBulletCD;
   float maxJumpCharge;
   float bulletspeed, walkspeed, aimAngle;
@@ -14,6 +14,7 @@ public class Character {
     this.yPos = yPos;
     hitboxWidth = 60;
     hitboxLength = 84;
+    maxLength = hitboxLength;
     lives = 3;
 
     // horizontal movement
@@ -45,12 +46,14 @@ public class Character {
     int power = max(jumpCharge, 15); // base jump
     yVelocity = -power * 1.6;
     jumpCharge = 0;
+    hitboxLength = maxLength;
   }
 
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
     if (jumpCharge < maxJumpCharge) { // change maximum based on base jump power!
-      jumpCharge += 3;
+      jumpCharge += 4;
+      hitboxLength -= 3;
     }
   }
 
@@ -194,9 +197,10 @@ public class Character {
       ifFalling = false;
     }
 
-    if (yPos - hitboxLength < 0) {
-      yPos = hitboxLength;
+    if (yPos < 0) {
+      yPos = 1;
       yVelocity = 0;
+      onGround = false;
     }
   }
   
