@@ -16,7 +16,7 @@ PImage bg;
 Gif cat1walkR;
 Gif cat1walkL;
 
-static float g = 3.8; // change gravity based on how fast we want them to fall!
+static float g = 3.5; // change gravity based on how fast we want them to fall!
 
 final int MAX_KEY = 128;
 final int MAX_KEYCODE = 256;

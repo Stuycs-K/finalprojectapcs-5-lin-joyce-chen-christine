@@ -23,7 +23,7 @@ public class Character {
     // vertical movement
     yVelocity = g;
     jumpCharge = 0;
-    maxJumpCharge = 60; // change depending on which character
+    maxJumpCharge = 30; // change depending on which character
 
     // projectile info
     this.bulletspeed = bulletspeed;
@@ -43,7 +43,7 @@ public class Character {
   void jump() {
     // replace the number later with base jump power!!
     int power = max(jumpCharge, 15); // base jump
-    yVelocity = -power * 3;
+    yVelocity = -power * 1.6;
     jumpCharge = 0;
   }
 
@@ -183,7 +183,7 @@ public class Character {
         jumpCharge--;
       } else {
         jumpCharge = 0;
-        yVelocity = g;
+        yVelocity += g;
       }
     }
 
