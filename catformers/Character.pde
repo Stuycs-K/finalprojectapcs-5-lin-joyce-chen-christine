@@ -143,20 +143,42 @@ public class Character {
 
     yVelocity += g;
     onGround = false; // check for platform collisions
-    float xMargin = 5.0; // margin of tolerance
-    float yMargin = 15.0;
-    for (Platforms p : platforms) {
-      if (yVelocity >= 0 && yPos + hitboxLength <= p.yPos && yPos + hitboxLength + yVelocity >= p.yPos &&
-      xPos + hitboxWidth - xMargin > p.xPos && xPos + xMargin < p.xPos + p.platformWidth && 
-      abs(p.yPos - (yPos + hitboxLength)) <= yMargin) {
-          yPos = p.yPos - hitboxLength;
-          yVelocity = 0;
-          onGround = true;
-          ifFalling = false;
+    float xMargin = 2.0; // margin of tolerance
+    
+    float maxChange = 1.0;
+    float direction; // moving up or down
+    if (yVelocity > 0) {
+      direction = 1;
+    } else {
+      direction = -1;
+    }
+    boolean landed = false;
+    while (abs(yVelocity) > 0.0 && !landed) {
+      float move;
+      if (abs(yVelocity) < maxChange) {
+        move = abs(yVelocity);
+      } else {
+        move = maxChange;
+      }
+      move *= direction;
+      yPos += move;
+      yVelocity -= move;
+      
+      for (int i = 0; i < platforms.size(); i++) {
+        Platforms p = platforms.get(i);
+        if (yVelocity >= 0 && yPos + hitboxLength <= p.yPos && yPos + hitboxLength + yVelocity >= p.yPos &&
+        xPos + hitboxWidth > p.xPos - xMargin && xPos < p.xPos + p.platformWidth + xMargin) {
+            yPos = p.yPos - hitboxLength;
+            yVelocity = 0;
+            onGround = true;
+            ifFalling = false;
+            landed = true;
+            
+            i = platforms.size(); // can we use breakkk!
+        }
       }
     }
-    if (!onGround && yPos + hitboxLength + yVelocity < height && yPos - hitboxLength + yVelocity > 0) {
-      yPos += yVelocity;
+    if (!onGround) {
       ifFalling = true;
       if (jumpCharge > 0) {
         jumpCharge--;
