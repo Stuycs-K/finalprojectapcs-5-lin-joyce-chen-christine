@@ -29,3 +29,10 @@ A victory screen was implemented to appear after a player dies in versus mode an
 things to consider for next coding session
 - create a square that displays bullet cooldowns (a countdown and maybe have it greyed out before the countdown is over)
 - hearts on the tops of the screen that displays remaining lives (get hit 3 times --> death)
+
+### 2025-05-26 - Some bug fixing and features - 40 minutes
+A jump bar was implemented so jump charge is displayed when the player starts jumping and the bug where up and down is inverted when the player flips while aiming was also fixed. A preliminary map for versus was created as well!
+
+stuff for tomorrow's class!!
+- start figuring out boss class!
+- think about other cat types we can implement and the difference between them

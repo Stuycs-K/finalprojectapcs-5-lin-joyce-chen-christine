@@ -1,6 +1,7 @@
 public class Character {
   int hitboxWidth, hitboxLength;
-  int lives, jumpCharge, maxJumpCharge, bulletCD, maxBulletCD;
+  int lives, jumpCharge, bulletCD, maxBulletCD;
+  float maxJumpCharge;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
@@ -22,6 +23,7 @@ public class Character {
     // vertical movement
     yVelocity = g;
     jumpCharge = 0;
+    maxJumpCharge = 60; // change depending on which character
 
     // projectile info
     this.bulletspeed = bulletspeed;
@@ -47,7 +49,7 @@ public class Character {
 
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
   void addJumpCharge() {
-    if (jumpCharge < 60) { // change maximum based on base jump power!
+    if (jumpCharge < maxJumpCharge) { // change maximum based on base jump power!
       jumpCharge += 3;
     }
   }
@@ -68,7 +70,7 @@ public class Character {
   }
 
   void aim(boolean goUp) {
-    if (goUp) {
+    if ((goUp && facingRight) || (!goUp && !facingRight)) {
       aimAngle += 2.0;
       if (aimAngle >= 360.0) {
         aimAngle = 0.0;
@@ -176,6 +178,13 @@ public class Character {
       yVelocity = 0;
     }
   }
+  
+  void displayJumpBar() {
+    fill(50,205,50);
+    rect(xPos - 15, yPos - 15, 20, 40.0);
+    fill(255);
+    rect(xPos - 15, yPos - 15, 20, 40.0*(1-(jumpCharge/maxJumpCharge)));
+  }
 
   void display() {
     // line to check aim angles
@@ -191,6 +200,10 @@ public class Character {
     line(mouthX, mouthY, mouthX + cos(angle) * len, mouthY + sin(angle) * len);
     
     rect(xPos, yPos, hitboxWidth, hitboxLength);
+    
+    if (jumpCharge > 0) {
+      displayJumpBar();
+    }
   }
 
 }
