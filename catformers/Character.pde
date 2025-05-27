@@ -70,7 +70,7 @@ public class Character {
   }
 
   void aim(boolean goUp) {
-    if (goUp) {
+    if ((goUp && facingRight) || (!goUp && !facingRight)) {
       aimAngle += 2.0;
       if (aimAngle >= 360.0) {
         aimAngle = 0.0;
