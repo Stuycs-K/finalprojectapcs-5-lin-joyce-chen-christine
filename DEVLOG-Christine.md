@@ -24,5 +24,7 @@ Future Improvements:
 
 **!!!** Fix bug where both players can not move/aim/act at the same time **!!!**. **!!** Fix bug where aiming controls are flipped upon changing direction **!!**.
 
-### 2025-05-26 - ..
-Worked for 45 minutes + .. . Modified input to track keys using boolean arrays p1Keys and p2Keys to fix simultaneous movement bug in Versus mode. Modified checkHit() to allow bullets to damage all players after bouncing. 
+### 2025-05-26 - Bug Fixing + Tuned Platform Clipping/Jumps
+Worked for 2 hours. Modified input to track keys using boolean arrays p1Keys and p2Keys to fix simultaneous movement bug in Versus mode. Modified checkHit() to allow bullets to damage all players after bouncing. Adjusted vertical movement in applyMovement() to check incremental changes through while loop to prevent players from falling through platforms at higher speeds. Tuned jump/jump charging values and logic. Modified xMargin logic to ignore excess space on sides of hitbox for idle animation.
+
+Future Improvements: Remove excess space on top of hitbox for both animations. Work on jumping animation. Work with Joyce in class tomorrow on boss mode and other ideas!!
