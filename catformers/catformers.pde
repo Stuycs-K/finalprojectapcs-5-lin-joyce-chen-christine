@@ -63,12 +63,14 @@ void draw() {
       if (!gameOver) {
         c.applyMovement();
       }
-      c.display();
     }
+      c.display();
   }
 
-  for (Platforms p : platforms) {
-    p.display();
+  if (!gameOver) {
+    for (Platforms p : platforms) {
+      p.display();
+    }
   }
 
   for (int x = 0; x < projectiles.size(); x++) {
@@ -92,8 +94,12 @@ void draw() {
   }
 
   for (Character c : chars) {
-    if (c.lives <= 0) {
+    if (c.lives <= 0 && c.isAlive) {
       c.isAlive = false;
+      c.deathSlope = random(-5,5) * 10.0;
+      while (c.deathSlope == 0.0) {
+        c.deathSlope = random(-5,5) * 10.0;
+      }
       gameEnd = true;
     }
   }
@@ -274,8 +280,11 @@ void displayScreen() {
 
   }
   else if (currmode.equals("Victory")) {
-    while (platforms.size() > 0) {
-      platforms.remove(0);
+    image(bg, 0, 0, width, height);
+    image(loadImage("p1.png"), 20, 30, 60, 44.4);
+    image(loadImage("p2.png"), 20, 80, 60, 44.4);
+    for (Platforms p : platforms) {
+      p.display();
     }
     String winText = "Player ";
     fill(0);
@@ -283,6 +292,9 @@ void displayScreen() {
     for (Character c : chars) {
       if (c.isAlive) {
         winText += chars.indexOf(c) + 1;
+      }
+      else {
+        deathAnimation(c);
       }
     }
     fill(255);
@@ -293,4 +305,9 @@ void displayScreen() {
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
+}
+
+void deathAnimation(Character c) {
+  c.xPos += 40;
+  c.yPos += c.deathSlope;
 }
