@@ -40,16 +40,63 @@ public class Boss {
     timer = 0;
     //imumune = (phase == // immune phase #);
     for (Character c : chars) {
-      c.inverseControls = false;
+     /* c.inverseControls = false;
       c.isTrapped = false;
-      c.spamCount = 0;
+      c.spamCount = 0; */
       // add these to char and add more if needed!
+    }
+  }
+  
+  void immunePhase() {
+    if (timer % 10 == 0) {
+      int count = 12;
+      for (int i = 0; i < count; i++) {
+        float angle = radians((360 / count) * i + timer);
+        //bossProjectiles.add(new Projectiles(
+      }
     }
   }
   
   //add more + complete!
   void giantBeamPhase() {
+    if (timer == 100) {
+      fill(255, 0, 0, 100);
+      rect(0, height - 120, width, 20); // figure out sizing later!
+      for (Character c : chars) {
+        if (c.yPos + c.hitboxLength > height - 120) {
+          c.lives--;
+          c.isAlive = c.lives > 0;
+        }
+      }
+    }
   }
+  
+  void trapPlayer() {
+    if (timer == 1) {
+      Character trapped = chars.get((int)random(chars.size()));
+      trapped.isTrapped = true;
+    }
+    for (Character c : chars) {
+      if (c.isTrapped && c.spamCount > 10) {
+        c.isTrapped = false;
+        c.spamCount = 0;
+      }
+    }
+  }
+  
+  void inverseControls() {
+    if (timer == 30) {
+      for (Character c : chars) c.inverseControls = true;
+    }
+    if (timer == 180) {
+      for (Character c : chars) c.inverseControls = false;
+    }
+  }
+  
+  void teleport() {
+  }
+  
+}
   
       
       
