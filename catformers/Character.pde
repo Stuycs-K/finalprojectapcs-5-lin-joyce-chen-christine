@@ -3,7 +3,7 @@ public class Character {
   int lives, jumpCharge, bulletCD, maxBulletCD;
   float maxJumpCharge;
   float bulletspeed, walkspeed, aimAngle;
-  float xVelocity, yVelocity, xPos, yPos;
+  float xVelocity, yVelocity, xPos, yPos, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
   PImage sprite;
   Gif walking;
@@ -24,7 +24,7 @@ public class Character {
     // vertical movement
     yVelocity = g;
     jumpCharge = 0;
-    maxJumpCharge = 30; // change depending on which character
+    maxJumpCharge = 32; // change depending on which character
 
     // projectile info
     this.bulletspeed = bulletspeed;
