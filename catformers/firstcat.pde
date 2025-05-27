@@ -50,6 +50,9 @@ public class firstcat extends Character {
     else {
       setAnimation();
     }
+    if (jumpCharge > 0) {
+      displayJumpBar();
+    }
   }
   
 }
