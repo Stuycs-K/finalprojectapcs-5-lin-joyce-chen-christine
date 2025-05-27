@@ -146,23 +146,23 @@ public class Character {
     float xMargin = 2.0; // margin of tolerance
     
     float maxChange = 1.0;
+    float remaining = yVelocity;
     float direction; // moving up or down
     if (yVelocity > 0) {
       direction = 1;
     } else {
       direction = -1;
     }
-    boolean landed = false;
-    while (abs(yVelocity) > 0.0 && !landed) {
+    while (abs(remaining) > 0.0 && !onGround) {
       float move;
-      if (abs(yVelocity) < maxChange) {
-        move = abs(yVelocity);
+      if (abs(remaining) < maxChange) {
+        move = abs(remaining);
       } else {
         move = maxChange;
       }
       move *= direction;
       yPos += move;
-      yVelocity -= move;
+      remaining -= move;
       
       for (int i = 0; i < platforms.size(); i++) {
         Platforms p = platforms.get(i);
@@ -172,7 +172,6 @@ public class Character {
             yVelocity = 0;
             onGround = true;
             ifFalling = false;
-            landed = true;
             
             i = platforms.size(); // can we use breakkk!
         }
