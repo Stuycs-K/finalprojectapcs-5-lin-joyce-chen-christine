@@ -166,7 +166,7 @@ public class Character {
       
       for (int i = 0; i < platforms.size(); i++) {
         Platforms p = platforms.get(i);
-        if (yVelocity >= 0 && yPos + hitboxLength <= p.yPos && yPos + hitboxLength + yVelocity >= p.yPos &&
+        if (yVelocity >= 0 && yPos + hitboxLength >= p.yPos && yPos + hitboxLength <= p.yPos + abs(move) &&
         xPos + hitboxWidth > p.xPos - xMargin && xPos < p.xPos + p.platformWidth + xMargin) {
             yPos = p.yPos - hitboxLength;
             yVelocity = 0;
