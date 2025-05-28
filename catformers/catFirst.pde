@@ -36,7 +36,7 @@ public class catFirst extends Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     
-    projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    projectiles.add(new Projectiles("laser", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     }
   }

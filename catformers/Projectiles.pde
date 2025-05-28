@@ -2,9 +2,11 @@ public class Projectiles {
   // add types when we start making different types of projectiles (i.e. with different types of effects)
   // String type;
   float xVelocity, yVelocity, xPos, yPos;
+  PVector a;
   int bounceCount, size, exploded;
   String type;
   Character player;
+  boolean shot;
   
   public Projectiles (String type, Character player, float angle, float speed, float xPos, float yPos) {
     this.type = type;
@@ -14,8 +16,11 @@ public class Projectiles {
     this.yPos = yPos;
     xVelocity = speed * cos(angle);
     yVelocity = speed * sin(angle);
+    a = new PVector(0,0);
     
+    // unique variables
     exploded = 0;
+    shot = false;
     
     size = 20;
     bounceCount = 0;
@@ -31,22 +36,30 @@ public class Projectiles {
       yPos += yVelocity;
     }
     else if (type.equals("laser")) {
-      float tempx = xVelocity;
-      float tempy = yVelocity;
       for (Character c : chars) {
+        float dist, fmag;
+        PVector f;
         if (c != player) {
-          yVelocity += ((c.yPos+c.hitboxLength/2)-yPos)/40.0;
-          xVelocity += ((c.xPos+c.hitboxWidth/2)-xPos)/40.0;
+          PVector otherPos = new PVector(c.xPos+c.hitboxWidth/2, c.yPos+c.hitboxLength/2);
+          dist = PVector.sub(new PVector(xPos,yPos), otherPos).mag();
+          fmag = 200000 / pow(dist,2);
+          f = PVector.sub(otherPos, new PVector(xPos,yPos));
+          f.normalize();
+          f.setMag(fmag);
+          a = a.add(f.div(10));
+          xVelocity += a.x;
+          yVelocity += a.y;
+          a.set(0,0);
         }
       }
+      
       if (checkBounce()) {
         bounceCount+=1;
         unclip();
       }
+      
       xPos += xVelocity;
       yPos += yVelocity;
-      xVelocity = tempx;
-      yVelocity = tempy;
     }
     else if (type.equals("grenade")) {
       yVelocity += g;
@@ -68,10 +81,10 @@ public class Projectiles {
       circle(xPos,yPos,size);
     }
     else if (type.equals("laser")) {
-      rect(xPos,yPos,size,size/2);
+      circle(xPos,yPos,size);
     }
     else if (type.equals("grenade")) {
-      if (bounceCount < 4) {
+      if (bounceCount < 3) {
         circle(xPos,yPos,size);
       }
       else {
