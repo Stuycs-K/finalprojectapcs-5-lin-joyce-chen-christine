@@ -58,41 +58,42 @@ public class Boss {
   }
 
   void giantBeamPhase() {
-    int startTime = 30;
-    int cycleLength = 60;
+    int startTime = 100;
+    int cycleLength = 200;
+    if (timer < startTime) return; 
     if (timer == startTime) {
       trapPlayers();
     }
     int currentCycle = (timer-startTime) / cycleLength;
     if (currentCycle < 4) {
       int cycleTime = (timer - startTime) % cycleLength;
-      // blinking red warning beams
       if (cycleTime < 40 && (cycleTime / 10) % 2 == 0) {
         fill(255, 0, 0, 100);
-        noStroke();
-        if (currentCycle % 2 == 0) {
-          rect(0, 0, width, 20);
-          rect(0, height - 20, width, 20);
-          rect(0, 0, 20, height);
-          rect(width - 20, 0, 20, height);
-        } else {
-          rect(width/2 - 10, 0, 20, height);
-          rect(0, height/2 - 10, width, 20);
-        }
+      } else {
+        fill(0, 0, 255, 200);
+      }
+      noStroke();
+      float beamHeight = 80;
+      if (currentCycle % 2 == 0) {
+        rect(0, height/2 - 120 - beamHeight/2, width, beamHeight);
+        rect(0, height/2 + 120 - beamHeight/2, width, beamHeight);
+      } else {
+        rect(0, height/2 - 40 - beamHeight/2, width, beamHeight);
+        rect(0, height/2 + 40 - beamHeight/2, width, beamHeight);
       }
       if (cycleTime == 40) {
         if (currentCycle % 2 == 0) {
           for (Character c : chars) {
-            if (c.yPos < 20 || c.yPos + c.hitboxLength > height - 20 || 
-            c.xPos < 20 || c.xPos + c.hitboxWidth > width - 20) {
+            if ((c.yPos + c.hitboxLength > height/2 - 120 - 40 && c.yPos < height/2 - 120 + 40) ||
+            (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40)) {
               c.lives--;
               c.isAlive = c.lives > 0;
             }
           }
         } else {
           for (Character c : chars) {
-            if ((c.xPos + c.hitboxWidth > width/2 - 10 && c.xPos < width/2 + 10) ||
-            (c.yPos + c.hitboxLength > height/2 - 10 && c.yPos < height/2 + 10)) {
+            if ((c.yPos + c.hitboxLength > height/2 - 40 - 40 && c.yPos < height/2 - 40 + 40) ||
+            (c.yPos + c.hitboxLength > height/2 + 40 - 40 && c.yPos < height/2 + 40 + 40)) {
               c.lives--;
               c.isAlive = c.lives > 0;
             }
