@@ -1,14 +1,15 @@
 public class Boss {
+  int lives, hitboxWidth, hitboxLength;
+  int phase, timer;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
-  int hitboxWidth, hitboxLength;
-  int phase, timer;
   boolean immune;
   ArrayList<Projectiles> bossProjectiles; // make separate BossProjectiles class?
 
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
+    lives = 10;
     hitboxWidth = 200;
     hitboxLength = 200;
     phase = 0;
@@ -18,7 +19,14 @@ public class Boss {
   }
   
   void display() {
-    fill(255);
+    if (immune && (frameCount % 20 < 10)) {
+      stroke(255); 
+      strokeWeight(6);
+    } else {
+      noStroke();
+    }
+
+    fill(255, 0, 0);
     rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
   }
 
@@ -31,8 +39,6 @@ public class Boss {
     if (phase == 0) {
       giantBeamPhase();
     } else if (phase == 1) {
-      teleportFigure8(tpTick);
-      tpTick++;
       immunePhase();
       inverseControls();
     } else if (phase == 2) {
@@ -49,7 +55,7 @@ public class Boss {
   void nextPhase() {
     phase = (phase + 1) % 3; // # of phases!
     timer = 0;
-    //imumune = (phase == // immune phase #);
+    immune = false;
     for (Character c : chars) {
       c.inverseControls = false;
       c.isTrapped = false;
@@ -58,11 +64,12 @@ public class Boss {
   }
 
   void immunePhase() {
-    if (timer % 10 == 0) {
-      int count = 12;
+    immune = true;
+    if (timer % 7 == 0) {
+      int count = 6;
       for (int i = 0; i < count; i++) {
-        float angle = radians((360 / count) * i + timer);
-        //bossProjectiles.add(new Projectiles(
+        float angle = radians((360/count) * i + timer);
+        bossProjectiles.add(new Projectiles("boss", null, angle, 10, xPos, yPos));
       }
     }
   }

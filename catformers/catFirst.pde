@@ -42,6 +42,7 @@ public class catFirst extends Character {
   }
   
   void display() {
+    fill(255);
     rect(xPos, yPos, hitboxWidth, hitboxLength); // debugging
 
     // line to check aim angles
