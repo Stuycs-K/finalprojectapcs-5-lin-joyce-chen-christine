@@ -1,6 +1,7 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxLength;
   int lives, jumpCharge, bulletCD, maxBulletCD;
+  int damageCD;
   float maxJumpCharge;
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, deathSlope;
@@ -46,6 +47,7 @@ public class Character {
     inverseControls = false;
     isTrapped = false;
     spamCount = 0;
+    damageCD = 0;
   }
 
   void jump() {
@@ -205,6 +207,11 @@ public class Character {
       yVelocity = 0;
       onGround = false;
     }
+    
+    if (damageCD > 0) {
+      damageCD--;
+    }
+    
   }
   
   void displayJumpBar() {

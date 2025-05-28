@@ -42,6 +42,8 @@ public class catFirst extends Character {
   }
   
   void display() {
+    rect(xPos, yPos, hitboxWidth, hitboxLength); // debugging
+
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;

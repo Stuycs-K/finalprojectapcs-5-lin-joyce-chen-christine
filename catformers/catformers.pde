@@ -256,6 +256,7 @@ void displayScreen() {
       chars.add(p2);
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
+      
       platforms.add(new Platforms(0, height - 125, 200)); 
       platforms.add(new Platforms(350, height - 125, 200));
       platforms.add(new Platforms(700, height - 125, 200));
@@ -292,6 +293,7 @@ void displayScreen() {
       }
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
+      
       platforms.add(new Platforms(0, height - 125, 200)); 
       platforms.add(new Platforms(350, height - 125, 200));
       platforms.add(new Platforms(700, height - 125, 200));

@@ -89,21 +89,21 @@ public class Boss {
         rect(0, height/2 - 40 - beamHeight/2, width, beamHeight);
         rect(0, height/2 + 40 - beamHeight/2, width, beamHeight);
       }
-      if (cycleTime == 40) {
-        if (currentCycle % 2 == 0) {
-          for (Character c : chars) {
-            if ((c.yPos + c.hitboxLength > height/2 - 120 - 40 && c.yPos < height/2 - 120 + 40) ||
-            (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40)) {
-              c.lives--;
-              c.isAlive = c.lives > 0;
+      if (cycleTime >= 40) {
+        for (Character c : chars) {
+          if (c.damageCD == 0) {
+            boolean hit = false;
+            if (currentCycle % 2 == 0) {
+              hit = (c.yPos + c.hitboxLength > height/2 - 120 - 40 && c.yPos < height/2 - 120 + 40) ||
+              (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40);
+            } else {
+              hit = (c.yPos + c.hitboxLength > height/2 - 40 - 40 && c.yPos < height/2 - 40 + 40) ||
+              (c.yPos + c.hitboxLength > height/2 + 40 - 40 && c.yPos < height/2 + 40 + 40);
             }
-          }
-        } else {
-          for (Character c : chars) {
-            if ((c.yPos + c.hitboxLength > height/2 - 40 - 40 && c.yPos < height/2 - 40 + 40) ||
-            (c.yPos + c.hitboxLength > height/2 + 40 - 40 && c.yPos < height/2 + 40 + 40)) {
+            if (hit) {      
               c.lives--;
               c.isAlive = c.lives > 0;
+              c.damageCD = 60;
             }
           }
         }
