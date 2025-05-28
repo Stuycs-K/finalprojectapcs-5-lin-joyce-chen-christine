@@ -38,10 +38,10 @@ Future Improvements:
 - Fix bug where jump charge bar is stuck/filled when not jumping (find out why this happens!)
 
 ### 2025-05-28 - More Boss Mode
-Worked for 50 minutes. Completed second boss phase with flashing white outline to indicate immunity + projectiles shot in circular pattern. Modified player projectiles to deal damage to boss in checkHit() and boss projectiles to deal damage to players with damage cooldown. Implemented inverse controls mechanic during boss fight.
+Worked for 1 hour. Completed second boss phase with flashing white outline to indicate immunity + projectiles shot in circular pattern. Modified player projectiles to deal damage to boss in checkHit() and boss projectiles to deal damage to players with damage cooldown. Implemented inverse controls mechanic during boss fight. Displayed HP bar above boss which moves to bottom of boss when near top of screen.
 
 Future Improvements:
 - Crop transparent part of image to fix hitbox height errors
 - Fix bullets during immune phase for better gameplay experience
-- Add health bar to display boss HP
 - Add projectiles to third phase of boss (teleporation phase)
+- Defeat/Victory screens in Boss Mode
