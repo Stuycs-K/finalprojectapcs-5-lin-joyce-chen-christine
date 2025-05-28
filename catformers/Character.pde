@@ -5,6 +5,8 @@ public class Character {
   float bulletspeed, walkspeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
+  boolean inverseControls, isTrapped;
+  int spamCount;
   PImage sprite;
   Gif walking;
 
@@ -39,6 +41,11 @@ public class Character {
     facingRight = true;
     isAlive = true;
     isWalking = false;
+    
+    // boss effects
+    inverseControls = false;
+    isTrapped = false;
+    spamCount = 0;
   }
 
   void jump() {
