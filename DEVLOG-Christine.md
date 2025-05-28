@@ -36,3 +36,6 @@ Future Improvements:
 - Excess hitbox height (transparent part) leads to beams dealing damage when visually underneath it; fix hitbox or change beam logic
 - Complete immune phase and fix boss positioning
 - Fix bug where jump charge bar is stuck/filled when not jumping (find out why this happens!)
+
+### 2025-05-28 -
+Worked for ... Completed second boss phase with flashing white outline to indicate immunity and projectiles shot in circular pattern. 
