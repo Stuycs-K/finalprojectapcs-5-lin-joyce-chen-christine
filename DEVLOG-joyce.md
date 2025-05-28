@@ -36,3 +36,11 @@ A jump bar was implemented so jump charge is displayed when the player starts ju
 stuff for tomorrow's class!!
 - start figuring out boss class!
 - think about other cat types we can implement and the difference between them
+
+### 2025-05-27 - New types of projectiles - 1.5 hours
+Working on implementing a death animation as well as two new types of projectiles. A preliminary code for the homing bullets and the grenade bullets have been created.
+
+for next sessionnn
+- find stock explosion for death animation
+- implement a new checkHit for grenade bullets
+- stop grenades from bouncing backwards at certain angles when hitting floor
