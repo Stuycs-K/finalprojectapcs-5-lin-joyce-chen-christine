@@ -32,11 +32,19 @@ public class Boss {
     fill(255, 0, 0);
     rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
     
-    float hpPercent = (float) lives / maxLives;   
+    int hpBarWidth = 150;
+    int hpBarHeight = 10;
+    float hpPercent = (float) lives / maxLives;
+    float hpY;
+    if (yPos - hitboxLength/2 - 20 < 0) {
+      hpY = yPos + hitboxLength/2 + 10;
+    } else {
+      hpY = yPos - hitboxLength/2 - 20;
+    }
     fill (100);
-    rect(xPos - 160/2, yPos - hitboxLength/2 - 25, 160, 10);
+    rect(xPos - hpBarWidth/2, hpY, hpBarWidth, hpBarHeight);
     fill(50, 205, 50);
-    rect(xPos - 160/2, yPos - hitboxLength/2 - 25, 160 * hpPercent, 10);
+    rect(xPos - hpBarWidth/2, hpY, hpBarWidth * hpPercent, hpBarHeight);
     
     popStyle(); 
   }
