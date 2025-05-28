@@ -80,7 +80,7 @@ void draw() {
     }
     else {
       if (!gameOver) {
-        if (projectiles.get(x).bounceCount < 3 && projectiles.get(x).time < 150) { // change max count if too littlke
+        if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
           projectiles.get(x).move();
         } else {
           projectiles.remove(x);
