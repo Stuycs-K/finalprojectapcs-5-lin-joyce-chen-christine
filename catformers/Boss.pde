@@ -51,6 +51,19 @@ public class Boss {
     for (Projectiles p : bossProjectiles) {
       p.move();
       p.display();
+      
+      if (p.type.equals("boss")) {
+        for (Character c : chars) {
+          if (c.damageCD == 0 && c.isAlive) {
+            if (p.xPos >= c.xPos && p.xPos <= c.xPos + c.hitboxWidth &&
+            p.yPos >= c.yPos && p.yPos <= c.yPos + c.hitboxLength) {
+              c.lives--;
+              c.damageCD = 30;
+              c.isAlive = c.lives > 0;
+            }
+          }
+        }
+      }
     }
   }
 
