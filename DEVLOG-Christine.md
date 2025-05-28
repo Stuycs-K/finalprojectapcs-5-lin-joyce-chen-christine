@@ -28,3 +28,11 @@ Future Improvements:
 Worked for 2 hours. Modified input to track keys using boolean arrays p1Keys and p2Keys to fix simultaneous movement bug in Versus mode. Modified checkHit() to allow bullets to damage all players after bouncing. Adjusted vertical movement in applyMovement() to check incremental changes through while loop to prevent players from falling through platforms at higher speeds. Tuned jump/jump charging values and logic. Modified xMargin logic to ignore excess space on sides of hitbox for idle animation.
 
 Future Improvements: Remove excess space on top of hitbox for both animations. Work on jumping animation. Work with Joyce in class tomorrow on boss mode and other ideas!!
+
+### 2025-05-27 - Boss Mode
+Worked for 2.5 hours. Created Boss class and began working on the boss phases we discussed during class! Implemented a beam attack pattern with alternating cycles and constant damage over time using damageCD to prevent too frequent hits. Implemented player trapping mechanic requiring 10 key presses to break free. Wrote a figure-8 teleportation method using the leminscate of Bernoulli formula for boss movements. Displayed boss visually and updated background/platforms to match Versus mode. Created template for an immune phase where the boss shoots projectiles in all directions and inverse player controls.
+
+Future Improvements:
+- Excess hitbox height (transparent part) leads to beams dealing damage when visually underneath it; fix hitbox or change beam logic
+- Complete immune phase and fix boss positioning
+- Fix bug where jump charge bar is stuck/filled when not jumping (find out why this happens!)
