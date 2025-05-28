@@ -1,6 +1,7 @@
 public class Boss {
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
+  int hitboxWidth, hitboxLength;
   int phase, timer;
   boolean immune;
   ArrayList<Projectiles> bossProjectiles; // make separate BossProjectiles class?
@@ -8,10 +9,17 @@ public class Boss {
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
-    this.phase = 0;
-    this.timer = 0;
-    this.immune = false;
+    hitboxWidth = 200;
+    hitboxLength = 200;
+    phase = 0;
+    timer = 0;
+    immune = false;
     bossProjectiles = new ArrayList<Projectiles>();
+  }
+  
+  void display() {
+    fill(100);
+    rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
   }
 
   void update() {

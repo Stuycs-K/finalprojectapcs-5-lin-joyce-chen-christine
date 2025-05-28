@@ -114,6 +114,7 @@ void draw() {
   
   if (currmode.equals("Boss")) {
     boss.update();
+    boss.display();
   }
 
   if (keyPressed) {
