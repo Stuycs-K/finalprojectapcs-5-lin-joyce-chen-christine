@@ -66,6 +66,12 @@ void draw() {
       }
     }
       c.display();
+      
+      if(c.isTrapped) {
+        fill(255, 0, 0);
+        textSize(24);
+        text("TRAPPED! Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+      }
   }
 
   if (!gameOver) {
@@ -115,28 +121,30 @@ void draw() {
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
-      // ===== Player 1 =====
-      if (p1Keys['a']) {
-        chars.get(0).move(false);
-        chars.get(0).isWalking = true;
-      } else if (p1Keys['d']) {
-        chars.get(0).move(true);
-        chars.get(0).isWalking = true;
-      }
-      if (p1Keys['w'] && !chars.get(0).ifFalling) {
-        chars.get(0).addJumpCharge();
-      }
-      if (p1Keys['q']) {
-        chars.get(0).aim(true);
-      } else if (p1Keys['e']) {
-        chars.get(0).aim(false);
-      }
-      if (p1Keys['r']) {
-        chars.get(0).shoot();
+      if (!chars.get(0).isTrapped) {
+        // ===== Player 1 =====
+        if (p1Keys['a']) {
+          chars.get(0).move(false);
+          chars.get(0).isWalking = true;
+        } else if (p1Keys['d']) {
+          chars.get(0).move(true);
+          chars.get(0).isWalking = true;
+        }
+        if (p1Keys['w'] && !chars.get(0).ifFalling) {
+          chars.get(0).addJumpCharge();
+        }
+        if (p1Keys['q']) {
+          chars.get(0).aim(true);
+        } else if (p1Keys['e']) {
+          chars.get(0).aim(false);
+        }
+        if (p1Keys['r']) {
+          chars.get(0).shoot();
+        }
       }
 
       // ===== Player 2 =====
-      if (numPlayer.equals("2")) {
+      if (numPlayer.equals("2") && !chars.get(1).isTrapped) {
         if (p2Keys[LEFT]) {
           chars.get(1).move(false);
           chars.get(1).isWalking = true;
@@ -165,6 +173,16 @@ void keyPressed() {
   if (key < MAX_KEY) p1Keys[key] = true;
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
   
+  for (Character c : chars) {
+    if (c.isTrapped) {
+      c.spamCount++;
+      if (c.spamCount >= 10) {
+        c.isTrapped = false;
+        c.spamCount = 0;
+      }
+    }
+  }
+  
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
       setup();
@@ -179,7 +197,7 @@ void keyReleased() {
   
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
     // ==== Player 1 ====
-    if (!chars.get(0).ifFalling && key == 'w') {
+    if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && key == 'w') {
       chars.get(0).jump();
     }
     // turn walking animation off
@@ -189,7 +207,7 @@ void keyReleased() {
 
     // ==== Player 2 ====
     if (numPlayer.equals("2")) {
-      if (!chars.get(1).ifFalling && keyCode == UP) {
+      if (!chars.get(1).isTrapped && !chars.get(1).ifFalling && keyCode == UP) {
         chars.get(1).jump();
       }
       // turn walking animation off
