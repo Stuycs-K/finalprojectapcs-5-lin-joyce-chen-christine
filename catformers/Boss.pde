@@ -37,7 +37,7 @@ public class Boss {
   }
 
   void nextPhase() {
-    phase = (phase + 1) % 4; // # of phases!
+    phase = (phase + 1) % 3; // # of phases!
     timer = 0;
     //imumune = (phase == // immune phase #);
     for (Character c : chars) {
@@ -57,30 +57,55 @@ public class Boss {
     }
   }
 
-  //add more + complete!
   void giantBeamPhase() {
-    if (timer == 100) {
-      fill(255, 0, 0, 100);
-      rect(0, height - 120, width, 20); // figure out sizing later!
-      for (Character c : chars) {
-        if (c.yPos + c.hitboxLength > height - 120) {
-          c.lives--;
-          c.isAlive = c.lives > 0;
+    int startTime = 30;
+    int cycleLength = 60;
+    if (timer == startTime) {
+      trapPlayers();
+    }
+    int currentCycle = (timer-startTime) / cycleLength;
+    if (currentCycle < 4) {
+      int cycleTime = (timer - startTime) % cycleLength;
+      // blinking red warning beams
+      if (cycleTime < 40 && (cycleTime / 10) % 2 == 0) {
+        fill(255, 0, 0, 100);
+        noStroke();
+        if (currentCycle % 2 == 0) {
+          rect(0, 0, width, 20);
+          rect(0, height - 20, width, 20);
+          rect(0, 0, 20, height);
+          rect(width - 20, 0, 20, height);
+        } else {
+          rect(width/2 - 10, 0, 20, height);
+          rect(0, height/2 - 10, width, 20);
+        }
+      }
+      if (cycleTime == 40) {
+        if (currentCycle % 2 == 0) {
+          for (Character c : chars) {
+            if (c.yPos < 20 || c.yPos + c.hitboxLength > height - 20 || 
+            c.xPos < 20 || c.xPos + c.hitboxWidth > width - 20) {
+              c.lives--;
+              c.isAlive = c.lives > 0;
+            }
+          }
+        } else {
+          for (Character c : chars) {
+            if ((c.xPos + c.hitboxWidth > width/2 - 10 && c.xPos < width/2 + 10) ||
+            (c.yPos + c.hitboxLength > height/2 - 10 && c.yPos < height/2 + 10)) {
+              c.lives--;
+              c.isAlive = c.lives > 0;
+            }
+          }
         }
       }
     }
   }
 
-  void trapPlayer() {
-    if (timer == 1) {
-      Character trapped = chars.get((int)random(chars.size()));
-      trapped.isTrapped = true;
-    }
+  void trapPlayers() {
     for (Character c : chars) {
-      if (c.isTrapped && c.spamCount > 10) {
-        c.isTrapped = false;
-        c.spamCount = 0;
-      }
+      c.isTrapped = true;
+      c.spamCount = 0;
     }
   }
 
