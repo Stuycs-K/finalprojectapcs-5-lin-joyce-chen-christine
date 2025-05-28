@@ -80,11 +80,11 @@ public class Boss {
 
   void immunePhase() {
     immune = true;
-    if (timer % 7 == 0) {
-      int count = 0;
+    if (timer % 6 == 0) {
+      int count = 6;
       for (int i = 0; i < count; i++) {
-        float angle = radians((360/count) * i + timer);
-        bossProjectiles.add(new Projectiles("boss", null, angle, 10, xPos, yPos));
+        float angle = radians((360.0/count) * i + timer);
+        bossProjectiles.add(new Projectiles("boss", null, angle, 5, xPos, yPos));
       }
     }
   }
