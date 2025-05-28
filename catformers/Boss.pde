@@ -21,13 +21,13 @@ public class Boss {
     }
 
     if (phase == 0) {
-      // phase here!
+      giantBeamPhase();
     } else if (phase == 1) {
-      // ..
+      immunePhase();
+      inverseControls();
     } else if (phase == 2) {
-      // ..
-    } else if (phase == 3) {
-      // can add more!
+      teleportFigure8(tpTick);
+      tpTick++;
     }
 
     for (Projectiles p : bossProjectiles) {

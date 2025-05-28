@@ -57,6 +57,10 @@ public class Projectiles {
       xPos += xVelocity;
       yPos += yVelocity;
     }
+    else if (type.equals("boss")) {
+      xPos += xVelocity;
+      yPos += yVelocity;
+    }
   }
   
   void display() {
@@ -76,6 +80,10 @@ public class Projectiles {
         fill(255);
         exploded+=1;
       }
+    }
+    else if (type.equals("boss")) {
+      fill(255, 100, 100);
+      circle(xPos,yPos,size);
     }
   }
   
