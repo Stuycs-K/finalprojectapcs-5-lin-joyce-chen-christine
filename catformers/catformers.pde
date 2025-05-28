@@ -80,7 +80,8 @@ void draw() {
     }
     else {
       if (!gameOver) {
-        if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
+        if (projectiles.get(x).exploded < 2 && 
+              (projectiles.get(x).bounceCount < 3 || projectiles.get(x).type.equals("grenade"))) { // change max count if too littlke
           projectiles.get(x).move();
         } else {
           projectiles.remove(x);
@@ -224,8 +225,8 @@ void displayScreen() {
     image(loadImage("p2.png"), 20, 80, 60, 44.4);
     if (!modeInitialized) {
       modeInitialized = true;
-      chars.add(new firstcat(20.0, 20.0, 60, 100.0, height - 125)); // temp for testing
-      Character p2 = (new firstcat(20.0, 20.0, 60, 1150.0, height - 125));
+      chars.add(new catFirst(20.0, 20.0, 60, 100.0, height - 125)); // temp for testing
+      Character p2 = (new catFirst(20.0, 20.0, 60, 1150.0, height - 125));
       p2.facingRight = false;
       p2.aimAngle = 180.0;
       chars.add(p2);
@@ -258,9 +259,9 @@ void displayScreen() {
 
     if (!modeInitialized) {
       modeInitialized = true;
-      chars.add(new firstcat(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+      chars.add(new catFirst(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
       if (numPlayer.equals("2")) {
-        Character p2 = (new firstcat(20.0, 20.0, 60, 900.0, 200.0));
+        Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, 200.0));
         p2.facingRight = false;
         p2.aimAngle = 180.0;
         chars.add(p2);

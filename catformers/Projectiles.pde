@@ -2,7 +2,7 @@ public class Projectiles {
   // add types when we start making different types of projectiles (i.e. with different types of effects)
   // String type;
   float xVelocity, yVelocity, xPos, yPos;
-  int bounceCount, size;
+  int bounceCount, size, exploded;
   String type;
   Character player;
   
@@ -14,6 +14,8 @@ public class Projectiles {
     this.yPos = yPos;
     xVelocity = speed * cos(angle);
     yVelocity = speed * sin(angle);
+    
+    exploded = 0;
     
     size = 20;
     bounceCount = 0;
@@ -46,18 +48,15 @@ public class Projectiles {
       xVelocity = tempx;
       yVelocity = tempy;
     }
-  }
-  
-  float setMin (float value, float min) {
-    if (value < 20 && (int)value != 0) {
-      if (value < 0) {
-        value = -1*min;
+    else if (type.equals("grenade")) {
+      yVelocity += g;
+      if (checkBounce()) {
+        bounceCount+=1;
+        unclip();
       }
-      else {
-        value = min;
-      }
+      xPos += xVelocity;
+      yPos += yVelocity;
     }
-    return value;
   }
   
   void display() {
@@ -66,6 +65,17 @@ public class Projectiles {
     }
     else if (type.equals("laser")) {
       rect(xPos,yPos,size,size/2);
+    }
+    else if (type.equals("grenade")) {
+      if (bounceCount < 4) {
+        circle(xPos,yPos,size);
+      }
+      else {
+        fill(255,0,0);
+        rect(xPos,yPos,size*2,size*2);
+        fill(255);
+        exploded+=1;
+      }
     }
   }
   
