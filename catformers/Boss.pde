@@ -1,5 +1,5 @@
 public class Boss {
-  int lives, hitboxWidth, hitboxLength;
+  int lives, maxLives, hitboxWidth, hitboxLength;
   int phase, timer;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
@@ -9,6 +9,7 @@ public class Boss {
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
+    maxLives = 10;
     lives = 10;
     hitboxWidth = 200;
     hitboxLength = 200;
@@ -20,6 +21,7 @@ public class Boss {
   
   void display() {
     pushStyle(); // prevent interference
+    
     if (immune && (frameCount % 20 < 10)) {
       stroke(255); 
       strokeWeight(6);
@@ -29,6 +31,13 @@ public class Boss {
 
     fill(255, 0, 0);
     rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
+    
+    float hpPercent = (float) lives / maxLives;   
+    fill (100);
+    rect(xPos - 160/2, yPos - hitboxLength/2 - 25, 160, 10);
+    fill(50, 205, 50);
+    rect(xPos - 160/2, yPos - hitboxLength/2 - 25, 160 * hpPercent, 10);
+    
     popStyle(); 
   }
 
