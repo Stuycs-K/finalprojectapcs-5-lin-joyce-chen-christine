@@ -67,7 +67,7 @@ public class Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     
-    projectiles.add(new Projectiles(this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    projectiles.add(new Projectiles("normal", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     }
   }
@@ -130,10 +130,6 @@ public class Character {
         }
       }
     }
-  }
-
-  void freeze() {
-    xVelocity = 0.0;
   }
 
   void applyMovement() {

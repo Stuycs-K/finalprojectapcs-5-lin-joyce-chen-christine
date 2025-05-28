@@ -1,28 +1,19 @@
-public class firstcat extends Character {
+public class secondcat extends Character {
   
   /*public firstcat(float xPos, float yPos) {
     this(, , , , , xPos, yPos); //fill this outtt
   }*/
   
-  public firstcat (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
+  public secondcat (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
   }
   
   void flip() {
     if (facingRight) {
-      sprite = loadImage("cat1idleR.png");
+      sprite = loadImage("cat2idleR.png");
     }
     else {
-      sprite = loadImage("cat1idleL.png");
-    }
-  }
-  
-  void setAnimation() {
-    if (facingRight) {
-      image(cat1walkR, xPos, yPos, hitboxWidth, hitboxLength);
-    }
-    else {
-      image(cat1walkL, xPos, yPos, hitboxWidth, hitboxLength);
+      sprite = loadImage("cat2idleL.png");
     }
   }
   
@@ -40,6 +31,15 @@ public class firstcat extends Character {
     bulletCD = maxBulletCD;
     }
   }
+  
+  /*void setAnimation() {
+    if (facingRight) {
+      image(cat2walkR, xPos, yPos, hitboxWidth, hitboxLength);
+    }
+    else {
+      image(cat2walkL, xPos, yPos, hitboxWidth, hitboxLength);
+    }
+  }*/
   
   void display() {
     // line to check aim angles
@@ -63,7 +63,7 @@ public class firstcat extends Character {
       image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
     }
     else {
-      setAnimation();
+      //setAnimation();
     }
     if (jumpCharge > 0) {
       displayJumpBar();

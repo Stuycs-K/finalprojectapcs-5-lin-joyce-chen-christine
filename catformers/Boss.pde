@@ -1,4 +1,4 @@
-public class Boss {
+/*public class Boss {
   float xPos, yPos;
   int phase, timer;
   boolean immune;
@@ -49,7 +49,7 @@ public class Boss {
   
   //add more + complete!
   void giantBeamPhase() {
-  }
+  }*/
   
       
       
