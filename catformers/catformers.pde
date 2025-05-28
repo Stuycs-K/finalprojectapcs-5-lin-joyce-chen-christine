@@ -254,7 +254,6 @@ void displayScreen() {
       p2.facingRight = false;
       p2.aimAngle = 180.0;
       chars.add(p2);
-      // add to character class instead?
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
       platforms.add(new Platforms(0, height - 125, 200)); 
@@ -279,7 +278,7 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Boss")) {
-    background(255);
+    image(bg, 0, 0, width, height);
 
     if (!modeInitialized) {
       modeInitialized = true;
@@ -291,15 +290,23 @@ void displayScreen() {
         p2.aimAngle = 180.0;
         chars.add(p2);
       }
-      // add to character class instead?
       
-      platforms.add(new Platforms(0, height - 20, width)); // floor!
-      platforms.add(new Platforms(100, 600, 300)); // I testttt
-      platforms.add(new Platforms(500, 400, 100));
-      platforms.add(new Platforms(200, 300, 100));
-      platforms.add(new Platforms(700, 200, 100));
-      platforms.add(new Platforms(300, 500, 300));
-      platforms.add(new Platforms(800, 250, 100));
+      platforms.add(new Platforms(0, height - 20, width)); // floor
+      platforms.add(new Platforms(0, height - 125, 200)); 
+      platforms.add(new Platforms(350, height - 125, 200));
+      platforms.add(new Platforms(700, height - 125, 200));
+      platforms.add(new Platforms(1050, height - 125, width-1050));
+      
+      platforms.add(new Platforms(250, height - 250, 50));
+      platforms.add(new Platforms(600, height - 250, 50));
+      platforms.add(new Platforms(950, height - 250, 50));
+      
+      platforms.add(new Platforms(0, height - 375, 200)); 
+      platforms.add(new Platforms(350, height - 375, 200));
+      platforms.add(new Platforms(700, height - 375, 200));
+      platforms.add(new Platforms(1050, height - 375, width-1050));
+      
+      platforms.add(new Platforms(250, height - 525, 750));
     }
   }
   else if (currmode.equals("Loss")) {

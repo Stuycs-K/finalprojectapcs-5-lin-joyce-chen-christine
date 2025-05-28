@@ -18,7 +18,7 @@ public class Boss {
   }
   
   void display() {
-    fill(100);
+    fill(255);
     rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
   }
 
