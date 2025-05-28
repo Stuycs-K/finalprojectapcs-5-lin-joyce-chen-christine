@@ -116,7 +116,14 @@ public class Character {
 
   // change to preserve aimm angle modifications or keep resetting?
   void move(boolean goRight) {
-    if (goRight) {
+    boolean finalGoRight;
+    if (inverseControls) {
+      finalGoRight = !goRight;
+    } else {
+      finalGoRight = goRight;
+    }
+    
+    if (finalGoRight) {
       xVelocity = walkspeed;
       if (!facingRight) {
         facingRight = true;

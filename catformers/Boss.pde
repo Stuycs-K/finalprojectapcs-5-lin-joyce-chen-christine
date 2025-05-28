@@ -81,7 +81,7 @@ public class Boss {
   void immunePhase() {
     immune = true;
     if (timer % 7 == 0) {
-      int count = 6;
+      int count = 0;
       for (int i = 0; i < count; i++) {
         float angle = radians((360/count) * i + timer);
         bossProjectiles.add(new Projectiles("boss", null, angle, 10, xPos, yPos));
@@ -146,7 +146,7 @@ public class Boss {
     if (timer == 30) {
       for (Character c : chars) c.inverseControls = true;
     }
-    if (timer == 180) {
+    if (timer == 300) {
       for (Character c : chars) c.inverseControls = false;
     }
   }
