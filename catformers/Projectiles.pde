@@ -3,10 +3,10 @@ public class Projectiles {
   // String type;
   float xVelocity, yVelocity, xPos, yPos;
   PVector a;
-  int bounceCount, size, exploded;
+  int bounceCount, size;
   String type;
   Character player;
-  boolean shot;
+  boolean shot, exploded;
   
   public Projectiles (String type, Character player, float angle, float speed, float xPos, float yPos) {
     this.type = type;
@@ -19,7 +19,7 @@ public class Projectiles {
     a = new PVector(0,0);
     
     // unique variables
-    exploded = 0;
+    exploded = false;
     shot = false;
     
     size = 20;
@@ -84,14 +84,13 @@ public class Projectiles {
       circle(xPos,yPos,size);
     }
     else if (type.equals("grenade")) {
-      if (bounceCount < 3) {
+      if (bounceCount < 3 && !exploded) {
         circle(xPos,yPos,size);
       }
       else {
         fill(255,0,0);
         rect(xPos,yPos,size*2,size*2);
         fill(255);
-        exploded+=1;
       }
     }
     else if (type.equals("boss")) {
@@ -103,10 +102,22 @@ public class Projectiles {
   boolean checkHit() {
     for (Character c : chars) {
       if (!(c == player && bounceCount == 0)) { 
-        if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
-        yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
-          c.lives -= 1;
-          return true;
+        if (!type.equals("grenade")) {
+          if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+              yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+            c.lives -= 1;
+            return true;
+          }
+        }
+        else if (exploded) {
+          if(xPos + size*2 >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+              yPos + size*2 >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+            c.lives -= 1;
+            return true;
+          }
+        }
+        else {
+          exploded = true;
         }
       }
     }

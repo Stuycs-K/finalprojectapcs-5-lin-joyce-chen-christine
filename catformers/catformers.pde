@@ -82,13 +82,22 @@ void draw() {
 
   for (int x = 0; x < projectiles.size(); x++) {
     if (!gameOver && projectiles.get(x).checkHit()) {
-      projectiles.remove(x);
-      x--;
+      if (projectiles.get(x).type.equals("grenade")) {
+        if (projectiles.get(x).exploded) {
+            projectiles.remove(x);
+            x--;
+        } else {
+          projectiles.get(x).exploded = true;
+        }
+      }
+      else {
+        projectiles.remove(x);
+        x--;
+      }
     }
     else {
       if (!gameOver) {
-        if (projectiles.get(x).exploded < 2 && 
-              (projectiles.get(x).bounceCount < 3 || projectiles.get(x).type.equals("grenade"))) { // change max count if too littlke
+        if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
           projectiles.get(x).move();
         } else {
           projectiles.remove(x);
