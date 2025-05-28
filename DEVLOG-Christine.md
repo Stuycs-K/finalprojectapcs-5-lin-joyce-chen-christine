@@ -38,4 +38,4 @@ Future Improvements:
 - Fix bug where jump charge bar is stuck/filled when not jumping (find out why this happens!)
 
 ### 2025-05-28 -
-Worked for ... Completed second boss phase with flashing white outline to indicate immunity and projectiles shot in circular pattern. 
+Worked for ... Completed second boss phase with flashing white outline to indicate immunity and projectiles shot in circular pattern. Modified player projectiles to deal damage to boss in checkHit(). Implemented (inverse controls ...)
