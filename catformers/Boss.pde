@@ -59,9 +59,6 @@ public class Boss {
 
   //add more + complete!
   void giantBeamPhase() {
-<<<<<<< HEAD
-  }*/
-=======
     if (timer == 100) {
       fill(255, 0, 0, 100);
       rect(0, height - 120, width, 20); // figure out sizing later!
