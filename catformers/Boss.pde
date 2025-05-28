@@ -1,5 +1,6 @@
 public class Boss {
   float xPos, yPos;
+  float tpTick; // used to iterate teleportFigure8
   int phase, timer;
   boolean immune;
   ArrayList<Projectiles> bossProjectiles; // make separate BossProjectiles class?
@@ -92,8 +93,12 @@ public class Boss {
     }
   }
 
-  void teleport() {
-    
+  // based off of Leminscate of Bernoulli
+  void teleportFigure8(float tpTick) {
+    float a = 200;
+    float t = tpTick * 0.05; // controls speed
+    xPos = width/2 + (a*cos(t)) / (1+sin(t) * sin(t));
+    yPos = height/2 + (a*cos(t) * sin(t)) / (1+sin(t) * sin(t));
   }
 
 }
