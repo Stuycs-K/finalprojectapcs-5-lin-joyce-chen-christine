@@ -2,7 +2,7 @@ public class Projectiles {
   // add types when we start making different types of projectiles (i.e. with different types of effects)
   // String type;
   float xVelocity, yVelocity, xPos, yPos;
-  int bounceCount, size, time;
+  int bounceCount, size, exploded;
   String type;
   Character player;
   
@@ -15,9 +15,10 @@ public class Projectiles {
     xVelocity = speed * cos(angle);
     yVelocity = speed * sin(angle);
     
+    exploded = 0;
+    
     size = 20;
     bounceCount = 0;
-    time = 0;
   }
   
   void move() {
@@ -30,31 +31,32 @@ public class Projectiles {
       yPos += yVelocity;
     }
     else if (type.equals("laser")) {
+      float tempx = xVelocity;
+      float tempy = yVelocity;
       for (Character c : chars) {
         if (c != player) {
-          yVelocity = setMin(((c.yPos+c.hitboxLength/2)-yPos)/30.0,15.0);
-          xVelocity = setMin(((c.xPos+c.hitboxWidth/2)-xPos)/30.0,15.0);
+          yVelocity += ((c.yPos+c.hitboxLength/2)-yPos)/40.0;
+          xVelocity += ((c.xPos+c.hitboxWidth/2)-xPos)/40.0;
         }
       }
       if (checkBounce()) {
         bounceCount+=1;
+        unclip();
       }
-      time += 1;
+      xPos += xVelocity;
+      yPos += yVelocity;
+      xVelocity = tempx;
+      yVelocity = tempy;
+    }
+    else if (type.equals("grenade")) {
+      yVelocity += g;
+      if (checkBounce()) {
+        bounceCount+=1;
+        unclip();
+      }
       xPos += xVelocity;
       yPos += yVelocity;
     }
-  }
-  
-  float setMin (float value, float min) {
-    if (value < 20 && (int)value != 0) {
-      if (value < 0) {
-        value = -1*min;
-      }
-      else {
-        value = min;
-      }
-    }
-    return value;
   }
   
   void display() {
@@ -63,6 +65,17 @@ public class Projectiles {
     }
     else if (type.equals("laser")) {
       rect(xPos,yPos,size,size/2);
+    }
+    else if (type.equals("grenade")) {
+      if (bounceCount < 4) {
+        circle(xPos,yPos,size);
+      }
+      else {
+        fill(255,0,0);
+        rect(xPos,yPos,size*2,size*2);
+        fill(255);
+        exploded+=1;
+      }
     }
   }
   

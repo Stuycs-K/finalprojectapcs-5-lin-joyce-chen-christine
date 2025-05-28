@@ -1,19 +1,28 @@
-public class secondcat extends Character {
+public class catFirst extends Character {
   
   /*public firstcat(float xPos, float yPos) {
     this(, , , , , xPos, yPos); //fill this outtt
   }*/
   
-  public secondcat (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
+  public catFirst (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
   }
   
   void flip() {
     if (facingRight) {
-      sprite = loadImage("cat2idleR.png");
+      sprite = loadImage("cat1idleR.png");
     }
     else {
-      sprite = loadImage("cat2idleL.png");
+      sprite = loadImage("cat1idleL.png");
+    }
+  }
+  
+  void setAnimation() {
+    if (facingRight) {
+      image(cat1walkR, xPos, yPos, hitboxWidth, hitboxLength);
+    }
+    else {
+      image(cat1walkL, xPos, yPos, hitboxWidth, hitboxLength);
     }
   }
   
@@ -27,19 +36,10 @@ public class secondcat extends Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     
-    projectiles.add(new Projectiles("laser", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     }
   }
-  
-  /*void setAnimation() {
-    if (facingRight) {
-      image(cat2walkR, xPos, yPos, hitboxWidth, hitboxLength);
-    }
-    else {
-      image(cat2walkL, xPos, yPos, hitboxWidth, hitboxLength);
-    }
-  }*/
   
   void display() {
     // line to check aim angles
@@ -63,7 +63,7 @@ public class secondcat extends Character {
       image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
     }
     else {
-      //setAnimation();
+      setAnimation();
     }
     if (jumpCharge > 0) {
       displayJumpBar();
