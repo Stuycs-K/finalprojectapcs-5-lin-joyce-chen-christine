@@ -3,6 +3,7 @@ import gifAnimation.*;
 ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
+Boss boss;
 String currmode, numPlayer;
 boolean modeInitialized, selectScreen, gameEnd;
 screenSelect s;
@@ -103,6 +104,10 @@ void draw() {
       }
       gameEnd = true;
     }
+  }
+  
+  if (currmode.equals("Boss")) {
+    boss.update();
   }
 
   if (keyPressed) {
@@ -259,6 +264,7 @@ void displayScreen() {
 
     if (!modeInitialized) {
       modeInitialized = true;
+      boss = new Boss(width / 2, 100);
       chars.add(new catFirst(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
       if (numPlayer.equals("2")) {
         Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, 200.0));

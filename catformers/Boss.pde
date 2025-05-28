@@ -40,10 +40,9 @@ public class Boss {
     timer = 0;
     //imumune = (phase == // immune phase #);
     for (Character c : chars) {
-     /* c.inverseControls = false;
+      c.inverseControls = false;
       c.isTrapped = false;
-      c.spamCount = 0; */
-      // add these to char and add more if needed!
+      c.spamCount = 0;
     }
   }
 
@@ -94,6 +93,7 @@ public class Boss {
   }
 
   void teleport() {
+    
   }
 
 }
