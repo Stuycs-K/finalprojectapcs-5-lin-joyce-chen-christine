@@ -4,7 +4,8 @@ public class Boss {
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
   boolean immune;
-  ArrayList<Projectiles> bossProjectiles; // make separate BossProjectiles class?
+  ArrayList<Projectiles> bossProjectiles; 
+  PImage sprite;
 
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
@@ -12,11 +13,12 @@ public class Boss {
     maxLives = 10;
     lives = 10;
     hitboxWidth = 200;
-    hitboxLength = 200;
+    hitboxLength = 145;
     phase = 0;
     timer = 0;
     immune = false;
     bossProjectiles = new ArrayList<Projectiles>();
+    sprite = loadImage("bossIdle.png");
   }
   
   void display() {
@@ -28,9 +30,8 @@ public class Boss {
     } else {
       noStroke();
     }
-
-    fill(255, 0, 0);
-    rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
+    
+    image(sprite, xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
     
     int hpBarWidth = 150;
     int hpBarHeight = 10;
