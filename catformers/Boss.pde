@@ -19,6 +19,7 @@ public class Boss {
   }
   
   void display() {
+    pushStyle(); // prevent interference
     if (immune && (frameCount % 20 < 10)) {
       stroke(255); 
       strokeWeight(6);
@@ -28,6 +29,7 @@ public class Boss {
 
     fill(255, 0, 0);
     rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
+    popStyle(); 
   }
 
   void update() {
