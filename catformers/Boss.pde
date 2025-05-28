@@ -3,7 +3,7 @@ public class Boss {
   int phase, timer;
   boolean immune;
   ArrayList<Projectiles> bossProjectiles; // make separate BossProjectiles class?
-  
+
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
@@ -12,13 +12,13 @@ public class Boss {
     this.immune = false;
     bossProjectiles = new ArrayList<Projectiles>();
   }
-  
+
   void update() {
     timer++;
     if (timer == 600) { // every minute
       nextPhase();
     }
-    
+
     if (phase == 0) {
       // phase here!
     } else if (phase == 1) {
@@ -28,13 +28,13 @@ public class Boss {
     } else if (phase == 3) {
       // can add more!
     }
-    
+
     for (Projectiles p : bossProjectiles) {
       p.move();
       p.display();
     }
   }
-  
+
   void nextPhase() {
     phase = (phase + 1) % 4; // # of phases!
     timer = 0;
@@ -46,7 +46,7 @@ public class Boss {
       // add these to char and add more if needed!
     }
   }
-  
+
   void immunePhase() {
     if (timer % 10 == 0) {
       int count = 12;
@@ -56,7 +56,7 @@ public class Boss {
       }
     }
   }
-  
+
   //add more + complete!
   void giantBeamPhase() {
     if (timer == 100) {
@@ -70,7 +70,7 @@ public class Boss {
       }
     }
   }
-  
+
   void trapPlayer() {
     if (timer == 1) {
       Character trapped = chars.get((int)random(chars.size()));
@@ -83,7 +83,7 @@ public class Boss {
       }
     }
   }
-  
+
   void inverseControls() {
     if (timer == 30) {
       for (Character c : chars) c.inverseControls = true;
@@ -92,12 +92,8 @@ public class Boss {
       for (Character c : chars) c.inverseControls = false;
     }
   }
-  
+
   void teleport() {
   }
-  
+
 }
-  
-      
-      
-  
