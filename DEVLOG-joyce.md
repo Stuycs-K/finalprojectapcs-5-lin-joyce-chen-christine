@@ -44,3 +44,11 @@ for next sessionnn
 - find stock explosion for death animation
 - implement a new checkHit for grenade bullets
 - stop grenades from bouncing backwards at certain angles when hitting floor
+
+### 2025-05-28 - Projectiles and hitboxes - 3 hours
+Homing and grenade projectiles were implemented for characters (still requires further testing). Character hitboxes were also fixed so that they are closer to the actual image of the character. Additionally preliminary optimizations to projectiles during boss immune phase were made and a potential projectile for teleporting/moving phase was implemented, though incomplete (both open to change).
+
+things to consider for next coding session
+- create an escape menu so that the game can either be restarted or ended before characters die
+- make it so that when boss projectiles leave the screen, they are removed from ArrayList
+- fix any collision errors with projectiles
