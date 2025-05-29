@@ -88,6 +88,7 @@ public class Projectiles {
         circle(xPos,yPos,size);
       }
       else {
+        exploded = true;
         fill(255,0,0);
         rect(xPos,yPos,size*2,size*2);
         fill(255);
@@ -102,22 +103,23 @@ public class Projectiles {
   boolean checkHit() {
     for (Character c : chars) {
       if (!(c == player && bounceCount == 0)) { 
-        if (!type.equals("grenade")) {
+        if (!type.equals("grenade") || !exploded) {
           if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
               yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
             c.lives -= 1;
+            if (type.equals("grenade")) {
+              exploded = true;
+            }
             return true;
           }
         }
         else if (exploded) {
-          if(xPos + size*2 >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
-              yPos + size*2 >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+          if(xPos + size*2 > c.xPos && xPos < c.xPos + c.hitboxWidth &&
+              yPos + size*2 > c.yPos && yPos < c.yPos + c.hitboxLength) {
+            print("runs");
             c.lives -= 1;
             return true;
           }
-        }
-        else {
-          exploded = true;
         }
       }
     }
