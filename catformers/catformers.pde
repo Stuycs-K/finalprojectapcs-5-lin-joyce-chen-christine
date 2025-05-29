@@ -72,6 +72,13 @@ void draw() {
         textSize(24);
         text("TRAPPED! Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
       }
+      
+      if (c.inverseControls) {
+        fill(255, 255, 0);
+        textSize(18);
+        text("INVERTED CONTROLS!", c.xPos, c.yPos - 40);
+      }
+
   }
 
   if (!gameOver) {

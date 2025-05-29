@@ -36,3 +36,13 @@ Future Improvements:
 - Excess hitbox height (transparent part) leads to beams dealing damage when visually underneath it; fix hitbox or change beam logic
 - Complete immune phase and fix boss positioning
 - Fix bug where jump charge bar is stuck/filled when not jumping (find out why this happens!)
+
+### 2025-05-28 - Drew Boss Sprite + More Boss Mode
+Worked for 2 hours. Completed second boss phase with flashing white outline to indicate immunity + projectiles shot in circular pattern. Modified player projectiles to deal damage to boss in checkHit() and boss projectiles to deal damage to players with damage cooldown. Implemented inverse controls mechanic during boss fight. Displayed HP bar above boss which moves to bottom of boss when near top of screen. Drew and applied sprite for boss.
+
+Future Improvements:
+- Crop transparent part of image to fix hitbox height errors for cat1 sprite
+- Modify bullets during immune phase for better gameplay experience
+- Add projectiles to third phase of boss (teleporation phase)
+- Fix boss positioning and interaction with platforms
+- Defeat/Victory screens in Boss Mode

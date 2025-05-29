@@ -1,25 +1,53 @@
 public class Boss {
+  int lives, maxLives, hitboxWidth, hitboxLength;
+  int phase, timer;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
-  int hitboxWidth, hitboxLength;
-  int phase, timer;
   boolean immune;
-  ArrayList<Projectiles> bossProjectiles; // make separate BossProjectiles class?
+  ArrayList<Projectiles> bossProjectiles; 
+  PImage sprite;
 
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
+    maxLives = 10;
+    lives = 10;
     hitboxWidth = 200;
-    hitboxLength = 200;
+    hitboxLength = 145;
     phase = 0;
     timer = 0;
     immune = false;
     bossProjectiles = new ArrayList<Projectiles>();
+    sprite = loadImage("bossIdle.png");
   }
   
   void display() {
-    fill(255);
-    rect(xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
+    pushStyle(); // prevent interference
+    
+    if (immune && (frameCount % 20 < 10)) {
+      stroke(255); 
+      strokeWeight(6);
+    } else {
+      noStroke();
+    }
+    
+    image(sprite, xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
+    
+    int hpBarWidth = 150;
+    int hpBarHeight = 10;
+    float hpPercent = (float) lives / maxLives;
+    float hpY;
+    if (yPos - hitboxLength/2 - 20 < 0) {
+      hpY = yPos + hitboxLength/2 + 10;
+    } else {
+      hpY = yPos - hitboxLength/2 - 20;
+    }
+    fill (100);
+    rect(xPos - hpBarWidth/2, hpY, hpBarWidth, hpBarHeight);
+    fill(50, 205, 50);
+    rect(xPos - hpBarWidth/2, hpY, hpBarWidth * hpPercent, hpBarHeight);
+    
+    popStyle(); 
   }
 
   void update() {
@@ -31,8 +59,6 @@ public class Boss {
     if (phase == 0) {
       giantBeamPhase();
     } else if (phase == 1) {
-      teleportFigure8(tpTick);
-      tpTick++;
       immunePhase();
       inverseControls();
     } else if (phase == 2) {
@@ -43,13 +69,26 @@ public class Boss {
     for (Projectiles p : bossProjectiles) {
       p.move();
       p.display();
+      
+      if (p.type.equals("boss")) {
+        for (Character c : chars) {
+          if (c.damageCD == 0 && c.isAlive) {
+            if (p.xPos >= c.xPos && p.xPos <= c.xPos + c.hitboxWidth &&
+            p.yPos >= c.yPos && p.yPos <= c.yPos + c.hitboxLength) {
+              c.lives--;
+              c.damageCD = 30;
+              c.isAlive = c.lives > 0;
+            }
+          }
+        }
+      }
     }
   }
 
   void nextPhase() {
     phase = (phase + 1) % 3; // # of phases!
     timer = 0;
-    //imumune = (phase == // immune phase #);
+    immune = false;
     for (Character c : chars) {
       c.inverseControls = false;
       c.isTrapped = false;
@@ -58,11 +97,12 @@ public class Boss {
   }
 
   void immunePhase() {
-    if (timer % 10 == 0) {
-      int count = 12;
+    immune = true;
+    if (timer % 6 == 0) {
+      int count = 6;
       for (int i = 0; i < count; i++) {
-        float angle = radians((360 / count) * i + timer);
-        //bossProjectiles.add(new Projectiles(
+        float angle = radians((360.0/count) * i + timer);
+        bossProjectiles.add(new Projectiles("boss", null, angle, 5, xPos, yPos));
       }
     }
   }
@@ -124,7 +164,7 @@ public class Boss {
     if (timer == 30) {
       for (Character c : chars) c.inverseControls = true;
     }
-    if (timer == 180) {
+    if (timer == 300) {
       for (Character c : chars) c.inverseControls = false;
     }
   }

@@ -123,6 +123,15 @@ public class Projectiles {
         }
       }
     }
+    
+    if (currmode.equals("Boss") && !boss.immune && player != null) {
+      if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&
+      yPos >= boss.yPos - boss.hitboxLength/2 && yPos <= boss.yPos + boss.hitboxLength/2) {
+        boss.lives--;
+        return true;
+      }
+    }
+    
     return false;
   }
   
