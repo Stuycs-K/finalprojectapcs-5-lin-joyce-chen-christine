@@ -15,8 +15,8 @@ public class Character {
     // basic character info
     this.xPos = xPos;
     this.yPos = yPos;
-    hitboxWidth = 60;
-    hitboxLength = 84;
+    hitboxWidth = 55;
+    hitboxLength = 70;
     maxLength = hitboxLength;
     lives = 3;
 
@@ -114,7 +114,6 @@ public class Character {
     }
   }
 
-  // change to preserve aimm angle modifications or keep resetting?
   void move(boolean goRight) {
     boolean finalGoRight;
     if (inverseControls) {
@@ -149,9 +148,8 @@ public class Character {
   }
 
   void applyMovement() {
-    // in the game itself, keep walking animation until freeze is called (horizontal movement)
     ifFalling = false;
-    if (xPos + hitboxWidth + xVelocity < width && xPos + hitboxWidth + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
+    if (xPos - 6.0 + hitboxWidth + xVelocity < width && xPos + 2.0 + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
       xVelocity = 0.0;
     }
