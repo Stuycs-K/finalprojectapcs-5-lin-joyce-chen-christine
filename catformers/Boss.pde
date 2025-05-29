@@ -64,6 +64,7 @@ public class Boss {
     } else if (phase == 2) {
       teleportFigure8(tpTick);
       tpTick++;
+      // generateHoming();
     }
 
     for (Projectiles p : bossProjectiles) {
@@ -98,11 +99,17 @@ public class Boss {
 
   void immunePhase() {
     immune = true;
-    if (timer % 6 == 0) {
+    if (timer % 5 == 0) {
       int count = 6;
       for (int i = 0; i < count; i++) {
         float angle = radians((360.0/count) * i + timer);
         bossProjectiles.add(new Projectiles("boss", null, angle, 5, xPos, yPos));
+      }
+    }
+    if (timer % 10 == 0) {
+      for (Projectiles p : bossProjectiles) {
+        p.xVelocity *= 1.15;
+        p.yVelocity *= 1.15;
       }
     }
   }
@@ -176,5 +183,26 @@ public class Boss {
     xPos = width/2 + (a*cos(t)) / (1+sin(t) * sin(t));
     yPos = height/2 + (a*cos(t) * sin(t)) / (1+sin(t) * sin(t));
   }
+  
+  /*void generateHoming() { // prelim code -- incomplete feel free to delete or change
+    if (timer % 8 == 0) {
+      bossProjectiles.add(new Projectiles("boss", null, 0, 5, xPos, yPos));
+    }
+    if (timer % 10 == 0) {
+      for (Projectiles p : bossProjectiles) {
+        float closestX = chars.get(0).xPos;
+        float closestY = chars.get(0).yPos;
+        float closestDist = sqrt(pow(closestX - p.xPos,2)+pow(closestY - p.yPos,2));
+        for (Character c : chars) {
+          float dist = sqrt(pow(c.xPos - p.xPos,2)+pow(c.yPos - p.yPos,2));
+          if (dist > closestDist) {
+            closestDist = dist;
+          }
+        }
+        p.xVelocity += (closestX - p.xPos)/100.0;
+        p.yVelocity += (closestY - p.yPos)/100.0;
+      }
+    }
+  }*/
 
 }
