@@ -36,6 +36,7 @@ public class Boss {
     
     int hpBarWidth = 150;
     int hpBarHeight = 10;
+    lives = max(0, lives);
     float hpPercent = (float) lives / maxLives;
     float hpY;
     if (yPos - hitboxLength/2 - 20 < 0) {
@@ -133,6 +134,7 @@ public class Boss {
     }
   }
   
+  // based off of polar rose curves
   void flowerBeams(float radius, float k, float petals) {
     pushStyle();
     pushMatrix(); // prevent interference
@@ -168,6 +170,7 @@ public class Boss {
   }
 
   void giantBeamPhase() {
+    pushStyle();
     int startTime = 100;
     int cycleLength = 200;
     if (timer < startTime) return; 
@@ -253,6 +256,7 @@ public class Boss {
         }
       }
     }
+    popStyle();
   }
 
   void trapPlayers() {
