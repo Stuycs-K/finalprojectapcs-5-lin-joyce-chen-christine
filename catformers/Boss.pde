@@ -137,7 +137,8 @@ public class Boss {
     pushStyle();
     pushMatrix(); // prevent interference
     translate(xPos, yPos);
-    rotate(sin(timer*0.02) * 0.3);
+    float rotation = sin(timer*0.02) * 0.3;
+    rotate(rotation);
     float newK = k + sin(timer*0.02) * 2.5;
     colorMode(HSB, 360, 100, 100, 100); // change colormode to HSB
     noStroke();
@@ -148,6 +149,19 @@ public class Boss {
       float y = r * sin(angle);
       fill((angle * 180 / PI + timer * 2) % 360, 80, 100, 60); // dynamic colors
       ellipse(x, y, 16, 28); 
+      
+      float xCor = xPos + cos(rotation)*x - sin(rotation)*y;
+      float yCor = yPos + sin(rotation)*x + cos(rotation)*y;
+      for (Character c : chars) {
+        if (c.damageCD == 0 && c.isAlive) {
+          if (xCor >= c.xPos && xCor <= c.xPos + c.hitboxWidth && 
+          yCor >= c.yPos && yCor <= c.yPos + c.hitboxLength) {
+            c.lives--;
+            c.damageCD = 30;
+            c.isAlive = c.lives > 0;
+          }
+        }
+      }
     }
     popMatrix();
     popStyle();
