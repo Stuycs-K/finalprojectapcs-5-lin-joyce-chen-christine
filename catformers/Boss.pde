@@ -147,14 +147,14 @@ public class Boss {
       else if (currentCycle == 2) {
         rect(0, height - 40 - 80 * 1.5 * 2 - 20, width, beamHeight * 1.2);
         rect(0, height - 40 - 80 * 1.5, width, beamHeight * 1.2);
-        rect(width - 40 - 20 * 2 - 10, 0, 50, height);
-        rect(width - 40 - 20, 0, 50, height);
+        rect(width - 90, 0, 50, height);
+        rect(width - 190, 0, 50, height);
       } // ==== Top + Left Beams ====
       else if (currentCycle == 3) {
         rect(0, 40, width, beamHeight * 1.2);
         rect(0, 60 + beamHeight * 1.5, width, beamHeight * 1.2);
-        rect(20, 0, 50, height);
-        rect(80, 0, 50, height);
+        rect(40, 0, 50, height);
+        rect(140, 0, 50, height);
       } // ==== Evenly-Spaced Beams ====
       else if (currentCycle == 4) {
         for (int i = 0; i < width; i += 80) {
@@ -176,13 +176,13 @@ public class Boss {
               hit = (c.yPos + c.hitboxLength > height - 40 - 80 * 1.5 * 2 - 20 &&
               c.yPos < height - 40 - 80 * 1.5 - 20) || (c.yPos + c.hitboxLength > height - 40 - 80 * 1.5 && 
               c.yPos < height - 40);
-              hit = hit || ((c.xPos + c.hitboxWidth > width - 40 - 20 * 2 - 10 && c.xPos < width - 40 - 10) ||
-              (c.xPos + c.hitboxWidth > width - 40 - 20 && c.xPos < width - 40));
+              hit = hit || ((c.xPos + c.hitboxWidth > width -190 && c.xPos < width - 140) ||
+              (c.xPos + c.hitboxWidth > width - 90 && c.xPos < width - 40));
             } else if (currentCycle == 3) {
               hit = (c.yPos + c.hitboxLength > 40 && c.yPos < 40 + 80 * 1.2) ||
               (c.yPos + c.hitboxLength > 60 + 80 * 1.5 && c.yPos < 60 + 80 * 1.5 + 80 * 1.2);
-              hit = hit || ((c.xPos + c.hitboxWidth > 20 && c.xPos < 70) ||
-              (c.xPos + c.hitboxWidth > 80 && c.xPos < 130));
+              hit = hit || ((c.xPos + c.hitboxWidth > 40 && c.xPos < 90) ||
+              (c.xPos + c.hitboxWidth > 140 && c.xPos < 190));
             } else if (currentCycle == 4) {
               hit = false;
               for (int i = 0; i < width; i += 80) {
