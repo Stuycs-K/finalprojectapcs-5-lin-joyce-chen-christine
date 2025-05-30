@@ -135,11 +135,13 @@ public class Boss {
   void flowerBeams(float radius, float k, float petals) {
     pushMatrix(); // prevent interference
     translate(xPos, yPos);
+    rotate(sin(timer*0.02) * 0.3);
+    float newK = k + sin(timer*0.02) * 2.5;
     colorMode(HSB, 360, 100, 100, 100); // change colormode to HSB
     noStroke();
     float inc = TWO_PI / petals;
     for (float angle = 0; angle <= TWO_PI; angle += inc) {
-      float r = radius * sin(k * angle);
+      float r = radius * sin(newK * angle);
       float x = r * cos(angle);
       float y = r * sin(angle);
       fill((angle * 180 / PI + timer * 2) % 360, 80, 100, 60); // dynamic colors
