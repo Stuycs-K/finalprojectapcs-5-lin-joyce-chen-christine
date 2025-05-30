@@ -52,7 +52,7 @@ public class Boss {
 
   void update() {
     timer++;
-    if (timer == 600) { // every minute
+    if (timer == 1200) { // every minute
       nextPhase();
     }
 
@@ -64,7 +64,7 @@ public class Boss {
     } else if (phase == 2) {
       teleportFigure8(tpTick);
       tpTick++;
-      // generateHoming();
+      generateHoming();
     }
 
     for (Projectiles p : bossProjectiles) {
@@ -99,17 +99,17 @@ public class Boss {
 
   void immunePhase() {
     immune = true;
-    if (timer % 5 == 0) {
+    if (timer % 15 == 0) {
       int count = 6;
       for (int i = 0; i < count; i++) {
         float angle = radians((360.0/count) * i + timer);
         bossProjectiles.add(new Projectiles("boss", null, angle, 5, xPos, yPos));
       }
     }
-    if (timer % 10 == 0) {
+    if (timer % 20 == 0) {
       for (Projectiles p : bossProjectiles) {
-        p.xVelocity *= 1.15;
-        p.yVelocity *= 1.15;
+        p.xVelocity *= 1.05;
+        p.yVelocity *= 1.05;
       }
     }
   }
@@ -122,32 +122,74 @@ public class Boss {
       trapPlayers();
     }
     int currentCycle = (timer-startTime) / cycleLength;
-    if (currentCycle < 4) {
+    if (currentCycle < 5) {
       int cycleTime = (timer - startTime) % cycleLength;
-      if (cycleTime < 40 && (cycleTime / 10) % 2 == 0) {
-        fill(255, 0, 0, 100);
+      if (cycleTime < 80) {
+        if ((cycleTime / 10) % 2 == 0) {
+          fill(255, 0, 0, 100);
+        } else {
+          fill(0, 0, 255, 50);
+        }
       } else {
         fill(0, 0, 255, 200);
       }
       noStroke();
       float beamHeight = 80;
-      if (currentCycle % 2 == 0) {
+      // ==== Mid-Bottom + Mid-Top Beams ====
+      if (currentCycle == 0) {
         rect(0, height/2 - 120 - beamHeight/2, width, beamHeight);
-        rect(0, height/2 + 120 - beamHeight/2, width, beamHeight);
-      } else {
+        rect(0, height/2 + 120 - beamHeight/2, width, beamHeight); 
+      } // ==== Thick Middle Beam ====
+      else if (currentCycle == 1) {
         rect(0, height/2 - 40 - beamHeight/2, width, beamHeight);
         rect(0, height/2 + 40 - beamHeight/2, width, beamHeight);
+      } // ====  Bottom + Right Beams ====
+      else if (currentCycle == 2) {
+        rect(0, height - 40 - 80 * 1.5 * 2 - 20, width, beamHeight * 1.2);
+        rect(0, height - 40 - 80 * 1.5, width, beamHeight * 1.2);
+        rect(width - 40 - 20 * 2 - 10, 0, 50, height);
+        rect(width - 40 - 20, 0, 50, height);
+      } // ==== Top + Left Beams ====
+      else if (currentCycle == 3) {
+        rect(0, 40, width, beamHeight * 1.2);
+        rect(0, 60 + beamHeight * 1.5, width, beamHeight * 1.2);
+        rect(20, 0, 50, height);
+        rect(80, 0, 50, height);
+      } // ==== Evenly-Spaced Beams ====
+      else if (currentCycle == 4) {
+        for (int i = 0; i < width; i += 80) {
+          rect(i, 0, 10, height);
+        }
       }
-      if (cycleTime >= 40) {
+      
+      if (cycleTime >= 80) {
         for (Character c : chars) {
           if (c.damageCD == 0) {
             boolean hit = false;
-            if (currentCycle % 2 == 0) {
+            if (currentCycle == 0) {
               hit = (c.yPos + c.hitboxLength > height/2 - 120 - 40 && c.yPos < height/2 - 120 + 40) ||
-              (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40);
-            } else {
+                    (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40);
+            } else if (currentCycle == 1) {
               hit = (c.yPos + c.hitboxLength > height/2 - 40 - 40 && c.yPos < height/2 - 40 + 40) ||
               (c.yPos + c.hitboxLength > height/2 + 40 - 40 && c.yPos < height/2 + 40 + 40);
+            } else if (currentCycle == 2) {
+              hit = (c.yPos + c.hitboxLength > height - 40 - 80 * 1.5 * 2 - 20 &&
+              c.yPos < height - 40 - 80 * 1.5 - 20) || (c.yPos + c.hitboxLength > height - 40 - 80 * 1.5 && 
+              c.yPos < height - 40);
+              hit = hit || ((c.xPos + c.hitboxWidth > width - 40 - 20 * 2 - 10 && c.xPos < width - 40 - 10) ||
+              (c.xPos + c.hitboxWidth > width - 40 - 20 && c.xPos < width - 40));
+            } else if (currentCycle == 3) {
+              hit = (c.yPos + c.hitboxLength > 40 && c.yPos < 40 + 80 * 1.2) ||
+              (c.yPos + c.hitboxLength > 60 + 80 * 1.5 && c.yPos < 60 + 80 * 1.5 + 80 * 1.2);
+              hit = hit || ((c.xPos + c.hitboxWidth > 20 && c.xPos < 70) ||
+              (c.xPos + c.hitboxWidth > 80 && c.xPos < 130));
+            } else if (currentCycle == 4) {
+              hit = false;
+              for (int i = 0; i < width; i += 80) {
+                if (c.xPos + c.hitboxWidth > i && c.xPos < i + 10) {
+                  hit = true;
+                }
+              }
             }
             if (hit) {      
               c.lives--;
@@ -184,7 +226,7 @@ public class Boss {
     yPos = height/2 + (a*cos(t) * sin(t)) / (1+sin(t) * sin(t));
   }
   
-  /*void generateHoming() { // prelim code -- incomplete feel free to delete or change
+  void generateHoming() { // prelim code -- incomplete feel free to delete or change
     if (timer % 8 == 0) {
       bossProjectiles.add(new Projectiles("boss", null, 0, 5, xPos, yPos));
     }
@@ -203,6 +245,6 @@ public class Boss {
         p.yVelocity += (closestY - p.yPos)/100.0;
       }
     }
-  }*/
+  }
 
 }
