@@ -133,6 +133,8 @@ public class Boss {
   }
   
   void flowerBeams(float radius, float k, float petals) {
+    pushMatrix(); // prevent interference
+    translate(xPos, yPos);
     colorMode(HSB, 360, 100, 100, 100); // change colormode to HSB
     noStroke();
     float inc = TWO_PI / petals;
@@ -140,9 +142,10 @@ public class Boss {
       float r = radius * sin(k * angle);
       float x = r * cos(angle);
       float y = r * sin(angle);
-      fill((angle * 180 / PI + frameCount * 2) % 360, 80, 100, 60); // dynamic colors
+      fill((angle * 180 / PI + timer * 2) % 360, 80, 100, 60); // dynamic colors
       ellipse(x, y, 16, 28); 
     }
+    popMatrix();
   }
 
   void giantBeamPhase() {
