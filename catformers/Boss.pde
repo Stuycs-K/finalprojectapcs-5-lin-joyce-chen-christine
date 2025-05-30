@@ -86,6 +86,14 @@ public class Boss {
         }
       }
     }
+    
+    for (int i = bossProjectiles.size() - 1; i >= 0; i--) {
+      Projectiles p = bossProjectiles.get(i);
+      if (p.xPos < 0 || p.xPos > width || p.yPos < 0 || p.yPos > height) {
+        bossProjectiles.remove(i);
+      }
+    }
+    
   }
 
   void nextPhase() {
