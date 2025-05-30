@@ -3,7 +3,7 @@ public class Character {
   int lives, jumpCharge, bulletCD, maxBulletCD;
   int damageCD;
   float maxJumpCharge;
-  float bulletspeed, walkspeed, aimAngle;
+  float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
   boolean inverseControls, isTrapped;
@@ -22,6 +22,7 @@ public class Character {
 
     // horizontal movement
     this.walkspeed = walkspeed;
+    maxWalkSpeed = walkspeed;
     xVelocity = 0.0;
 
     // vertical movement
@@ -64,6 +65,16 @@ public class Character {
       jumpCharge += 4;
       hitboxLength -= 3;
     }
+  }
+  
+  void crouch() {
+    hitboxLength = (int)(maxLength/1.5);
+    walkspeed = maxWalkSpeed/2;
+  }
+  
+  void unCrouch() {
+    hitboxLength = maxLength;
+    walkspeed = maxWalkSpeed;
   }
 
   void shoot() {

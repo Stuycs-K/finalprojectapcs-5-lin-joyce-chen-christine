@@ -5,7 +5,7 @@ ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 Boss boss;
 String currmode, numPlayer;
-boolean modeInitialized, selectScreen, gameEnd;
+boolean modeInitialized, selectScreen, gameEnd, gamePause;
 screenSelect s;
 
 // things for graphics
@@ -49,6 +49,7 @@ void setup() {
   modeInitialized = false;
   selectScreen = false;
   gameEnd = false; 
+  gamePause = false;
 
 }
 
@@ -57,7 +58,7 @@ void draw() {
   
   boolean gameOver = currmode.equals("Victory") || currmode.equals("Loss");
   for (Character c : chars) {
-    if (c.isAlive) {
+    if (c.isAlive && !gamePause) {
       if (!gameOver && c.bulletCD > 0) {
         c.bulletCD--;
       }
@@ -66,19 +67,6 @@ void draw() {
       }
     }
       c.display();
-      
-      if(c.isTrapped) {
-        fill(255, 0, 0);
-        textSize(24);
-        text("TRAPPED! Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
-      }
-      
-      if (c.inverseControls) {
-        fill(255, 255, 0);
-        textSize(18);
-        text("INVERTED CONTROLS!", c.xPos, c.yPos - 40);
-      }
-
   }
 
   if (!gameOver) {
@@ -102,7 +90,7 @@ void draw() {
       }
     }
     else {
-      if (!gameOver) {
+      if (!gameOver && !gamePause) {
         if (projectiles.get(x).bounceCount < 3) { // change max count if too littlke
           projectiles.get(x).move();
         } else {
@@ -128,11 +116,46 @@ void draw() {
       }
       gameEnd = true;
     }
+    
+    if(c.isTrapped) {
+      fill(255, 0, 0);
+      textSize(24);
+      text("TRAPPED! Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+    }
+    
+    if (c.inverseControls) {
+      fill(255, 255, 0);
+      textSize(18);
+      text("INVERTED CONTROLS!", c.xPos, c.yPos - 40);
+    }
   }
   
   if (currmode.equals("Boss")) {
     boss.update();
     boss.display();
+  }    
+  
+  if (gamePause) {
+    fill(0);
+    rect(width/3.25, height/3.25, 500, 300);
+    fill(255);
+    textSize(70);
+    text("MENU",width/2, height/2.20);
+    textSize(40);
+    fill(255,0,0);
+    fill(255);
+    if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
+          mouseY >= height/1.80 - 20 && mouseY <= height/1.80 + 20) {
+      text("> exit <",width/2, height/1.80);
+    } else {
+      text("exit",width/2, height/1.80);
+    }
+    if (mouseX >= width/2 - 55 && mouseX <= width/2 + 55 &&
+          mouseY >= height/1.60 - 20 && mouseY <= height/1.60 + 20) {
+      text("> restart <",width/2, height/1.60);
+    } else {
+      text("restart",width/2, height/1.60);
+    }
   }
 
   if (keyPressed) {
@@ -140,47 +163,55 @@ void draw() {
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
-      if (!chars.get(0).isTrapped) {
-        // ===== Player 1 =====
-        if (p1Keys['a']) {
-          chars.get(0).move(false);
-          chars.get(0).isWalking = true;
-        } else if (p1Keys['d']) {
-          chars.get(0).move(true);
-          chars.get(0).isWalking = true;
+      if (!gamePause) {
+        if (!chars.get(0).isTrapped) {
+          // ===== Player 1 =====
+          if (p1Keys['a']) {
+            chars.get(0).move(false);
+            chars.get(0).isWalking = true;
+          } else if (p1Keys['d']) {
+            chars.get(0).move(true);
+            chars.get(0).isWalking = true;
+          }
+          if (p1Keys['w'] && !chars.get(0).ifFalling) {
+            chars.get(0).addJumpCharge();
+          }
+          else if (p1Keys['s']) {
+            chars.get(0).crouch();
+          }
+          if (p1Keys['q']) {
+            chars.get(0).aim(true);
+          } else if (p1Keys['e']) {
+            chars.get(0).aim(false);
+          }
+          if (p1Keys['r']) {
+            chars.get(0).shoot();
+          }
         }
-        if (p1Keys['w'] && !chars.get(0).ifFalling) {
-          chars.get(0).addJumpCharge();
-        }
-        if (p1Keys['q']) {
-          chars.get(0).aim(true);
-        } else if (p1Keys['e']) {
-          chars.get(0).aim(false);
-        }
-        if (p1Keys['r']) {
-          chars.get(0).shoot();
-        }
-      }
-
-      // ===== Player 2 =====
-      if (numPlayer.equals("2") && !chars.get(1).isTrapped) {
-        if (p2Keys[LEFT]) {
-          chars.get(1).move(false);
-          chars.get(1).isWalking = true;
-        } else if (p2Keys[RIGHT]) {
-          chars.get(1).move(true);
-          chars.get(1).isWalking = true;
-        }
-        if (p2Keys[UP] && !chars.get(1).ifFalling) {
-          chars.get(1).addJumpCharge();
-        }
-        if (p2Keys[',']) {
-          chars.get(1).aim(true);
-        } else if (p2Keys['/']) {
-          chars.get(1).aim(false);
-        }
-        if (p2Keys['.']) {
-          chars.get(1).shoot();
+  
+        // ===== Player 2 =====
+        if (numPlayer.equals("2") && !chars.get(1).isTrapped) {
+          if (p2Keys[LEFT]) {
+            chars.get(1).move(false);
+            chars.get(1).isWalking = true;
+          } else if (p2Keys[RIGHT]) {
+            chars.get(1).move(true);
+            chars.get(1).isWalking = true;
+          }
+          if (p2Keys[UP] && !chars.get(1).ifFalling) {
+            chars.get(1).addJumpCharge();
+          }
+          else if (p1Keys[DOWN]) {
+            chars.get(1).crouch();
+          }
+          if (p2Keys[',']) {
+            chars.get(1).aim(true);
+          } else if (p2Keys['/']) {
+            chars.get(1).aim(false);
+          }
+          if (p2Keys['.']) {
+            chars.get(1).shoot();
+          }
         }
       }
     }
@@ -192,12 +223,14 @@ void keyPressed() {
   if (key < MAX_KEY) p1Keys[key] = true;
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
   
-  for (Character c : chars) {
-    if (c.isTrapped) {
-      c.spamCount++;
-      if (c.spamCount >= 10) {
-        c.isTrapped = false;
-        c.spamCount = 0;
+  if (!gameEnd) {
+    for (Character c : chars) {
+      if (c.isTrapped) {
+        c.spamCount++;
+        if (c.spamCount >= 10) {
+          c.isTrapped = false;
+          c.spamCount = 0;
+        }
       }
     }
   }
@@ -215,24 +248,37 @@ void keyReleased() {
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
   
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
-    // ==== Player 1 ====
-    if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && key == 'w') {
-      chars.get(0).jump();
-    }
-    // turn walking animation off
-    if (key == 'd' || key == 'a') {
-      chars.get(0).isWalking = false;
-    } 
-
-    // ==== Player 2 ====
-    if (numPlayer.equals("2")) {
-      if (!chars.get(1).isTrapped && !chars.get(1).ifFalling && keyCode == UP) {
-        chars.get(1).jump();
+      if (key == ' ') {
+        gamePause = !gamePause;
+      }
+     if (!gamePause) {
+      // ==== Player 1 ====
+      if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && key == 'w') {
+        chars.get(0).jump();
       }
       // turn walking animation off
-      if (keyCode == RIGHT || keyCode == LEFT) {
-        chars.get(1).isWalking = false;
+      if (key == 'd' || key == 'a') {
+        chars.get(0).isWalking = false;
       } 
+      
+      if (key == 's') {
+        chars.get(0).unCrouch();
+      }
+  
+      // ==== Player 2 ====
+      if (numPlayer.equals("2")) {
+        if (!chars.get(1).isTrapped && !chars.get(1).ifFalling && keyCode == UP) {
+          chars.get(1).jump();
+        }
+        // turn walking animation off
+        if (keyCode == RIGHT || keyCode == LEFT) {
+          chars.get(1).isWalking = false;
+        } 
+        
+        if (keyCode == DOWN) {
+          chars.get(1).unCrouch();
+        } 
+      }
     }
     
   }
@@ -241,6 +287,26 @@ void keyReleased() {
 void mouseClicked() {
   if (selectScreen) {
     s.buttonClicked();
+  }
+  if (gamePause) {
+    if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
+          mouseY >= height/1.80 - 20 && mouseY <= height/1.80 + 20) {
+      setup();
+    }
+    if (mouseX >= width/2 - 55 && mouseX <= width/2 + 55 &&
+          mouseY >= height/1.60 - 20 && mouseY <= height/1.60 + 20) {
+      while (chars.size() > 0) {
+        chars.remove(0);
+      }
+      while (projectiles.size() > 0) {
+        projectiles.remove(0);
+      }
+      while (platforms.size() > 0) {
+        platforms.remove(0);
+      }
+      modeInitialized = false;
+      gamePause = false;
+    }
   }
 }
 
