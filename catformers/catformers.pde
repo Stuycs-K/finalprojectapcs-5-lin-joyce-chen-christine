@@ -10,6 +10,7 @@ screenSelect s;
 
 // things for graphics
 Gif start;
+Gif death;
 PImage title;
 PImage bg;
 
@@ -36,7 +37,10 @@ void setup() {
   
   // graphicsss
   start = new Gif(this, "start.gif");
+  death = new Gif(this, "explosion.gif");
   start.play();
+  death.play();
+  death.noLoop();
   title = loadImage("title.png");
   bg = loadImage("background1.png");
   
@@ -114,6 +118,8 @@ void draw() {
       while (c.deathSlope == 0.0) {
         c.deathSlope = random(-5,5) * 10.0;
       }
+      c.deathX = c.xPos;
+      c.deathY = c.yPos;
       gameEnd = true;
     }
     
@@ -427,6 +433,7 @@ void displayScreen() {
 }
 
 void deathAnimation(Character c) {
+  image(death, c.deathX, c.deathY, 60,84);
   c.xPos += 40;
   c.yPos += c.deathSlope;
 }
