@@ -62,10 +62,11 @@ public class Boss {
     }
 
     if (phase == 0) {
-      immunePhase();
-      flowerBeams(300.0, 2, 60); 
+      giantBeamPhase();
     } else if (phase == 1  && !gamePause) {
-      immunePhase();
+      immunePhase();      
+      flowerBeams(300.0, 2, 90); 
+      flowerBeams(200.0, 2, 30); 
       inverseControls();
     } else if (phase == 2 && !gamePause) {
       if (bossProjectiles.size() == 0 || homingPhase) {
@@ -133,6 +134,7 @@ public class Boss {
   }
   
   void flowerBeams(float radius, float k, float petals) {
+    pushStyle();
     pushMatrix(); // prevent interference
     translate(xPos, yPos);
     rotate(sin(timer*0.02) * 0.3);
@@ -148,6 +150,7 @@ public class Boss {
       ellipse(x, y, 16, 28); 
     }
     popMatrix();
+    popStyle();
   }
 
   void giantBeamPhase() {
