@@ -46,3 +46,11 @@ Future Improvements:
 - Add projectiles to third phase of boss (teleporation phase)
 - Fix boss positioning and interaction with platforms
 - Defeat/Victory screens in Boss Mode
+
+### 2025-05-29 -
+Worked for 40 minutes. Added new beam patterns in first boss phase and applied damage for each. Modified lengths for each phase. Wrote code to remove boss projectiles from ArrayList once off-screen.
+
+Future Improvements:
+- Modify platform positions for Boss Mode
+- Include s/DOWN keys to function as sneak button (decrease hitbox height + movement speed)
+- Tune difficulty of Boss Mode
