@@ -5,7 +5,7 @@ ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 Boss boss;
 String currmode, numPlayer;
-boolean modeInitialized, selectScreen, gameEnd, gamePause;
+boolean modeInitialized, selectScreen, gameEnd, gamePause, deathFinish;
 screenSelect s;
 
 // things for graphics
@@ -13,6 +13,8 @@ Gif start;
 Gif death;
 PImage title;
 PImage bg;
+PImage[] deathFrames;
+int deathFrame;
 
 // walk animations
 Gif cat1walkR;
@@ -37,12 +39,13 @@ void setup() {
   
   // graphicsss
   start = new Gif(this, "start.gif");
-  death = new Gif(this, "explosion.gif");
   start.play();
-  death.play();
-  death.noLoop();
   title = loadImage("title.png");
   bg = loadImage("background1.png");
+  
+  deathFrames = Gif.getPImages(this, "explosion.gif");
+  deathFrame = 0;
+  deathFinish = false;
   
   // walking animation
   cat1walkR = new Gif(this,"cat1walkR.gif");
@@ -134,6 +137,7 @@ void draw() {
       textSize(18);
       text("INVERTED CONTROLS!", c.xPos, c.yPos - 40);
     }
+    
   }
   
   if (currmode.equals("Boss")) {
@@ -207,7 +211,7 @@ void draw() {
           if (p2Keys[UP] && !chars.get(1).ifFalling) {
             chars.get(1).addJumpCharge();
           }
-          else if (p1Keys[DOWN]) {
+          else if (p2Keys[DOWN]) {
             chars.get(1).crouch();
           }
           if (p2Keys[',']) {
@@ -433,7 +437,14 @@ void displayScreen() {
 }
 
 void deathAnimation(Character c) {
-  image(death, c.deathX, c.deathY, 60,84);
+  if (deathFrame == 17) {
+    deathFrame = 0;
+    deathFinish = true;
+  }
+  if (!deathFinish) {
+    image(deathFrames[deathFrame%300], c.deathX, c.deathY, 60,84);
+    deathFrame++;
+  }
   c.xPos += 40;
   c.yPos += c.deathSlope;
 }
