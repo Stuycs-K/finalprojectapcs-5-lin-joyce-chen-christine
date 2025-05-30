@@ -3,7 +3,7 @@ public class Boss {
   int phase, timer;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
-  boolean immune;
+  boolean immune, homingPhase;
   ArrayList<Projectiles> bossProjectiles; 
   PImage sprite;
 
@@ -17,6 +17,7 @@ public class Boss {
     phase = 0;
     timer = 0;
     immune = false;
+    homingPhase = false;
     bossProjectiles = new ArrayList<Projectiles>();
     sprite = loadImage("bossIdle.png");
   }
@@ -51,29 +52,35 @@ public class Boss {
   }
 
   void update() {
-    timer++;
-    if (phase == 0) {
-      if (timer == 1200) nextPhase();
-    } else if (timer == 600) {
-      nextPhase();
+    if (!gamePause) {
+      timer++;
+      if (phase == 0) {
+        if (timer == 1200) nextPhase();
+      } else if (timer == 600) {
+        nextPhase();
+      }
     }
 
     if (phase == 0) {
       giantBeamPhase();
-    } else if (phase == 1) {
+    } else if (phase == 1  && !gamePause) {
       immunePhase();
       inverseControls();
-    } else if (phase == 2) {
-      teleportFigure8(tpTick);
-      tpTick++;
-      generateHoming();
+    } else if (phase == 2 && !gamePause) {
+      if (bossProjectiles.size() == 0 || homingPhase) {
+        teleportFigure8(tpTick);
+        tpTick++;
+        generateHoming();
+      }
     }
 
     for (Projectiles p : bossProjectiles) {
-      p.move();
+      if (!gamePause) {
+        p.move();
+      }
       p.display();
       
-      if (p.type.equals("boss")) {
+      if (p.type.equals("boss") && !gamePause) {
         for (Character c : chars) {
           if (c.damageCD == 0 && c.isAlive) {
             if (p.xPos >= c.xPos && p.xPos <= c.xPos + c.hitboxWidth &&
@@ -237,7 +244,8 @@ public class Boss {
   }
   
   void generateHoming() { // prelim code -- incomplete feel free to delete or change
-    if (timer % 8 == 0) {
+    homingPhase = true;
+    if (timer % 20 == 0) {
       bossProjectiles.add(new Projectiles("boss", null, 0, 5, xPos, yPos));
     }
     if (timer % 10 == 0) {
