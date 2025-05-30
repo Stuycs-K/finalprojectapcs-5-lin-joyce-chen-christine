@@ -36,6 +36,7 @@ public class Boss {
     
     int hpBarWidth = 150;
     int hpBarHeight = 10;
+    lives = max(0, lives);
     float hpPercent = (float) lives / maxLives;
     float hpY;
     if (yPos - hitboxLength/2 - 20 < 0) {
@@ -64,7 +65,9 @@ public class Boss {
     if (phase == 0) {
       giantBeamPhase();
     } else if (phase == 1  && !gamePause) {
-      immunePhase();
+      immunePhase();      
+      //flowerBeams(300.0, 2, 90); 
+      //flowerBeams(200.0, 2, 30); 
       inverseControls();
     } else if (phase == 2 && !gamePause) {
       if (bossProjectiles.size() == 0 || homingPhase) {
@@ -102,7 +105,7 @@ public class Boss {
     }
     
   }
-
+ 
   void nextPhase() {
     phase = (phase + 1) % 3; // # of phases!
     timer = 0;
@@ -117,7 +120,7 @@ public class Boss {
   void immunePhase() {
     immune = true;
     if (timer % 15 == 0) {
-      int count = 6;
+      int count = 8;
       for (int i = 0; i < count; i++) {
         float angle = radians((360.0/count) * i + timer);
         bossProjectiles.add(new Projectiles("boss", null, angle, 5, xPos, yPos));
@@ -130,8 +133,44 @@ public class Boss {
       }
     }
   }
+  
+  // based off of polar rose curves
+ /* void flowerBeams(float radius, float k, float petals) {
+    pushStyle();
+    pushMatrix(); // prevent interference
+    translate(xPos, yPos);
+    float rotation = sin(timer*0.02) * 0.3;
+    rotate(rotation);
+    float newK = k + sin(timer*0.02) * 2.5;
+    colorMode(HSB, 360, 100, 100, 100); // change colormode to HSB
+    noStroke();
+    float inc = TWO_PI / petals;
+    for (float angle = 0; angle <= TWO_PI; angle += inc) {
+      float r = radius * sin(newK * angle);
+      float x = r * cos(angle);
+      float y = r * sin(angle);
+      fill((angle * 180 / PI + timer * 2) % 360, 80, 100, 60); // dynamic colors
+      ellipse(x, y, 16, 28); 
+      
+      float xCor = xPos + cos(rotation)*x - sin(rotation)*y;
+      float yCor = yPos + sin(rotation)*x + cos(rotation)*y;
+      for (Character c : chars) {
+        if (c.damageCD == 0 && c.isAlive) {
+          if (xCor >= c.xPos && xCor <= c.xPos + c.hitboxWidth && 
+          yCor >= c.yPos && yCor <= c.yPos + c.hitboxLength) {
+            c.lives--;
+            c.damageCD = 30;
+            c.isAlive = c.lives > 0;
+          }
+        }
+      }
+    }
+    popMatrix();
+    popStyle();
+  } */
 
   void giantBeamPhase() {
+    pushStyle();
     int startTime = 100;
     int cycleLength = 200;
     if (timer < startTime) return; 
@@ -217,6 +256,7 @@ public class Boss {
         }
       }
     }
+    popStyle();
   }
 
   void trapPlayers() {

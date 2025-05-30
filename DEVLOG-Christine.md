@@ -47,10 +47,12 @@ Future Improvements:
 - Fix boss positioning and interaction with platforms
 - Defeat/Victory screens in Boss Mode
 
-### 2025-05-29 -
-Worked for 40 minutes. Added new beam patterns in first boss phase and applied damage for each. Modified lengths for each phase. Wrote code to remove boss projectiles from ArrayList once off-screen.
+### 2025-05-29 - Enhanced Boss Moves + Bug Fixing
+Worked for 1.5 hours. Added new beam patterns in first boss phase and applied damage for each. Modified lengths for each phase. Wrote code to remove boss projectiles from ArrayList once off-screen. Fixed bug causing players to sink through bottom platform after crouching. Integrated flower beam attack/visuals during immune phase and applied damage. Constrained lower limit for boss HP to mantain format of HP bar.
 
 Future Improvements:
 - Modify platform positions for Boss Mode
 - Include s/DOWN keys to function as sneak button (decrease hitbox height + movement speed)
 - Tune difficulty of Boss Mode
+
+**!!!** Fix bug where grenades bring boss to negative lives in 1 hit **!!!**.

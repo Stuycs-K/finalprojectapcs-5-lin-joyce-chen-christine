@@ -74,7 +74,9 @@ public class Character {
   }
   
   void unCrouch() {
+    float oldLength = hitboxLength;
     hitboxLength = maxLength;
+    yPos -= (hitboxLength - oldLength);
     walkspeed = maxWalkSpeed;
   }
 
