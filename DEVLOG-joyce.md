@@ -52,3 +52,11 @@ things to consider for next coding session
 - create an escape menu so that the game can either be restarted or ended before characters die
 - make it so that when boss projectiles leave the screen, they are removed from ArrayList
 - fix any collision errors with projectiles
+
+### 2025-05-29 - Menu and Crouching - 1.5 hours
+A menu system was implemented where when the player presses the space bar, they have the option to either exit the game or to restart the game they are currently in (pressing the spacebar again closes this). A preliminary crouching system was also implemented along with minor tweaks to boss phase to only begin after all projectiles have left the screen.
+
+things to consider for next coding session
+- make bullets leave faster after immune phase has ended!
+- start implementing death system in boss where the dead character starts floating up slowly in a straight line (prereq for creating revive system)
+- add the stock explosion to death animation in versus mode!
