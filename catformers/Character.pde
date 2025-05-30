@@ -4,7 +4,8 @@ public class Character {
   int damageCD;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
-  float xVelocity, yVelocity, xPos, yPos, deathSlope;
+  float xVelocity, yVelocity, xPos, yPos;
+  float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
   boolean inverseControls, isTrapped;
   int spamCount;

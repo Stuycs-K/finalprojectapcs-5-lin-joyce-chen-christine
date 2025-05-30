@@ -58,6 +58,7 @@ public class Boss {
       if (phase == 0) {
         if (timer == 1200) nextPhase();
       } else if (timer == 600) {
+        homingPhase = false;
         nextPhase();
       }
     }
@@ -66,8 +67,8 @@ public class Boss {
       giantBeamPhase();
     } else if (phase == 1  && !gamePause) {
       immunePhase();      
-      //flowerBeams(300.0, 2, 90); 
-      //flowerBeams(200.0, 2, 30); 
+      flowerBeams(300.0, 2, 90); 
+      flowerBeams(200.0, 2, 30); 
       inverseControls();
     } else if (phase == 2 && !gamePause) {
       if (bossProjectiles.size() == 0 || homingPhase) {
@@ -135,7 +136,7 @@ public class Boss {
   }
   
   // based off of polar rose curves
- /* void flowerBeams(float radius, float k, float petals) {
+  void flowerBeams(float radius, float k, float petals) {
     pushStyle();
     pushMatrix(); // prevent interference
     translate(xPos, yPos);
@@ -167,7 +168,7 @@ public class Boss {
     }
     popMatrix();
     popStyle();
-  } */
+  } 
 
   void giantBeamPhase() {
     pushStyle();
