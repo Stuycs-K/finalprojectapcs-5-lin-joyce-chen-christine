@@ -176,6 +176,9 @@ void draw() {
           if (p1Keys['w'] && !chars.get(0).ifFalling) {
             chars.get(0).addJumpCharge();
           }
+          else if (p1Keys['s']) {
+            chars.get(0).crouch();
+          }
           if (p1Keys['q']) {
             chars.get(0).aim(true);
           } else if (p1Keys['e']) {
@@ -197,6 +200,9 @@ void draw() {
           }
           if (p2Keys[UP] && !chars.get(1).ifFalling) {
             chars.get(1).addJumpCharge();
+          }
+          else if (p1Keys[DOWN]) {
+            chars.get(1).crouch();
           }
           if (p2Keys[',']) {
             chars.get(1).aim(true);
@@ -254,6 +260,10 @@ void keyReleased() {
       if (key == 'd' || key == 'a') {
         chars.get(0).isWalking = false;
       } 
+      
+      if (key == 's') {
+        chars.get(0).unCrouch();
+      }
   
       // ==== Player 2 ====
       if (numPlayer.equals("2")) {
@@ -263,6 +273,10 @@ void keyReleased() {
         // turn walking animation off
         if (keyCode == RIGHT || keyCode == LEFT) {
           chars.get(1).isWalking = false;
+        } 
+        
+        if (keyCode == DOWN) {
+          chars.get(1).unCrouch();
         } 
       }
     }
