@@ -52,7 +52,9 @@ public class Boss {
 
   void update() {
     timer++;
-    if (timer == 1200) { // every minute
+    if (phase == 0) {
+      if (timer == 1200) nextPhase();
+    } else if (timer == 600) {
       nextPhase();
     }
 
@@ -168,7 +170,7 @@ public class Boss {
             boolean hit = false;
             if (currentCycle == 0) {
               hit = (c.yPos + c.hitboxLength > height/2 - 120 - 40 && c.yPos < height/2 - 120 + 40) ||
-                    (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40);
+              (c.yPos + c.hitboxLength > height/2 + 120 - 40 && c.yPos < height/2 + 120 + 40);
             } else if (currentCycle == 1) {
               hit = (c.yPos + c.hitboxLength > height/2 - 40 - 40 && c.yPos < height/2 - 40 + 40) ||
               (c.yPos + c.hitboxLength > height/2 + 40 - 40 && c.yPos < height/2 + 40 + 40);
