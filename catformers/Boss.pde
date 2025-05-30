@@ -62,7 +62,8 @@ public class Boss {
     }
 
     if (phase == 0) {
-      giantBeamPhase();
+      immunePhase();
+      flowerBeams(300.0, 2, 60); 
     } else if (phase == 1  && !gamePause) {
       immunePhase();
       inverseControls();
@@ -102,7 +103,7 @@ public class Boss {
     }
     
   }
-
+ 
   void nextPhase() {
     phase = (phase + 1) % 3; // # of phases!
     timer = 0;
@@ -117,7 +118,7 @@ public class Boss {
   void immunePhase() {
     immune = true;
     if (timer % 15 == 0) {
-      int count = 6;
+      int count = 8;
       for (int i = 0; i < count; i++) {
         float angle = radians((360.0/count) * i + timer);
         bossProjectiles.add(new Projectiles("boss", null, angle, 5, xPos, yPos));
@@ -128,6 +129,19 @@ public class Boss {
         p.xVelocity *= 1.05;
         p.yVelocity *= 1.05;
       }
+    }
+  }
+  
+  void flowerBeams(float radius, float k, float petals) {
+    colorMode(HSB, 360, 100, 100, 100); // change colormode to HSB
+    noStroke();
+    float inc = TWO_PI / petals;
+    for (float angle = 0; angle <= TWO_PI; angle += inc) {
+      float r = radius * sin(k * angle);
+      float x = r * cos(angle);
+      float y = r * sin(angle);
+      fill((angle * 180 / PI + frameCount * 2) % 360, 80, 100, 60); // dynamic colors
+      ellipse(x, y, 16, 28); 
     }
   }
 
