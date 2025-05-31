@@ -170,9 +170,19 @@ void draw() {
     }
     
     if (c.inverseControls) {
-      fill(255, 255, 0);
-      textSize(18);
-      text("INVERTED CONTROLS!", c.xPos, c.yPos - 40);
+      pushStyle();
+      float bW = 160;
+      float bH = 30;
+      fill(0, 0, 0, 120);
+      noStroke();
+      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+      textAlign(CENTER, CENTER);
+      textSize(16);
+      fill(255);
+      text("Inverse Controls!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+      float size = 40;
+      image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
+      popStyle();
     }
     
   }
