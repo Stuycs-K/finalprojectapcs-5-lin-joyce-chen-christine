@@ -60,3 +60,9 @@ things to consider for next coding session
 - make bullets leave faster after immune phase has ended!
 - start implementing death system in boss where the dead character starts floating up slowly in a straight line (prereq for creating revive system)
 - add the stock explosion to death animation in versus mode!
+
+### 2025-05-30 - Animations and small tweaks - 2.5 hours
+Death animation was completed and an explosion is set to play everytime a player dies in versus mode. An open mouth was added to appear everytime a player shoots (to both walking and idle animations). Small tweaks to the game, such as preliminary platform positions for boss mode and the moving of player 2's hp bar to the right, was made.
+
+- work on completing the weekend's to do list!!
+- note for Christine: check how long the mouth stays open for both walking and idle sprites + adjust using shootTick if too fast/slow!! :) 
