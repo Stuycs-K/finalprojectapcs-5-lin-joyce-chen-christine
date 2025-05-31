@@ -101,34 +101,47 @@ public class Projectiles {
   }
   
   boolean checkHit() {
-    for (Character c : chars) {
-      if (!(c == player && bounceCount == 0)) { 
-        if (!type.equals("grenade") || !exploded) {
-          if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
-              yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
-            c.lives -= 1;
-            if (type.equals("grenade")) {
-              exploded = true;
+    if (currmode.equals("Versus")) {
+      for (Character c : chars) {
+        if (!(c == player && bounceCount == 0)) { 
+          if (!type.equals("grenade") || !exploded) {
+            if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+                yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+              c.lives -= 1;
+              if (type.equals("grenade")) {
+                exploded = true;
+              }
+              return true;
             }
-            return true;
           }
-        }
-        else if (exploded) {
-          if(xPos + size*2 > c.xPos && xPos < c.xPos + c.hitboxWidth &&
-              yPos + size*2 > c.yPos && yPos < c.yPos + c.hitboxLength) {
-            print("runs");
-            c.lives -= 1;
-            return true;
+          else if (exploded) {
+            if(xPos + size*2 > c.xPos && xPos < c.xPos + c.hitboxWidth &&
+                yPos + size*2 > c.yPos && yPos < c.yPos + c.hitboxLength) {
+              c.lives -= 1;
+              return true;
+            }
           }
         }
       }
     }
     
     if (currmode.equals("Boss") && !boss.immune && player != null) {
-      if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&
-      yPos >= boss.yPos - boss.hitboxLength/2 && yPos <= boss.yPos + boss.hitboxLength/2) {
-        boss.lives--;
-        return true;
+      if (!type.equals("grenade") || !exploded) {
+        if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&
+              yPos >= boss.yPos - boss.hitboxLength/2 && yPos <= boss.yPos + boss.hitboxLength/2) {
+          boss.lives -= 1;
+          if (type.equals("grenade")) {
+            exploded = true;
+          }
+          return true;
+        }
+      }
+      else if (exploded) {
+        if(xPos + size*2 >= boss.xPos - boss.hitboxWidth/2 && xPos + size*2 <= boss.xPos + boss.hitboxWidth/2 &&
+            yPos + size*2 >= boss.yPos - boss.hitboxLength/2 && yPos + size*2 <= boss.yPos + boss.hitboxLength/2) {
+          boss.lives -= 1;
+          return true;
+        }
       }
     }
     
