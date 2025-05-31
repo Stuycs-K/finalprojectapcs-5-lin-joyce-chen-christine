@@ -388,21 +388,17 @@ void displayScreen() {
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
       
-      platforms.add(new Platforms(0, height - 125, 200)); 
-      platforms.add(new Platforms(350, height - 125, 200));
-      platforms.add(new Platforms(700, height - 125, 200));
-      platforms.add(new Platforms(1050, height - 125, width-1050));
+      platforms.add(new Platforms(0, height - 175, 284)); 
+      platforms.add(new Platforms(0, height - 450, 284));
       
-      platforms.add(new Platforms(250, height - 250, 50));
-      platforms.add(new Platforms(600, height - 250, 50));
-      platforms.add(new Platforms(950, height - 250, 50));
+      platforms.add(new Platforms(498, height - 175, 284)); 
+      platforms.add(new Platforms(498, height - 450, 284)); 
       
-      platforms.add(new Platforms(0, height - 375, 200)); 
-      platforms.add(new Platforms(350, height - 375, 200));
-      platforms.add(new Platforms(700, height - 375, 200));
-      platforms.add(new Platforms(1050, height - 375, width-1050));
+      platforms.add(new Platforms(996, height - 175, 284)); 
+      platforms.add(new Platforms(996, height - 450, 284));
       
-      platforms.add(new Platforms(250, height - 525, 750));
+      platforms.add(new Platforms(304, height - 312, 174)); 
+      platforms.add(new Platforms(802, height - 312, 174)); 
     }
   }
   else if (currmode.equals("Loss")) {
