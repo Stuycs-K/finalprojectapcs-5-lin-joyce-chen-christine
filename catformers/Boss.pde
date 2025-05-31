@@ -296,7 +296,7 @@ public class Boss {
         float closestDist = sqrt(pow(closestX - p.xPos,2)+pow(closestY - p.yPos,2));
         for (Character c : chars) {
           float dist = sqrt(pow(c.xPos - p.xPos,2)+pow(c.yPos - p.yPos,2));
-          if (dist > closestDist) {
+          if (c.isAlive && dist > closestDist) {
             closestDist = dist;
           }
         }

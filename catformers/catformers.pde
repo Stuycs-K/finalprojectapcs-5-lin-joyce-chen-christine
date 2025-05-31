@@ -184,7 +184,7 @@ void draw() {
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
       if (!gamePause) {
-        if (!chars.get(0).isTrapped) {
+        if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
           if (p1Keys['a']) {
             chars.get(0).move(false);
@@ -210,7 +210,7 @@ void draw() {
         }
   
         // ===== Player 2 =====
-        if (numPlayer.equals("2") && !chars.get(1).isTrapped) {
+        if (numPlayer.equals("2") && !chars.get(1).isTrapped && chars.get(1).isAlive) {
           if (p2Keys[LEFT]) {
             chars.get(1).move(false);
             chars.get(1).isWalking = true;
@@ -273,7 +273,7 @@ void keyReleased() {
       }
      if (!gamePause) {
       // ==== Player 1 ====
-      if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && key == 'w') {
+      if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && chars.get(0).isAlive && key == 'w') {
         chars.get(0).jump();
       }
       // turn walking animation off
@@ -287,7 +287,7 @@ void keyReleased() {
   
       // ==== Player 2 ====
       if (numPlayer.equals("2")) {
-        if (!chars.get(1).isTrapped && !chars.get(1).ifFalling && keyCode == UP) {
+        if (!chars.get(1).isTrapped && !chars.get(1).ifFalling && chars.get(1).isAlive && keyCode == UP) {
           chars.get(1).jump();
         }
         // turn walking animation off
