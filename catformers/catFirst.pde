@@ -33,7 +33,7 @@ public class catFirst extends Character {
   
   void setAnimation() {
     if (facingRight) {
-      if (shootTick > 0 && shootTick < 40) {
+      if (shootTick > 0 && shootTick < 90) {
         PImage[] frames = cat1walkOpenR.getPImages();
         image(frames[cat1walkR.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
         shootTick++;
@@ -44,7 +44,7 @@ public class catFirst extends Character {
       }
     }
     else {
-      if (shootTick > 0 && shootTick < 40) {
+      if (shootTick > 0 && shootTick < 90) {
         PImage[] frames = cat1walkOpenL.getPImages();
         image(frames[cat1walkL.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
         shootTick++;
