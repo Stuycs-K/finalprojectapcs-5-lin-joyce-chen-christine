@@ -426,7 +426,7 @@ void displayScreen() {
 
     if (!modeInitialized) {
       modeInitialized = true;
-      boss = new Boss(width / 2, 100);
+      boss = new Boss(640, height - 522);
       chars.add(new catFirst(20.0, 20.0, 60, 200.0, height - 100)); // temp for testing
       if (numPlayer.equals("2")) {
         Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, height - 100));
