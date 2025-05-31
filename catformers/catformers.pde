@@ -285,6 +285,10 @@ void keyPressed() {
   if (!gameEnd) {
     for (Character c : chars) {
       if (c.isTrapped) {
+        if (c.jumpCharge > 0 || c.hitboxLength < c.maxLength) {
+          c.jumpCharge = 0;
+          c.unCrouch();
+        }
         c.spamCount++;
         if (c.spamCount >= 10) {
           c.isTrapped = false;
