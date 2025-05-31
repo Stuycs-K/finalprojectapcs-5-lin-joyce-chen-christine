@@ -57,5 +57,9 @@ Future Improvements:
 
 **!!!** Fix bug where grenades bring boss to negative lives in 1 hit **!!!**.
 
-### 2025-05-30 -
-Worked for .. .
+### 2025-05-30 - Graphics/Tuning + Bug Fixing
+Worked for 2 hours. Improved graphics and text display warnings for trapped and inverse controls state in Boss Mode. Moved boss to rest on top of platform; moved aim line to match mouth area. Modified shootTick to decrease animation speed for shooting and decreased base movement/bullet speed. Fixed bug where falling off platform + releasing jump concurrently leads to jump charge becoming stuck. Reset jump bar/crouching after trapped state in Boss Mode and fixed bug where holding same key counts as spamming when escaping from trap. Drew basic outline for alien cat and bomber cat sprites.  
+
+Future Improvements:
+- Finish drawing alien and bomber cat sprites
+- Weekend To-Do list with Joyce!!
