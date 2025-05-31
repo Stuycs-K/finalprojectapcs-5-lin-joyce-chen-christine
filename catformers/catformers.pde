@@ -147,13 +147,15 @@ void draw() {
   
   if (gamePause) {
     fill(0);
+    stroke(255);
+    strokeWeight(5);
     rect(width/3.25, height/3.25, 500, 300);
+    strokeWeight(1);
+    stroke(0);
     fill(255);
     textSize(70);
     text("MENU",width/2, height/2.20);
     textSize(40);
-    fill(255,0,0);
-    fill(255);
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
           mouseY >= height/1.80 - 20 && mouseY <= height/1.80 + 20) {
       text("> exit <",width/2, height/1.80);
@@ -378,9 +380,9 @@ void displayScreen() {
     if (!modeInitialized) {
       modeInitialized = true;
       boss = new Boss(width / 2, 100);
-      chars.add(new catFirst(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+      chars.add(new catFirst(20.0, 20.0, 60, 200.0, height - 100)); // temp for testing
       if (numPlayer.equals("2")) {
-        Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, 200.0));
+        Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, height - 100));
         p2.facingRight = false;
         p2.aimAngle = 180.0;
         chars.add(p2);
@@ -400,6 +402,18 @@ void displayScreen() {
       platforms.add(new Platforms(304, height - 312, 174)); 
       platforms.add(new Platforms(802, height - 312, 174)); 
     }
+    
+    int deathCount = 0;
+    for (Character c : chars) {
+      if (!c.isAlive) {
+        deathCount+=1; 
+      }
+    }
+    if (deathCount > 1) {
+      currmode = "Loss";
+    } else {
+      deathCount = 0;
+    }
   }
   else if (currmode.equals("Loss")) {
 
@@ -413,7 +427,11 @@ void displayScreen() {
     }
     String winText = "Player ";
     fill(0);
+    stroke(255);
+    strokeWeight(5);
     rect(width/3.25, height/3.25, 500, 300);
+    strokeWeight(1);
+    stroke(0);
     for (Character c : chars) {
       if (c.isAlive) {
         winText += chars.indexOf(c) + 1;
