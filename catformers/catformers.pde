@@ -30,6 +30,7 @@ final int MAX_KEY = 128;
 final int MAX_KEYCODE = 256;
 boolean[] p1Keys = new boolean[MAX_KEY];
 boolean[] p2Keys = new boolean[MAX_KEYCODE];
+boolean[] spamKeys = new boolean[MAX_KEYCODE];
 
 void setup() {
   size(1280, 720); // change size of screen if we need to
@@ -283,16 +284,19 @@ void keyPressed() {
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
   
   if (!gameEnd) {
-    for (Character c : chars) {
-      if (c.isTrapped) {
-        if (c.jumpCharge > 0 || c.hitboxLength < c.maxLength) {
-          c.jumpCharge = 0;
-          c.unCrouch();
-        }
-        c.spamCount++;
-        if (c.spamCount >= 10) {
-          c.isTrapped = false;
-          c.spamCount = 0;
+    if (!spamKeys[keyCode]) {
+      spamKeys[keyCode] = true;
+      for (Character c : chars) {
+        if (c.isTrapped) {
+          if (c.jumpCharge > 0 || c.hitboxLength < c.maxLength) {
+            c.jumpCharge = 0;
+            c.unCrouch();
+          }
+          c.spamCount++;
+          if (c.spamCount >= 10) {
+            c.isTrapped = false;
+            c.spamCount = 0;
+          }
         }
       }
     }
@@ -309,6 +313,7 @@ void keyPressed() {
 void keyReleased() {
   if (key < MAX_KEY) p1Keys[key] = false;
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
+  if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
   
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
       if (key == ' ') {
