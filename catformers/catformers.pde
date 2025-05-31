@@ -19,6 +19,8 @@ int deathFrame;
 // walk animations
 Gif cat1walkR;
 Gif cat1walkL;
+Gif cat1walkOpenR;
+Gif cat1walkOpenL;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -52,6 +54,12 @@ void setup() {
   cat1walkL = new Gif(this,"cat1walkL.gif");
   cat1walkR.play();
   cat1walkL.play();
+  
+  // shooting frame
+  cat1walkOpenR = new Gif(this, "cat1walkOpenR.gif");
+  cat1walkOpenL = new Gif(this, "cat1walkOpenL.gif");
+  cat1walkOpenR.play();
+  cat1walkOpenL.play();
   
   modeInitialized = false;
   selectScreen = false;
@@ -147,13 +155,15 @@ void draw() {
   
   if (gamePause) {
     fill(0);
+    stroke(255);
+    strokeWeight(5);
     rect(width/3.25, height/3.25, 500, 300);
+    strokeWeight(1);
+    stroke(0);
     fill(255);
     textSize(70);
     text("MENU",width/2, height/2.20);
     textSize(40);
-    fill(255,0,0);
-    fill(255);
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
           mouseY >= height/1.80 - 20 && mouseY <= height/1.80 + 20) {
       text("> exit <",width/2, height/1.80);
@@ -340,7 +350,7 @@ void displayScreen() {
   else if (currmode.equals("Versus")) {
     image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
-    image(loadImage("p2.png"), 20, 80, 60, 44.4);
+    image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
       modeInitialized = true;
       chars.add(new catFirst(20.0, 20.0, 60, 100.0, height - 125)); // temp for testing
@@ -378,9 +388,9 @@ void displayScreen() {
     if (!modeInitialized) {
       modeInitialized = true;
       boss = new Boss(width / 2, 100);
-      chars.add(new catFirst(20.0, 20.0, 60, 200.0, 200.0)); // temp for testing
+      chars.add(new catFirst(20.0, 20.0, 60, 200.0, height - 100)); // temp for testing
       if (numPlayer.equals("2")) {
-        Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, 200.0));
+        Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, height - 100));
         p2.facingRight = false;
         p2.aimAngle = 180.0;
         chars.add(p2);
@@ -388,21 +398,29 @@ void displayScreen() {
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
       
-      platforms.add(new Platforms(0, height - 125, 200)); 
-      platforms.add(new Platforms(350, height - 125, 200));
-      platforms.add(new Platforms(700, height - 125, 200));
-      platforms.add(new Platforms(1050, height - 125, width-1050));
+      platforms.add(new Platforms(0, height - 175, 284)); 
+      platforms.add(new Platforms(0, height - 450, 284));
       
-      platforms.add(new Platforms(250, height - 250, 50));
-      platforms.add(new Platforms(600, height - 250, 50));
-      platforms.add(new Platforms(950, height - 250, 50));
+      platforms.add(new Platforms(498, height - 175, 284)); 
+      platforms.add(new Platforms(498, height - 450, 284)); 
       
-      platforms.add(new Platforms(0, height - 375, 200)); 
-      platforms.add(new Platforms(350, height - 375, 200));
-      platforms.add(new Platforms(700, height - 375, 200));
-      platforms.add(new Platforms(1050, height - 375, width-1050));
+      platforms.add(new Platforms(996, height - 175, 284)); 
+      platforms.add(new Platforms(996, height - 450, 284));
       
-      platforms.add(new Platforms(250, height - 525, 750));
+      platforms.add(new Platforms(304, height - 312, 174)); 
+      platforms.add(new Platforms(802, height - 312, 174)); 
+    }
+    
+    int deathCount = 0;
+    for (Character c : chars) {
+      if (!c.isAlive) {
+        deathCount+=1; 
+      }
+    }
+    if (deathCount > 1) {
+      currmode = "Loss";
+    } else {
+      deathCount = 0;
     }
   }
   else if (currmode.equals("Loss")) {
@@ -417,7 +435,11 @@ void displayScreen() {
     }
     String winText = "Player ";
     fill(0);
+    stroke(255);
+    strokeWeight(5);
     rect(width/3.25, height/3.25, 500, 300);
+    strokeWeight(1);
+    stroke(0);
     for (Character c : chars) {
       if (c.isAlive) {
         winText += chars.indexOf(c) + 1;

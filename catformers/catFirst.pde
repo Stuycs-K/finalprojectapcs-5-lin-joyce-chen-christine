@@ -10,19 +10,49 @@ public class catFirst extends Character {
   
   void flip() {
     if (facingRight) {
-      sprite = loadImage("cat1idleR.png");
+      if (shootTick > 0 && shootTick < 4) {
+        sprite = loadImage("cat1shootR.png");
+        shootTick++;
+      }
+      else {
+        sprite = loadImage("cat1idleR.png");
+        shootTick = 0;
+      }
     }
     else {
-      sprite = loadImage("cat1idleL.png");
+      if (shootTick > 0 && shootTick < 4) {
+        sprite = loadImage("cat1shootL.png");
+        shootTick++;
+      }
+      else {
+        sprite = loadImage("cat1idleL.png");
+        shootTick = 0;
+      }
     }
   }
   
   void setAnimation() {
     if (facingRight) {
-      image(cat1walkR, xPos, yPos, hitboxWidth, hitboxLength);
+      if (shootTick > 0 && shootTick < 40) {
+        PImage[] frames = cat1walkOpenR.getPImages();
+        image(frames[cat1walkR.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick++;
+      }
+      else {
+        image(cat1walkR, xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick = 0;
+      }
     }
     else {
-      image(cat1walkL, xPos, yPos, hitboxWidth, hitboxLength);
+      if (shootTick > 0 && shootTick < 40) {
+        PImage[] frames = cat1walkOpenL.getPImages();
+        image(frames[cat1walkL.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick++;
+      }
+      else {
+        image(cat1walkL, xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick = 0;
+      }
     }
   }
   
@@ -36,8 +66,9 @@ public class catFirst extends Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     
-    projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    projectiles.add(new Projectiles("normal", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
+    shootTick++;
     }
   }
   
@@ -57,7 +88,7 @@ public class catFirst extends Character {
         
     // display lives
     for (int x = 0; x < lives; x++) {
-      image(loadImage("heart.png"), 90+35*x, 35+50*(chars.indexOf(this)), 30,30);
+      image(loadImage("heart.png"), (width*chars.indexOf(this))+(pow(-1,chars.indexOf(this)+2))*(90+(40*chars.indexOf(this))+35*x), 35, 30,30);
     }
     flip();
     if (!isWalking) {

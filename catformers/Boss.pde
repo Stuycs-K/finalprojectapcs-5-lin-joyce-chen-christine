@@ -120,7 +120,7 @@ public class Boss {
 
   void immunePhase() {
     immune = true;
-    if (timer % 15 == 0) {
+    if (timer % 13 == 0) {
       int count = 8;
       for (int i = 0; i < count; i++) {
         float angle = radians((360.0/count) * i + timer);
