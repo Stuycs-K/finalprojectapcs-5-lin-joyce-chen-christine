@@ -253,7 +253,7 @@ public class Character {
     } else {
       mouthX = xPos + hitboxWidth * 0.2;
     }
-    float mouthY = yPos+ hitboxLength * 0.47;
+    float mouthY = yPos + hitboxLength * 0.35;
     line(mouthX, mouthY, mouthX + cos(angle) * len, mouthY + sin(angle) * len);
     
     rect(xPos, yPos, hitboxWidth, hitboxLength);
