@@ -57,7 +57,7 @@ public class catFirst extends Character {
         
     // display lives
     for (int x = 0; x < lives; x++) {
-      image(loadImage("heart.png"), 90+35*x, 35+50*(chars.indexOf(this)), 30,30);
+      image(loadImage("heart.png"), (width*chars.indexOf(this))+(pow(-1,chars.indexOf(this)+2))*(90+(40*chars.indexOf(this))+35*x), 35, 30,30);
     }
     flip();
     if (!isWalking) {

@@ -340,7 +340,7 @@ void displayScreen() {
   else if (currmode.equals("Versus")) {
     image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
-    image(loadImage("p2.png"), 20, 80, 60, 44.4);
+    image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
       modeInitialized = true;
       chars.add(new catFirst(20.0, 20.0, 60, 100.0, height - 125)); // temp for testing
