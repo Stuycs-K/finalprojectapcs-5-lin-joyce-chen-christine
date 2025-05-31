@@ -427,9 +427,9 @@ void displayScreen() {
     if (!modeInitialized) {
       modeInitialized = true;
       boss = new Boss(640, height - 522);
-      chars.add(new catFirst(20.0, 20.0, 60, 200.0, height - 100)); // temp for testing
+      chars.add(new catFirst(15.0, 15.0, 60, 200.0, height - 100)); // temp for testing
       if (numPlayer.equals("2")) {
-        Character p2 = (new catFirst(20.0, 20.0, 60, 900.0, height - 100));
+        Character p2 = (new catFirst(15.0, 15.0, 60, 900.0, height - 100));
         p2.facingRight = false;
         p2.aimAngle = 180.0;
         chars.add(p2);
