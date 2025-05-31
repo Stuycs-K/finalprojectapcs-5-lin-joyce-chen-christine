@@ -19,6 +19,8 @@ int deathFrame;
 // walk animations
 Gif cat1walkR;
 Gif cat1walkL;
+Gif cat1walkOpenR;
+Gif cat1walkOpenL;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -52,6 +54,12 @@ void setup() {
   cat1walkL = new Gif(this,"cat1walkL.gif");
   cat1walkR.play();
   cat1walkL.play();
+  
+  // shooting frame
+  cat1walkOpenR = new Gif(this, "cat1walkOpenR.gif");
+  cat1walkOpenL = new Gif(this, "cat1walkOpenL.gif");
+  cat1walkOpenR.play();
+  cat1walkOpenL.play();
   
   modeInitialized = false;
   selectScreen = false;

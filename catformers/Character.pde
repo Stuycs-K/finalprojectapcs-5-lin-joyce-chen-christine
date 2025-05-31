@@ -1,7 +1,7 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxLength;
   int lives, jumpCharge, bulletCD, maxBulletCD;
-  int damageCD;
+  int damageCD, shootTick;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos;
@@ -44,6 +44,9 @@ public class Character {
     facingRight = true;
     isAlive = true;
     isWalking = false;
+    
+    // animation variables
+    shootTick = 0;
     
     // boss effects
     inverseControls = false;
