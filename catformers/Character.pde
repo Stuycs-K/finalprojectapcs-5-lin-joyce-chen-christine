@@ -210,11 +210,10 @@ public class Character {
     if (!onGround) {
       ifFalling = true;
       if (jumpCharge > 0) {
-        jumpCharge--;
-      } else {
         jumpCharge = 0;
-        yVelocity += g;
+        hitboxLength = maxLength;
       }
+      yVelocity += g;
     }
 
     if (yPos + hitboxLength > height) {
