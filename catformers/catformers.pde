@@ -15,6 +15,8 @@ PImage title;
 PImage bg;
 PImage[] deathFrames;
 int deathFrame;
+PImage warningSign;
+PImage blankSign;
 
 // walk animations
 Gif cat1walkR;
@@ -48,6 +50,9 @@ void setup() {
   deathFrames = Gif.getPImages(this, "explosion.gif");
   deathFrame = 0;
   deathFinish = false;
+  
+  warningSign = loadImage("warningSign.png");
+  blankSign = loadImage("blankSign.png");
   
   // walking animation
   cat1walkR = new Gif(this,"cat1walkR.gif");
@@ -135,9 +140,33 @@ void draw() {
     }
     
     if(c.isTrapped) {
-      fill(255, 0, 0);
-      textSize(24);
-      text("TRAPPED! Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+      pushStyle();
+      float bW = 180;
+      float bH = 38;
+      fill(0, 0, 0, 120);
+      noStroke();
+      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
+      textAlign(CENTER, CENTER);
+      textSize(16);
+      fill(255);
+      text("TRAPPED!", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+      text("Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
+
+      // trap cage bars
+      stroke(0);
+      strokeWeight(2);
+      float x = c.xPos - 4, y = c.yPos - 4, w = c.hitboxWidth + 8, h = c.hitboxLength + 8;
+      for (int i = 1; i <= 5; i++) {
+        float barX = x + (w/4) * (i - .5) - 7;
+        line(barX, y, barX, y + h);
+      }
+      line(x, y, x + w, y);
+      line(x, y + h, x + w, y + h);
+      // warning sign
+      float size = 40;
+      image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 100, size, size);
+      
+      popStyle();
     }
     
     if (c.inverseControls) {
