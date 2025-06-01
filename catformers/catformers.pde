@@ -4,7 +4,7 @@ ArrayList<Character> chars;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 Boss boss;
-String currmode, numPlayer;
+String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, gameEnd, gamePause, deathFinish;
 screenSelect s;
 
@@ -435,6 +435,7 @@ void displayScreen() {
     
     if (gameEnd) {
       currmode = "Victory";
+      prevMode = "Versus";
     }
   }
   else if (currmode.equals("Boss")) {
@@ -477,10 +478,16 @@ void displayScreen() {
       }
     }
     if (deathCount == chars.size()) {
-      currmode = "Loss";
       gameEnd = true;
+      currmode = "Loss";
     } else {
       deathCount = 0;
+    }
+    
+    if (boss.lives <= 0) {
+      gameEnd = true;
+      currmode = "Victory";
+      prevMode = "Boss";
     }
   }
   else if (currmode.equals("Loss")) {
@@ -508,7 +515,7 @@ void displayScreen() {
     stroke(0);
     
     fill(255);
-    textSize(70);
+    textSize(80);
     text("You Lose :(",width/2, height/2);
     
     textSize(20);
@@ -521,28 +528,43 @@ void displayScreen() {
     for (Platforms p : platforms) {
       p.display();
     }
-    String winText = "Player ";
-    fill(0);
-    stroke(255);
-    strokeWeight(5);
-    rect(width/3.25, height/3.25, 500, 300);
-    strokeWeight(1);
-    stroke(0);
     for (Character c : chars) {
       c.display();
     }
-    for (Character c : chars) {
-      if (c.isAlive) {
-        winText += chars.indexOf(c) + 1;
+    if (prevMode.equals("Versus")) {
+      String winText = "Player ";
+      fill(0);
+      stroke(255);
+      strokeWeight(5);
+      rect(width/3.25, height/3.25, 500, 300);
+      strokeWeight(1);
+      stroke(0);
+      for (Character c : chars) {
+        if (c.isAlive) {
+          winText += chars.indexOf(c) + 1;
+        }
+        else {
+          deathAnimation(c);
+        }
       }
-      else {
-        deathAnimation(c);
-      }
+      fill(255);
+      textSize(70);
+      text(winText,width/2, height/2.20);
+      text("wins!",width/2, height/1.80);
+    } else {
+      boss.update();
+      boss.display();
+      fill(0);
+      stroke(255);
+      strokeWeight(5);
+      rect(width/3.25, height/3.25, 500, 300);
+      strokeWeight(1);
+      stroke(0);
+      
+      fill(255);
+      textSize(80);
+      text("You Win :D",width/2, height/2);
     }
-    fill(255);
-    textSize(70);
-    text(winText,width/2, height/2.20);
-    text("wins!",width/2, height/1.80);
     
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
