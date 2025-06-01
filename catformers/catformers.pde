@@ -14,7 +14,7 @@ screenSelect s;
 Gif start;
 Gif death;
 PImage title;
-PImage bg;
+PImage bg, bgDark;
 PImage[] deathFrames;
 int deathFrame;
 PImage heartImg;
@@ -49,6 +49,7 @@ void setup() {
   start.play();
   title = loadImage("title.png");
   bg = loadImage("background1.png");
+  bgDark = loadImage("background2.png");
   
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
@@ -77,6 +78,15 @@ void setup() {
 }
 
 void draw() {
+  
+   if (currmode.equals("Boss")) {
+    if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
+      background(bgDark); 
+    } else {
+      background(bg);
+    }
+  }
+  
   displayScreen();
   
   boolean gameOver = currmode.equals("Victory") || currmode.equals("Loss");
@@ -439,7 +449,7 @@ void displayScreen() {
     s.displayCharSelect();
   }
   else if (currmode.equals("Versus")) {
-    image(bg, 0, 0, width, height);
+    background(bg);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
@@ -470,7 +480,6 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Boss")) {
-    image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);

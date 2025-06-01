@@ -3,7 +3,7 @@ public class Boss {
   int phase, timer;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
-  boolean immune, homingPhase;
+  boolean immune, homingPhase, warningPhase;
   ArrayList<Projectiles> bossProjectiles; 
   PImage sprite;
 
@@ -56,7 +56,9 @@ public class Boss {
     if (!gamePause && !gameEnd) {
       timer++;
       if (phase == 0) {
-        if (timer == 1200) nextPhase();
+        if (timer == 1200) {
+          nextPhase();
+        }
       } else if (timer == 600) {
         homingPhase = false;
         nextPhase();
@@ -66,10 +68,14 @@ public class Boss {
     if (phase == 0) {
       giantBeamPhase();
     } else if (phase == 1  && !gamePause && !gameEnd) {
-      immunePhase();      
-      flowerBeams(300.0, 2, 90); 
-      flowerBeams(200.0, 2, 30); 
-      inverseControls();
+      if (timer < 200) {
+        showWarning();
+      } else {
+        immunePhase();      
+        flowerBeams(300.0, 2, 90); 
+        flowerBeams(200.0, 2, 30); 
+        inverseControls();
+      }
     } else if (phase == 2 && !gamePause && !gameEnd) {
       if (bossProjectiles.size() == 0 || homingPhase) {
         teleportFigure8(tpTick);
@@ -115,6 +121,7 @@ public class Boss {
       c.inverseControls = false;
       c.isTrapped = false;
       c.spamCount = 0;
+      background(bg);
     }
   }
 
@@ -134,6 +141,17 @@ public class Boss {
       }
     }
   }
+  
+  void showWarning() { 
+    if (timer % 20 < 10) {
+      float size = 60;
+      image(warningSign, xPos - 250, yPos - 150, size, size);
+      image(warningSign, xPos + 150, yPos - 150, size, size);
+      image(warningSign, xPos - 250, yPos + 150, size, size);
+      image(warningSign, xPos + 150, yPos + 150, size, size);
+    }
+  }
+    
   
   // based off of polar rose curves
   void flowerBeams(float radius, float k, float petals) {
@@ -181,7 +199,7 @@ public class Boss {
     int currentCycle = (timer-startTime) / cycleLength;
     if (currentCycle < 5) {
       int cycleTime = (timer - startTime) % cycleLength;
-      if (cycleTime < 80) {
+      if (cycleTime < 110) {
         if ((cycleTime / 10) % 2 == 0) {
           fill(255, 0, 0, 100);
         } else {
@@ -214,12 +232,12 @@ public class Boss {
         rect(140, 0, 50, height);
       } // ==== Evenly-Spaced Beams ====
       else if (currentCycle == 4) {
-        for (int i = 0; i < width; i += 80) {
+        for (int i = 0; i < width; i += 85) {
           rect(i, 0, 10, height);
         }
       }
       
-      if (cycleTime >= 80) {
+      if (cycleTime >= 110) {
         for (Character c : chars) {
           if (c.damageCD == 0) {
             boolean hit = false;
@@ -242,7 +260,7 @@ public class Boss {
               (c.xPos + c.hitboxWidth > 140 && c.xPos < 190));
             } else if (currentCycle == 4) {
               hit = false;
-              for (int i = 0; i < width; i += 80) {
+              for (int i = 0; i < width; i += 85) {
                 if (c.xPos + c.hitboxWidth > i && c.xPos < i + 10) {
                   hit = true;
                 }
@@ -268,10 +286,10 @@ public class Boss {
   }
 
   void inverseControls() {
-    if (timer == 30) {
+    if (timer == 250) {
       for (Character c : chars) c.inverseControls = true;
     }
-    if (timer == 300) {
+    if (timer == 400) {
       for (Character c : chars) c.inverseControls = false;
     }
   }
