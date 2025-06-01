@@ -18,9 +18,9 @@ public class screenSelect {
     p1Index = 0; p2Index = 0;
     p1Chosen = false; p2Chosen = false;
     
-    charOptions.add(new catFirst(20, 20, 60, 0, height-125));
-    charOptions.add(new catFirst(20, 20, 60, 0, height-125));
-    charOptions.add(new catFirst(20, 20, 60, 0, height-125));
+    charOptions.add(new catFirst(20, 20, 60, 0, 0));
+    charOptions.add(new catFirst(20, 20, 60, 0, 0));
+    charOptions.add(new catFirst(20, 20, 60, 0, 0));
   }
   
   void buttonClicked() {
@@ -84,6 +84,17 @@ public class screenSelect {
       if (numPlayer.equals("2") && i == p2Index) text("P2", x + previewW/2, y + previewH + 60);
       text(desc[i], x + previewW/2, y + previewH + 90);
     }
+  }
+  
+  Character generateChar(int index) {
+    if (index == 0) {
+      return new catFirst(15, 15, 60, 0, height - 125);  // Chill Cat
+    } else if (index == 1) {
+      return new catFirst(15, 15, 60, 0, height - 125); // Alien Cat
+    } else if (index == 2) {
+      return new catFirst(15, 15, 60, 0, height - 125);  // Bomber Cat
+    }
+    return new catFirst(15, 15, 60, 0, height - 125);
   }
   
   void display() {

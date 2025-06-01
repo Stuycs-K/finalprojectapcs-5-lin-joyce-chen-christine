@@ -294,7 +294,7 @@ void keyPressed() {
       if (key == 'a' || key == 'A') s.p1Index = (s.p1Index + s.charOptions.size() - 1) % s.charOptions.size();
       if (key == 'd' || key == 'D') s.p1Index = (s.p1Index + 1) % s.charOptions.size();
       if (key == 'w' || key == 'W') {
-        p1Char = s.charOptions.get(s.p1Index);
+        p1Char = s.generateChar(s.p1Index);
         p1Chosen = true;
       }
     }  
@@ -302,7 +302,7 @@ void keyPressed() {
       if (keyCode == LEFT) s.p2Index = (s.p2Index + s.charOptions.size() - 1) % s.charOptions.size();
       if (keyCode == RIGHT) s.p2Index = (s.p2Index + 1) % s.charOptions.size();
       if (keyCode == UP) {
-        p2Char = s.charOptions.get(s.p2Index);
+        p2Char = s.generateChar(s.p2Index);
         p2Chosen = true;
       }
     }
@@ -310,7 +310,7 @@ void keyPressed() {
       p1Char.xPos = 100;
       chars.add(p1Char);
       if (numPlayer.equals("2")) {
-        p2Char.xPos =1150;
+        p2Char.xPos = 1150;
         p2Char.facingRight = false;
         p2Char.aimAngle = 180;
         chars.add(p2Char);
