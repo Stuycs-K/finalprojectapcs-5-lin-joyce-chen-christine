@@ -26,6 +26,11 @@ Gif cat1walkL;
 Gif cat1walkOpenR;
 Gif cat1walkOpenL;
 
+Gif cat2walkR;
+Gif cat2walkL;
+Gif cat2walkOpenR;
+Gif cat2walkOpenL;
+
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
 final int MAX_KEY = 128;
@@ -63,11 +68,21 @@ void setup() {
   cat1walkR.play();
   cat1walkL.play();
   
+  cat2walkR = new Gif(this,"cat1walkR.gif");
+  cat2walkL = new Gif(this,"cat1walkL.gif");
+  cat2walkR.play();
+  cat2walkL.play();
+  
   // shooting frame
   cat1walkOpenR = new Gif(this, "cat1walkOpenR.gif");
   cat1walkOpenL = new Gif(this, "cat1walkOpenL.gif");
   cat1walkOpenR.play();
   cat1walkOpenL.play();
+  
+  cat2walkOpenR = new Gif(this, "cat1walkOpenR.gif");
+  cat2walkOpenL = new Gif(this, "cat1walkOpenL.gif");
+  cat2walkOpenR.play();
+  cat2walkOpenL.play();
   
   modeInitialized = false;
   selectScreen = false;
@@ -297,7 +312,9 @@ void keyPressed() {
         p1Char = s.generateChar(s.p1Index);
         p1Chosen = true;
       }
-    }  
+    } else if (key == 'w' || key == 'W') {
+      p1Chosen = false;
+    }
     if (numPlayer.equals("2") && !p2Chosen) {
       if (keyCode == LEFT) s.p2Index = (s.p2Index + s.charOptions.size() - 1) % s.charOptions.size();
       if (keyCode == RIGHT) s.p2Index = (s.p2Index + 1) % s.charOptions.size();
@@ -305,6 +322,8 @@ void keyPressed() {
         p2Char = s.generateChar(s.p2Index);
         p2Chosen = true;
       }
+    } else if (p2Chosen && keyCode == UP) {
+      p2Chosen = false;
     }
     if (keyCode == ENTER && ((numPlayer.equals("1") && p1Chosen) || (numPlayer.equals("2") && p1Chosen && p2Chosen))) {
       p1Char.xPos = 100;
