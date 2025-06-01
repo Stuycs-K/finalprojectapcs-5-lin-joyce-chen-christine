@@ -1,4 +1,4 @@
-static PImage idleR, idleL, shootR, shootL;
+static PImage cat1idleR, cat1idleL, cat1shootR, cat1shootL;
 
 public class catFirst extends Character {
     
@@ -9,30 +9,30 @@ public class catFirst extends Character {
   public catFirst (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
     
-    if (idleR == null) idleR = loadImage("cat1idleR.png");
-    if (idleL == null) idleL = loadImage("cat1idleL.png");
-    if (shootR == null) shootR = loadImage("cat1shootR.png");
-    if (shootL == null) shootL = loadImage("cat1shootL.png");
+    if (idleR == null) cat1idleR = loadImage("cat1idleR.png");
+    if (idleL == null) cat1idleL = loadImage("cat1idleL.png");
+    if (shootR == null) cat1shootR = loadImage("cat1shootR.png");
+    if (shootL == null) cat1shootL = loadImage("cat1shootL.png");
   }
   
   void flip() {
     if (facingRight) {
       if (shootTick > 0 && shootTick < 4) {
-        sprite = shootR;
+        sprite = cat1shootR;
         shootTick++;
       }
       else {
-        sprite = idleR;
+        sprite = cat1idleR;
         shootTick = 0;
       }
     }
     else {
       if (shootTick > 0 && shootTick < 4) {
-        sprite = shootL;
+        sprite = cat1shootL;
         shootTick++;
       }
       else {
-        sprite = idleL;
+        sprite = cat1idleL;
         shootTick = 0;
       }
     }
