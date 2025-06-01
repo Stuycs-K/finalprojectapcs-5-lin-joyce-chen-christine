@@ -253,6 +253,10 @@ public class Character {
     fill(255);
     rect(xPos - 15, yPos - 15, 20, 40.0*(1-(jumpCharge/maxJumpCharge)));
   }
+  
+  PImage getPreview() {
+    return sprite;
+  }
 
   void display() {
     // line to check aim angles

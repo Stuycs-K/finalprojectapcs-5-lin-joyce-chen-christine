@@ -9,10 +9,10 @@ public class catFirst extends Character {
   public catFirst (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
     
-    if (idleR == null) cat1idleR = loadImage("cat1idleR.png");
-    if (idleL == null) cat1idleL = loadImage("cat1idleL.png");
-    if (shootR == null) cat1shootR = loadImage("cat1shootR.png");
-    if (shootL == null) cat1shootL = loadImage("cat1shootL.png");
+    if (cat1idleR == null) cat1idleR = loadImage("cat1idleR.png");
+    if (cat1idleL == null) cat1idleL = loadImage("cat1idleL.png");
+    if (cat1shootR == null) cat1shootR = loadImage("cat1shootR.png");
+    if (cat1shootL == null) cat1shootL = loadImage("cat1shootL.png");
   }
   
   void flip() {
@@ -77,6 +77,10 @@ public class catFirst extends Character {
     bulletCD = maxBulletCD;
     shootTick++;
     }
+  }
+  
+  PImage getPreview() {
+    return cat1idleR;
   }
   
   void display() {
