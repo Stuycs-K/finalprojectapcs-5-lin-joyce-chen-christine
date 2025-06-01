@@ -62,7 +62,15 @@ things to consider for next coding session
 - add the stock explosion to death animation in versus mode!
 
 ### 2025-05-30 - Animations and small tweaks - 3 hours
-Death animation was completed and an explosion is set to play everytime a player dies in versus mode. An open mouth was added to appear everytime a player shoots (to both walking and idle animations). Small tweaks to the game, such as preliminary platform positions for boss mode and the moving of player 2's hp bar to the right, was made. Grenade impact bug is fixed and it was made so that when characters die, movement is not allowed. 
+Death animation was completed and an explosion is set to play everytime a player dies in versus mode. An open mouth was added to appear everytime a player shoots (to both walking and idle animations). Small tweaks to the game, such as preliminary platform positions for boss mode and the moving of player 2's hp bar to the right, was made. Grenade impact bug is fixed and it was made so that when characters die, movement is not allowed.
 
 - work on completing the weekend's to do list!!
 - note for Christine: check how long the mouth stays open for both walking and idle sprites + adjust using shootTick if too fast/slow!! :)
+
+### 2025-05-31 - Horizontal Jump and screens - 1.5 hours
+Horizontal jump system was created so that when player is walking and jumps, it travels a horizontal distance. A loss and victory screen was also implemented to happen after game ends in boss mode.
+
+stuff to do + consider for next session
+- animate sprites
+- add wall restrictions so horizontal jumping next to a wall doesn't send you into the wall
+- increase jumping height for horizontal jump
