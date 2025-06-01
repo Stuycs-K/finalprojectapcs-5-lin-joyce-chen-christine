@@ -144,11 +144,12 @@ public class Boss {
   
   void showWarning() { 
     if (timer % 20 < 10) {
-      float size = 60;
-      image(warningSign, xPos - 250, yPos - 150, size, size);
-      image(warningSign, xPos + 150, yPos - 150, size, size);
-      image(warningSign, xPos - 250, yPos + 150, size, size);
-      image(warningSign, xPos + 150, yPos + 150, size, size);
+      float size = 50;
+      float r = 150;
+      for (int i = 0; i < 10; i++) {
+        float angle = TWO_PI/10 * i;
+        image(warningSign, xPos + cos(angle)*r - size/2, yPos + sin(angle)*r - size/2, size, size);
+      }
     }
   }
     
