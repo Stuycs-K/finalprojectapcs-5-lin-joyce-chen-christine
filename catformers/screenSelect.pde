@@ -20,7 +20,7 @@ public class screenSelect {
     
     charOptions.add(new catFirst(20, 20, 60, 0, 0));
     charOptions.add(new catSecond(20, 20, 60, 0, 0));
-    charOptions.add(new catFirst(20, 20, 60, 0, 0));
+    charOptions.add(new catThird(20, 20, 60, 0, 0));
   }
   
   void buttonClicked() {
@@ -100,7 +100,7 @@ public class screenSelect {
     } else if (index == 1) {
       return new catSecond(15, 15, 60, 0, height - 125); // Alien Cat
     } else if (index == 2) {
-      return new catFirst(15, 15, 60, 0, height - 125);  // Bomber Cat
+      return new catThird(15, 15, 60, 0, height - 125);  // Bomber Cat
     }
     return new catFirst(15, 15, 60, 0, height - 125);
   }

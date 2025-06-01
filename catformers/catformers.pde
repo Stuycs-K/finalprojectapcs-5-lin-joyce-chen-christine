@@ -31,6 +31,11 @@ Gif cat2walkL;
 Gif cat2walkOpenR;
 Gif cat2walkOpenL;
 
+Gif cat3walkR;
+Gif cat3walkL;
+Gif cat3walkOpenR;
+Gif cat3walkOpenL;
+
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
 final int MAX_KEY = 128;
@@ -69,10 +74,15 @@ void setup() {
   cat1walkR.play();
   cat1walkL.play();
   
-  cat2walkR = new Gif(this,"cat1walkR.gif");
-  cat2walkL = new Gif(this,"cat1walkL.gif");
+  cat2walkR = new Gif(this,"cat2walkR.gif");
+  cat2walkL = new Gif(this,"cat2walkL.gif");
   cat2walkR.play();
   cat2walkL.play();
+  
+  cat3walkR = new Gif(this,"cat3walkR.gif");
+  cat3walkL = new Gif(this,"cat3walkL.gif");
+  cat3walkR.play();
+  cat3walkL.play();
   
   // shooting frame
   cat1walkOpenR = new Gif(this, "cat1walkOpenR.gif");
@@ -80,10 +90,15 @@ void setup() {
   cat1walkOpenR.play();
   cat1walkOpenL.play();
   
-  cat2walkOpenR = new Gif(this, "cat1walkOpenR.gif");
-  cat2walkOpenL = new Gif(this, "cat1walkOpenL.gif");
+  cat2walkOpenR = new Gif(this, "cat2walkOpenR.gif");
+  cat2walkOpenL = new Gif(this, "cat2walkOpenL.gif");
   cat2walkOpenR.play();
   cat2walkOpenL.play();
+  
+  cat3walkOpenR = new Gif(this, "cat3walkOpenR.gif");
+  cat3walkOpenL = new Gif(this, "cat3walkOpenL.gif");
+  cat3walkOpenR.play();
+  cat3walkOpenL.play();
   
   modeInitialized = false;
   selectScreen = false;
