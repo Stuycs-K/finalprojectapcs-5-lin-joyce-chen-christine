@@ -1,31 +1,38 @@
+static PImage idleR, idleL, shootR, shootL;
+
 public class catFirst extends Character {
-  
+    
   /*public firstcat(float xPos, float yPos) {
     this(, , , , , xPos, yPos); //fill this outtt
   }*/
   
   public catFirst (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
+    
+    if (idleR == null) idleR = loadImage("cat1idleR.png");
+    if (idleL == null) idleL = loadImage("cat1idleL.png");
+    if (shootR == null) shootR = loadImage("cat1shootR.png");
+    if (shootL == null) shootL = loadImage("cat1shootL.png");
   }
   
   void flip() {
     if (facingRight) {
       if (shootTick > 0 && shootTick < 4) {
-        sprite = loadImage("cat1shootR.png");
+        sprite = shootR;
         shootTick++;
       }
       else {
-        sprite = loadImage("cat1idleR.png");
+        sprite = idleR;
         shootTick = 0;
       }
     }
     else {
       if (shootTick > 0 && shootTick < 4) {
-        sprite = loadImage("cat1shootL.png");
+        sprite = shootL;
         shootTick++;
       }
       else {
-        sprite = loadImage("cat1idleL.png");
+        sprite = idleL;
         shootTick = 0;
       }
     }
@@ -88,7 +95,7 @@ public class catFirst extends Character {
         
     // display lives
     for (int x = 0; x < lives; x++) {
-      image(loadImage("heart.png"), (width*chars.indexOf(this))+(pow(-1,chars.indexOf(this)+2))*(90+(40*chars.indexOf(this))+35*x), 35, 30,30);
+      image(heartImg, (width*chars.indexOf(this))+(pow(-1,chars.indexOf(this)+2))*(90+(40*chars.indexOf(this))+35*x), 35, 30,30);
     }
     flip();
     if (!isWalking) {

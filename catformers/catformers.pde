@@ -15,8 +15,8 @@ PImage title;
 PImage bg;
 PImage[] deathFrames;
 int deathFrame;
+PImage heartImg;
 PImage warningSign;
-PImage blankSign;
 
 // walk animations
 Gif cat1walkR;
@@ -48,12 +48,12 @@ void setup() {
   title = loadImage("title.png");
   bg = loadImage("background1.png");
   
+  heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
   deathFrame = 0;
   deathFinish = false;
   
   warningSign = loadImage("warningSign.png");
-  //blankSign = loadImage("blankSign.png");
   
   // walking animation
   cat1walkR = new Gif(this,"cat1walkR.gif");
@@ -71,7 +71,6 @@ void setup() {
   selectScreen = false;
   gameEnd = false; 
   gamePause = false;
-
 }
 
 void draw() {
@@ -401,6 +400,9 @@ void displayScreen() {
     else {
       s.display();
     }
+  }
+  else if (currmode.equals("CharacterSelect")) {
+    s.displayCharSelect();
   }
   else if (currmode.equals("Versus")) {
     image(bg, 0, 0, width, height);
