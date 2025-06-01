@@ -18,9 +18,9 @@ public class screenSelect {
     p1Index = 0; p2Index = 0;
     p1Chosen = false; p2Chosen = false;
     
-    charOptions.add(new catFirst(20, 20, 60, 0, 0));
-    charOptions.add(new catFirst(20, 20, 60, 0, 0));
-    charOptions.add(new catFirst(20, 20, 60, 0, 0));
+    charOptions.add(new catFirst(20, 20, 60, 0, height-125));
+    charOptions.add(new catFirst(20, 20, 60, 0, height-125));
+    charOptions.add(new catFirst(20, 20, 60, 0, height-125));
   }
   
   void buttonClicked() {

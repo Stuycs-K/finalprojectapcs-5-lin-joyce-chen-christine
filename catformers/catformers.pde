@@ -307,8 +307,10 @@ void keyPressed() {
       }
     }
     if (keyCode == ENTER && ((numPlayer.equals("1") && p1Chosen) || (numPlayer.equals("2") && p1Chosen && p2Chosen))) {
+      p1Char.xPos = 100;
       chars.add(p1Char);
       if (numPlayer.equals("2")) {
+        p2Char.xPos =1150;
         p2Char.facingRight = false;
         p2Char.aimAngle = 180;
         chars.add(p2Char);
@@ -442,11 +444,6 @@ void displayScreen() {
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
       modeInitialized = true;
-      chars.add(new catFirst(20.0, 20.0, 60, 100.0, height - 125)); // temp for testing
-      Character p2 = (new catFirst(20.0, 20.0, 60, 1150.0, height - 125));
-      p2.facingRight = false;
-      p2.aimAngle = 180.0;
-      chars.add(p2);
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
       
@@ -482,13 +479,6 @@ void displayScreen() {
     if (!modeInitialized) {
       modeInitialized = true;
       boss = new Boss(640, height - 522);
-      chars.add(new catFirst(15.0, 15.0, 60, 200.0, height - 100)); // temp for testing
-      if (numPlayer.equals("2")) {
-        Character p2 = (new catFirst(15.0, 15.0, 60, 900.0, height - 100));
-        p2.facingRight = false;
-        p2.aimAngle = 180.0;
-        chars.add(p2);
-      }
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
       
