@@ -1,11 +1,13 @@
 import gifAnimation.*;
 
 ArrayList<Character> chars;
+Character p1Char, p2Char;
+
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, gameEnd, gamePause, deathFinish;
+boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
 screenSelect s;
 
 // things for graphics
@@ -69,6 +71,7 @@ void setup() {
   
   modeInitialized = false;
   selectScreen = false;
+  p1Chosen = false; p2Chosen = false;
   gameEnd = false; 
   gamePause = false;
 }
@@ -286,6 +289,35 @@ void draw() {
 }
 
 void keyPressed() {
+  if (currmode.equals("CharacterSelect")) {
+    if (!p1Chosen) {
+      if (key == 'a' || key == 'A') s.p1Index = (s.p1Index + s.charOptions.size() - 1) % s.charOptions.size();
+      if (key == 'd' || key == 'D') s.p1Index = (s.p1Index + 1) % s.charOptions.size();
+      if (key == 'w' || key == 'W') {
+        p1Char = s.charOptions.get(s.p1Index);
+        p1Chosen = true;
+      }
+    }  
+    if (numPlayer.equals("2") && !p2Chosen) {
+      if (keyCode == LEFT) s.p2Index = (s.p2Index + s.charOptions.size() - 1) % s.charOptions.size();
+      if (keyCode == RIGHT) s.p2Index = (s.p2Index + 1) % s.charOptions.size();
+      if (keyCode == UP) {
+        p2Char = s.charOptions.get(s.p2Index);
+        p2Chosen = true;
+      }
+    }
+    if (keyCode == ENTER && ((numPlayer.equals("1") && p1Chosen) || (numPlayer.equals("2") && p1Chosen && p2Chosen))) {
+      chars.add(p1Char);
+      if (numPlayer.equals("2")) {
+        p2Char.facingRight = false;
+        p2Char.aimAngle = 180;
+        chars.add(p2Char);
+      }
+      currmode = s.selectedMode;
+      modeInitialized = false;
+    }
+  }
+    
   if (key < MAX_KEY) p1Keys[key] = true;
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
   

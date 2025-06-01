@@ -5,8 +5,6 @@ public class screenSelect {
   // ==== Character Select ====  
   ArrayList<Character> charOptions = new ArrayList<Character>();
   int p1Index, p2Index;
-  boolean p1Chosen, p2Chosen;
-  Character p1Choice, p2Choice;
   
   String selectedMode;
   
