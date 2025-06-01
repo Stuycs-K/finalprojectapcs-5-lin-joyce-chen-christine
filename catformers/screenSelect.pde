@@ -55,17 +55,36 @@ public class screenSelect {
     textAlign(CENTER);
     fill(255);
     textSize(32);
-    text("Character Select", width / 2, 80);
+    text("< Select a Catformer >", width / 2, 80);
     textSize(20);
-    text("Press ENTER to start", width / 2, height - 60);
+    fill(200);
+    if (numPlayer.equals("2")) {
+      text("P1: Use A/D to switch and W to select", width/2 - 250, 150);
+      text("P2: Use <-/-> to switch and ^ (UP) to select", width/2 + 250, 150);
+    } else {
+      text("Use A/D to change characters and W to select", width/2, 110);
+    }
+    text("Press ENTER to Begin Game", width / 2, height - 60);
+    
+    String[] names = {"Chill Cat", "Alien Cat", "Bomber Cat"};
+    String[] desc = {
+      "Faster movement speed, higher jump", 
+      "Homing bullets",
+      "Grenades"
+    };
   
     for (int i = 0; i < charOptions.size(); i++) {
-      float x = width / 2 - 300 + i * 200;
-      float y = height / 2;
-      image(charOptions.get(i).getPreview(), x, y, 100, 100);
-  
-      if (i == p1Index) text("P1", x + 50, y + 120);
-      if (numPlayer.equals("2") && i == p2Index) text("P2", x + 50, y + 150);
+      float previewW = 150; 
+      float previewH = previewW * 70.0/55.0;
+      float x = width / 2 - 320 + i * 250;
+      float y = height / 2 - 100;
+      textSize(22);
+      text(names[i], x + previewW/2, y - 20);
+      image(charOptions.get(i).getPreview(), x, y, previewW, previewH);
+      textSize(18);
+      if (i == p1Index) text("P1", x + previewW/2, y + previewH + 40);
+      if (numPlayer.equals("2") && i == p2Index) text("P2", x + previewW/2, y + previewH + 60);
+      text(desc[i], x + previewW/2, y + previewH + 90);
     }
   }
   
