@@ -7,7 +7,7 @@ public class Character {
   float xVelocity, yVelocity, xPos, yPos;
   float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
-  boolean inverseControls, isTrapped;
+  boolean inverseControls, isTrapped, horizontalJump;
   int spamCount;
   PImage sprite;
   Gif walking;
@@ -58,7 +58,11 @@ public class Character {
   void jump() {
     // replace the number later with base jump power!!
     int power = max(jumpCharge, 15); // base jump
-    yVelocity = -power * 1.6;
+    if (horizontalJump) {
+      yVelocity = -power*1.6*(sin(45));
+    } else {
+      yVelocity = -power * 1.6;
+    }
     jumpCharge = 0;
     hitboxLength = maxLength;
   }
@@ -170,7 +174,7 @@ public class Character {
       xPos += xVelocity;
       xVelocity = 0.0;
     }
-
+    
     yVelocity += g;
     onGround = false; // check for platform collisions
     float xMargin = 2.0; // margin to ignore for bigger hitbox
@@ -204,6 +208,14 @@ public class Character {
             ifFalling = false;
             
             i = platforms.size(); // can we use breakkk!
+        }
+      }
+      
+      if (horizontalJump && !onGround) {
+        if (facingRight) {
+          xPos += abs(move)/2;
+        } else {
+          xPos -= abs(move)/2;
         }
       }
     }

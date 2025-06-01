@@ -53,7 +53,7 @@ void setup() {
   deathFinish = false;
   
   warningSign = loadImage("warningSign.png");
-  blankSign = loadImage("blankSign.png");
+  //blankSign = loadImage("blankSign.png");
   
   // walking animation
   cat1walkR = new Gif(this,"cat1walkR.gif");
@@ -234,6 +234,11 @@ void draw() {
             chars.get(0).isWalking = true;
           }
           if (p1Keys['w'] && !chars.get(0).ifFalling) {
+            if (p1Keys['d'] || p1Keys['a']) {
+              chars.get(0).horizontalJump = true;
+            } else {
+              chars.get(0).horizontalJump = false;
+            }
             chars.get(0).addJumpCharge();
           }
           else if (p1Keys['s']) {
@@ -432,6 +437,8 @@ void displayScreen() {
   }
   else if (currmode.equals("Boss")) {
     image(bg, 0, 0, width, height);
+    image(loadImage("p1.png"), 20, 30, 60, 44.4);
+    image(loadImage("p2.png"), width-90, 30, 60, 44.4);
 
     if (!modeInitialized) {
       modeInitialized = true;
@@ -477,7 +484,7 @@ void displayScreen() {
   else if (currmode.equals("Victory")) {
     image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
-    image(loadImage("p2.png"), 20, 80, 60, 44.4);
+    image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     for (Platforms p : platforms) {
       p.display();
     }
