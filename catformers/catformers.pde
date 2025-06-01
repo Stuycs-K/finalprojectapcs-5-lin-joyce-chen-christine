@@ -87,7 +87,9 @@ void draw() {
         c.applyMovement();
       }
     }
+    if (!gameEnd) {
       c.display();
+    }
   }
 
   if (!gameOver) {
@@ -438,8 +440,10 @@ void displayScreen() {
   else if (currmode.equals("Boss")) {
     image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
-    image(loadImage("p2.png"), width-90, 30, 60, 44.4);
-
+    if (numPlayer.equals("2")) {
+      image(loadImage("p2.png"), width-90, 30, 60, 44.4);
+    }
+    
     if (!modeInitialized) {
       modeInitialized = true;
       boss = new Boss(640, height - 522);
@@ -472,14 +476,43 @@ void displayScreen() {
         deathCount+=1; 
       }
     }
-    if (deathCount > 1) {
+    if (deathCount == chars.size()) {
       currmode = "Loss";
+      gameEnd = true;
     } else {
       deathCount = 0;
     }
   }
   else if (currmode.equals("Loss")) {
+    image(bg, 0, 0, width, height);
+    image(loadImage("p1.png"), 20, 30, 60, 44.4);
+    if (numPlayer.equals("2")) {
+      image(loadImage("p2.png"), width-90, 30, 60, 44.4);
+    }
+    
+    for (Platforms p : platforms) {
+      p.display();
+    }
+    for (Character c : chars) {
+      c.display();
+    }
 
+    boss.update();
+    boss.display();
+    
+    fill(0);
+    stroke(255);
+    strokeWeight(5);
+    rect(width/3.25, height/3.25, 500, 300);
+    strokeWeight(1);
+    stroke(0);
+    
+    fill(255);
+    textSize(70);
+    text("You Lose :(",width/2, height/2);
+    
+    textSize(20);
+    text("press [enter] to return to start screen",width/2, height/1.50);
   }
   else if (currmode.equals("Victory")) {
     image(bg, 0, 0, width, height);
@@ -495,6 +528,9 @@ void displayScreen() {
     rect(width/3.25, height/3.25, 500, 300);
     strokeWeight(1);
     stroke(0);
+    for (Character c : chars) {
+      c.display();
+    }
     for (Character c : chars) {
       if (c.isAlive) {
         winText += chars.indexOf(c) + 1;

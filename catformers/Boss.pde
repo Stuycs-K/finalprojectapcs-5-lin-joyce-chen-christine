@@ -53,7 +53,7 @@ public class Boss {
   }
 
   void update() {
-    if (!gamePause) {
+    if (!gamePause && !gameEnd) {
       timer++;
       if (phase == 0) {
         if (timer == 1200) nextPhase();
@@ -65,12 +65,12 @@ public class Boss {
 
     if (phase == 0) {
       giantBeamPhase();
-    } else if (phase == 1  && !gamePause) {
+    } else if (phase == 1  && !gamePause && !gameEnd) {
       immunePhase();      
       flowerBeams(300.0, 2, 90); 
       flowerBeams(200.0, 2, 30); 
       inverseControls();
-    } else if (phase == 2 && !gamePause) {
+    } else if (phase == 2 && !gamePause && !gameEnd) {
       if (bossProjectiles.size() == 0 || homingPhase) {
         teleportFigure8(tpTick);
         tpTick++;
@@ -79,7 +79,7 @@ public class Boss {
     }
 
     for (Projectiles p : bossProjectiles) {
-      if (!gamePause) {
+      if (!gamePause && !gameEnd) {
         p.move();
       }
       p.display();
