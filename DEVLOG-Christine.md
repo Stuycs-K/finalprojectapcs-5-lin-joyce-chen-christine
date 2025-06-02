@@ -75,9 +75,12 @@ Future Improvements:
 **!!!** Update README **!!!**.
 
 ### 2025-06-01 - Graphics/SFX + README; Code Reformatting
-Worked for 3 hours. Drew dark version background and displayed it during Boss immune phase along with warning signs. Updated README with Project Description and information regarding charcter selection, keyboard controls, and game mechanics. Added import for Processing sound effect library and added sound effects to players for shooting (my brother voiced it!) and receiving damage. Fixed tiny style interference bug from Character Selection. Drew loading screen to replace grey loading screen in Processing and reformatted code to load assets after loading screen. Created separate method to load game state to prevent loading assets multiple times. Added restart game method to replace former logic and fixed new bugs in restarting/exiting game. Fixed tiny bug regarding trying to pause audio when not playing any.
+Worked for 2.8 hours. Drew dark version background and displayed it during Boss immune phase along with warning signs. Updated README with Project Description and information regarding charcter selection, keyboard controls, and game mechanics. Added import for Processing sound effect library and added sound effects to players for shooting (my brother voiced it!) and receiving damage. Fixed tiny style interference bug from Character Selection. Drew loading screen to replace grey loading screen in Processing and reformatted code to load assets after loading screen. Created separate method to load game state to prevent loading assets multiple times. Added restart game method to replace former logic and fixed new bugs in restarting/exiting game. Fixed tiny bug regarding trying to pause audio when not playing any.
 
 Future Improvements:
 - Fix ArrayIndexOutOfBoundsException: Index 65406 (or similar) out of bounds for length 256 (find out why it happens!)
 - Improve grenade logic for Bomber Cat
 - Implement additional features (ex: revive system)
+
+### 2025-06-02 -
+Worked for _. Fixed array index out of bounds error by adding proper bounds checks for spamKeys array.

@@ -405,7 +405,7 @@ void keyPressed() {
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
   
   if (!gameEnd) {
-    if (!spamKeys[keyCode]) {
+    if (keyCode < MAX_KEYCODE && !spamKeys[keyCode]) {
       spamKeys[keyCode] = true;
       for (Character c : chars) {
         if (c.isTrapped) {
