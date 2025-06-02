@@ -76,6 +76,7 @@ public class catFirst extends Character {
     projectiles.add(new Projectiles("normal", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     shootTick++;
+    shootSound.play();
     }
   }
   

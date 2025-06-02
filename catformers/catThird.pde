@@ -51,6 +51,7 @@ public class catThird extends Character {
     projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     shootTick++;
+    shootSound.play();
     }
   }
   
