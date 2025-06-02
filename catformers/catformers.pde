@@ -1,4 +1,5 @@
 import gifAnimation.*;
+import processing.sound.*;
 
 ArrayList<Character> chars;
 Character p1Char, p2Char;
@@ -25,6 +26,9 @@ Gif cat1walkR;
 Gif cat1walkL;
 Gif cat1walkOpenR;
 Gif cat1walkOpenL;
+
+// sound effects
+//SoundFile .., ..
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
