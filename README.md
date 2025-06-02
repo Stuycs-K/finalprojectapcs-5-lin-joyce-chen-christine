@@ -32,7 +32,7 @@ During gameplay, all actions are controlled via the keyboard. The controls for e
 - **Crouch** reduces your hitbox and movement speed, allowing for dodging or precise movements.
 - **Aiming** is reflected by a line coming from the Catformer's mouth. The aim angle never resets and each change must be made manually.
 - **Shooting** is subject to a _ second cooldown time.
-  - **Projectiles** bounce 3 times off all walls, platforms, and the floor/ceiling before disapearing. 
+  - **Projectiles** bounce 3 times off all walls, platforms, and the floor/ceiling before disapearing.
   - In **Boss Mode** friendly fire and self damage is disabled
   - In **Versus Mode**, players can take damage from their own projectiles if they bounce back.
 
@@ -43,6 +43,7 @@ From the pause screen, players can choose to:
 - **Resume** (press SPACE again)
 - **Restart** in the current game mode
 - **Return** to Start Screen
+
 **HP Indicator**:
 - **Players** remaining lives are shown at the top of the screen as heart icons.
 - **Boss** health bar is displayed above the boss' head.
