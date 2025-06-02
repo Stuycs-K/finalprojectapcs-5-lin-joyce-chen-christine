@@ -48,7 +48,7 @@ From the pause screen, players can choose to:
 - **Players** remaining lives are shown at the top of the screen as heart icons.
 - **Boss** health bar is displayed above the boss' head.
 
-### Boss-Mode - Additional Mechanics
+### Boss Mode: Additional Mechanics
 
 - **Traps** require players to spam keys 10 times to escape (shared in 2-Player Mode).
 - **Inverse Controls** temporarily flip left/right movement and are indicated with an on-screen warning.
