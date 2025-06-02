@@ -51,6 +51,7 @@ public class catSecond extends Character {
     projectiles.add(new Projectiles("laser", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     shootTick++;
+    shootSound.play();
     }
   }
   
