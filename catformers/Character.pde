@@ -4,9 +4,9 @@ public class Character {
   int damageCD, shootTick;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
-  float xVelocity, yVelocity, xPos, yPos;
+  float xVelocity, yVelocity, xPos, yPos, startX;
   float deathX, deathY, deathSlope;
-  boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive;
+  boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive, isPlayerTwo;
   boolean inverseControls, isTrapped, horizontalJump;
   int spamCount;
   PImage sprite;
@@ -246,6 +246,44 @@ public class Character {
       damageCD--;
     }
     
+  }
+  
+  void reset() {
+    xPos = startX;
+    yPos = height - 150;  
+    xVelocity = 0.0;
+    yVelocity = g;
+    jumpCharge = 0;
+    hitboxLength = maxLength;
+    
+    onGround = true;
+    bulletFired = false;
+    ifFalling = false;
+    isWalking = false;
+    isAlive = true;
+    
+    bulletCD = 0;
+    shootTick = 0;
+    facingRight = true;
+    aimAngle = 0.0;
+    
+    if (isPlayerTwo) {
+      facingRight = false;
+      aimAngle = 180.0;
+    } else {
+      facingRight = true;
+      aimAngle = 0.0;
+    }
+    
+    lives = maxLives;
+    
+    inverseControls = false;
+    isTrapped = false;
+    spamCount = 0;
+    damageCD = 0;
+    
+    walkspeed = maxWalkSpeed;
+    horizontalJump = false;
   }
   
   void displayJumpBar() {

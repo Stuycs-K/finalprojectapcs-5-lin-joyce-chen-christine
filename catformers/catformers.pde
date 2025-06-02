@@ -62,15 +62,6 @@ void setup() {
 }
 
 void loadAssets() {  
-  currmode = "Menu";
-  numPlayer = "0";
-
-  chars = new ArrayList<Character>();
-  projectiles = new ArrayList<Projectiles>();
-  platforms = new ArrayList<Platforms>();
-  consumables = new ArrayList<Consumable>();
-  s = new screenSelect();
-  
   // graphicsss
   start = new Gif(this, "start.gif");
   start.play();
@@ -80,8 +71,6 @@ void loadAssets() {
   
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
-  deathFrame = 0;
-  deathFinish = false;
   
   warningSign = loadImage("warningSign.png");
   
@@ -123,18 +112,33 @@ void loadAssets() {
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav"); 
   hitSound = new SoundFile(this, "catMeow1.wav");
+}
+
+void loadState() {
+  currmode = "Menu";
+  numPlayer = "0";
+  
+  chars = new ArrayList<Character>();
+  projectiles = new ArrayList<Projectiles>();
+  platforms = new ArrayList<Platforms>();
+  consumables = new ArrayList<Consumable>();
+  s = new screenSelect();
   
   modeInitialized = false;
   selectScreen = false;
-  p1Chosen = false; p2Chosen = false;
-  gameEnd = false; 
+  p1Chosen = false;
+  p2Chosen = false;
+  gameEnd = false;
   gamePause = false;
+  deathFrame = 0;
+  deathFinish = false;
 }
-
+  
 void draw() {
   
   if (!loaded) {
     loadAssets();
+    loadState();
     loaded = true;
     return;
   }
@@ -381,10 +385,13 @@ void keyPressed() {
       p2Chosen = false;
     }
     if (keyCode == ENTER && ((numPlayer.equals("1") && p1Chosen) || (numPlayer.equals("2") && p1Chosen && p2Chosen))) {
-      p1Char.xPos = 100;
+      p1Char.startX = 100;
+      p1Char.xPos = p1Char.startX;
       chars.add(p1Char);
       if (numPlayer.equals("2")) {
-        p2Char.xPos = 1150;
+        p2Char.isPlayerTwo = true;
+        p2Char.startX = 1150;
+        p2Char.xPos = p2Char.startX;
         p2Char.facingRight = false;
         p2Char.aimAngle = 180;
         chars.add(p2Char);
@@ -418,7 +425,7 @@ void keyPressed() {
   
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
-      setup();
+      loadState();
     }
   }
 
@@ -473,21 +480,11 @@ void mouseClicked() {
   if (gamePause) {
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
           mouseY >= height/1.80 - 20 && mouseY <= height/1.80 + 20) {
-      setup();
+      loadState();
     }
     if (mouseX >= width/2 - 55 && mouseX <= width/2 + 55 &&
           mouseY >= height/1.60 - 20 && mouseY <= height/1.60 + 20) {
-      while (chars.size() > 0) {
-        chars.remove(0);
-      }
-      while (projectiles.size() > 0) {
-        projectiles.remove(0);
-      }
-      while (platforms.size() > 0) {
-        platforms.remove(0);
-      }
-      modeInitialized = false;
-      gamePause = false;
+      restartGame();
     }
   }
 }
@@ -695,6 +692,27 @@ void displayScreen() {
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
+}
+
+void restartGame() {
+  projectiles.clear();
+  platforms.clear();
+  consumables.clear();
+  
+  if (currmode.equals("Boss")) {
+    boss = null;
+  }
+  
+  for (Character c : chars) {
+    c.reset();
+  }
+
+  modeInitialized = false;
+  gameEnd = false;
+  gamePause = false;
+  deathFrame = 0;
+  deathFinish = false;
+
 }
 
 void deathAnimation(Character c) {
