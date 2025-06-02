@@ -10,7 +10,7 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
+boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, restarted;
 screenSelect s;
 
 // things for graphics
@@ -297,7 +297,7 @@ void draw() {
   }
 
   if (keyPressed) {
-    if (currmode.equals("Menu")) { // for now go to versus, later create a second screen for character selection
+    if (currmode.equals("Menu") && !restarted) { // for now go to versus, later create a second screen for character selection
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
@@ -426,6 +426,7 @@ void keyPressed() {
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
       loadState();
+      restarted = true;
     }
   }
 
@@ -469,7 +470,9 @@ void keyReleased() {
         } 
       }
     }
-    
+  }
+  if (currmode.equals("Menu") && restarted) {
+    restarted = false;
   }
 }
 
