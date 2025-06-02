@@ -481,9 +481,11 @@ void mouseClicked() {
 
 void displayScreen() {
   if (currmode.equals("Menu")) {
+    float bgmVolume = 0.5;
     if (!selectScreen) {
       if (!startBGM.isPlaying()) {
         startBGM.loop();
+        startBGM.amp(bgmVolume);
       }
       background(start);
       image(title,width/4.3,height/4);
@@ -497,7 +499,10 @@ void displayScreen() {
     }
     else {
       s.display();
-      startBGM.amp(0.4);
+      if (bgmVolume != 0.1) {
+        bgmVolume = 0.1;
+        startBGM.amp(bgmVolume);
+      }
     }
   }
   else if (currmode.equals("CharacterSelect")) {
