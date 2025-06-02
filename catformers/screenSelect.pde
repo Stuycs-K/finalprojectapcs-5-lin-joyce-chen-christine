@@ -83,12 +83,12 @@ public class screenSelect {
       if (i == p1Index) {
         if (p1Chosen) fill(255,0,0);
         text("P1", x + previewW/2, y + previewH + 40);
-        fill(255);
+        fill(200);
       }
       if (numPlayer.equals("2") && i == p2Index) {
         if (p2Chosen) fill(255,0,0);
         text("P2", x + previewW/2, y + previewH + 60);
-        fill(255);
+        fill(200);
       }
       text(desc[i], x + previewW/2, y + previewH + 90);
     }

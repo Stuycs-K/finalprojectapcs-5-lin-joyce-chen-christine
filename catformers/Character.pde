@@ -212,9 +212,9 @@ public class Character {
       }
       
       if (horizontalJump && !onGround) {
-        if (facingRight) {
+        if (facingRight && xPos - 6.0 + hitboxWidth + abs(move)/2 < width) {
           xPos += abs(move)/2;
-        } else {
+        } else if (xPos + abs(move)/2 + 2.0 > 0) {
           xPos -= abs(move)/2;
         }
       }

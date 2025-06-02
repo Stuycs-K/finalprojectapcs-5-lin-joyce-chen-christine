@@ -542,6 +542,7 @@ void displayScreen() {
     for (Character c : chars) {
       if (!c.isAlive) {
         deathCount+=1; 
+        deathAnimation(c);
       }
     }
     if (deathCount == chars.size()) {
@@ -568,6 +569,7 @@ void displayScreen() {
       p.display();
     }
     for (Character c : chars) {
+      deathAnimation(c);
       c.display();
     }
 
@@ -639,14 +641,18 @@ void displayScreen() {
 }
 
 void deathAnimation(Character c) {
-  if (deathFrame == 17) {
-    deathFrame = 0;
-    deathFinish = true;
+  if (currmode.equals("Versus")) {
+    if (deathFrame == 17) {
+      deathFrame = 0;
+      deathFinish = true;
+    }
+    if (!deathFinish) {
+      image(deathFrames[deathFrame%300], c.deathX, c.deathY, 60,84);
+      deathFrame++;
+    }
+    c.xPos += 40;
+    c.yPos += c.deathSlope;
+  } else {
+    c.yPos -= 5.0;
   }
-  if (!deathFinish) {
-    image(deathFrames[deathFrame%300], c.deathX, c.deathY, 60,84);
-    deathFrame++;
-  }
-  c.xPos += 40;
-  c.yPos += c.deathSlope;
 }
