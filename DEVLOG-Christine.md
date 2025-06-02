@@ -65,14 +65,13 @@ Future Improvements:
 - Weekend To-Do list with Joyce!!
 
 ### 2025-05-31 - Character Selection Screen + Drew Sprites
-Worked for 1.8 hours. Completed drawing sprites for Alien Cat. Modified code to improve memory efficiency when loading in sprites and lives. Added a character selection screen with previews/descriptions and keypress navigation + selection. Removed former character additions and spawned new objects of the selected character at correct positions.
+Worked for 2.1 hours. Completed drawing sprites for Alien Cat. Modified code to improve memory efficiency when loading in sprites and lives. Added a character selection screen with previews/descriptions and keypress navigation + selection. Removed former character additions and spawned new objects of the selected character at correct positions. Complated drawing sprites for Bomber Cat.
 
 Future Improvements:
-- Finish drawing Bomber Cat
 - Clear Boss Mode or modify it so I can!!
 - Finish everything by Monday 8:33 A.M. (!!!!!!!)
 
 **!!!** Update README **!!!**.
 
 ### 2025-06-01 -
-Worked for _.
+Worked for _. 
