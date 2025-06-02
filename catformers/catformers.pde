@@ -481,6 +481,9 @@ void mouseClicked() {
 void displayScreen() {
   if (currmode.equals("Menu")) {
     if (!selectScreen) {
+      if (!startBGM.isPlaying()) {
+        startBGM.loop();
+      }
       background(start);
       image(title,width/4.3,height/4);
 
@@ -493,16 +496,19 @@ void displayScreen() {
     }
     else {
       s.display();
+      startBGM.amp(0.4);
     }
   }
   else if (currmode.equals("CharacterSelect")) {
     s.displayCharSelect();
   }
   else if (currmode.equals("Versus")) {
+    prevMode = "Versus";
     background(bg);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
+      startBGM.pause();
       modeInitialized = true;
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
@@ -526,16 +532,17 @@ void displayScreen() {
     
     if (gameEnd) {
       currmode = "Victory";
-      prevMode = "Versus";
     }
   }
   else if (currmode.equals("Boss")) {
+    prevMode = "Boss";
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     }
     
     if (!modeInitialized) {
+      startBGM.pause();
       modeInitialized = true;
       boss = new Boss(640, height - 522);
       
@@ -580,7 +587,6 @@ void displayScreen() {
     if (deathCount == chars.size()) {
       gameEnd = true;
       currmode = "Loss";
-      prevMode = "Boss";
     } else {
       deathCount = 0;
     }
@@ -588,7 +594,6 @@ void displayScreen() {
     if (boss.lives <= 0) {
       gameEnd = true;
       currmode = "Victory";
-      prevMode = "Boss";
     }
   }
   else if (currmode.equals("Loss")) {
