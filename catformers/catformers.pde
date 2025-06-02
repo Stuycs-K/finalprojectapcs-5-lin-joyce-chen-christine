@@ -1,4 +1,5 @@
 import gifAnimation.*;
+import processing.sound.*;
 
 ArrayList<Character> chars;
 Character p1Char, p2Char;
@@ -37,6 +38,9 @@ Gif cat3walkR;
 Gif cat3walkL;
 Gif cat3walkOpenR;
 Gif cat3walkOpenL;
+
+// sound effects
+SoundFile shootSound;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -102,6 +106,9 @@ void setup() {
   cat3walkOpenL = new Gif(this, "cat3walkOpenL.gif");
   cat3walkOpenR.play();
   cat3walkOpenL.play();
+  
+  // sound effects
+  shootSound = new SoundFile(this, "popCat.wav");
   
   modeInitialized = false;
   selectScreen = false;
