@@ -17,10 +17,24 @@ public class catSecond extends Character {
   
   void flip() {
     if (facingRight) {
-      sprite = cat2idleR;
+      if (shootTick > 0 && shootTick < 4) {
+        sprite = cat2shootR;
+        shootTick++;
+      }
+      else {
+        sprite = cat2idleR;
+        shootTick = 0;
+      }
     }
     else {
-      sprite = cat2idleL;
+      if (shootTick > 0 && shootTick < 4) {
+        sprite = cat2shootL;
+        shootTick++;
+      }
+      else {
+        sprite = cat2idleL;
+        shootTick = 0;
+      }
     }
   }
   
@@ -36,17 +50,38 @@ public class catSecond extends Character {
     
     projectiles.add(new Projectiles("laser", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
+    shootTick++;
     }
   }
   
-  /*void setAnimation() {
+  void setAnimation() {
     if (facingRight) {
-      image(cat2walkR, xPos, yPos, hitboxWidth, hitboxLength);
+      if (shootTick > 0 && shootTick < 90) {
+        PImage[] frames = cat2walkOpenR.getPImages();
+        image(frames[cat2walkR.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick++;
+      }
+      else {
+        image(cat2walkR, xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick = 0;
+      }
     }
     else {
-      image(cat2walkL, xPos, yPos, hitboxWidth, hitboxLength);
+      if (shootTick > 0 && shootTick < 90) {
+        PImage[] frames = cat2walkOpenL.getPImages();
+        image(frames[cat2walkL.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick++;
+      }
+      else {
+        image(cat2walkL, xPos, yPos, hitboxWidth, hitboxLength);
+        shootTick = 0;
+      }
     }
-  }*/
+  }
+  
+  PImage getPreview() {
+    return cat2idleR;
+  }
   
   void display() {
     // line to check aim angles
@@ -70,7 +105,7 @@ public class catSecond extends Character {
       image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
     }
     else {
-      //setAnimation();
+      setAnimation();
     }
     if (jumpCharge > 0) {
       displayJumpBar();

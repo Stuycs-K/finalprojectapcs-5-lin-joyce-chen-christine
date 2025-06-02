@@ -10,8 +10,8 @@ public class Boss {
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
-    maxLives = 10;
-    lives = 10;
+    maxLives = 10*chars.size();
+    lives = maxLives;
     hitboxWidth = 200;
     hitboxLength = 145;
     phase = 0;
