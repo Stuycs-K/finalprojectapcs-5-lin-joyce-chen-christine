@@ -74,3 +74,10 @@ stuff to do + consider for next session
 - animate sprites
 - add wall restrictions so horizontal jumping next to a wall doesn't send you into the wall
 - increase jumping height for horizontal jump
+
+### 2025-06-01 - Sprites, Bugs, and Extras - 5 hours
+Fixed bug where horizontal jumps would lead to character jumping off the screen and imported the sprites (+ animations) for cat2 + cat3. An hp potion mechanic was implemented in boss mode so that players can recover some health (make gameplay hopefully easier?). A basic death animation for boss mode was also created. BGM for the startscreen was selected.
+
+stuff to do + consider for next session
+- get the bgm to fade out after you select a mode (maybe also add select sounds)
+- import bgm for versus and boss modes
