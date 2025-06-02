@@ -39,6 +39,9 @@ Gif cat3walkL;
 Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
+//BGM 
+SoundFile startBGM;
+
 // sound effects
 SoundFile shootSound;
 
@@ -106,6 +109,9 @@ void setup() {
   cat3walkOpenL = new Gif(this, "cat3walkOpenL.gif");
   cat3walkOpenR.play();
   cat3walkOpenL.play();
+  
+  // BGM
+  startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav");
@@ -574,7 +580,7 @@ void displayScreen() {
     if (deathCount == chars.size()) {
       gameEnd = true;
       currmode = "Loss";
-      prevMode = "Boss"
+      prevMode = "Boss";
     } else {
       deathCount = 0;
     }
