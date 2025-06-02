@@ -1,10 +1,6 @@
 static PImage cat1idleR, cat1idleL, cat1shootR, cat1shootL;
 
 public class catFirst extends Character {
-    
-  /*public firstcat(float xPos, float yPos) {
-    this(, , , , , xPos, yPos); //fill this outtt
-  }*/
   
   public catFirst (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);

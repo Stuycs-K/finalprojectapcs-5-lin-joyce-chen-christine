@@ -574,6 +574,7 @@ void displayScreen() {
     if (deathCount == chars.size()) {
       gameEnd = true;
       currmode = "Loss";
+      prevMode = "Boss"
     } else {
       deathCount = 0;
     }
