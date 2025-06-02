@@ -10,13 +10,13 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
+boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, restarted;
 screenSelect s;
 
 // things for graphics
 Gif start;
 Gif death;
-PImage title;
+PImage loading, title;
 PImage bg, bgDark;
 PImage[] deathFrames;
 int deathFrame;
@@ -43,7 +43,7 @@ Gif cat3walkOpenL;
 SoundFile startBGM;
 
 // sound effects
-SoundFile shootSound;
+SoundFile shootSound, hitSound;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -52,18 +52,16 @@ final int MAX_KEYCODE = 256;
 boolean[] p1Keys = new boolean[MAX_KEY];
 boolean[] p2Keys = new boolean[MAX_KEYCODE];
 boolean[] spamKeys = new boolean[MAX_KEYCODE];
+boolean loaded = false;
 
 void setup() {
-  size(1280, 720); // change size of screen if we need to
-  currmode = "Menu";
-  numPlayer = "0";
+  size(1280, 720);
+  // Loading Screen (hide that gray thingy at the start)
+  loading = loadImage("loadingScreen.png");
+  background(loading);
+}
 
-  chars = new ArrayList<Character>();
-  projectiles = new ArrayList<Projectiles>();
-  platforms = new ArrayList<Platforms>();
-  consumables = new ArrayList<Consumable>();
-  s = new screenSelect();
-  
+void loadAssets() {  
   // graphicsss
   start = new Gif(this, "start.gif");
   start.play();
@@ -73,8 +71,6 @@ void setup() {
   
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
-  deathFrame = 0;
-  deathFinish = false;
   
   warningSign = loadImage("warningSign.png");
   
@@ -114,16 +110,38 @@ void setup() {
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   
   // sound effects
-  shootSound = new SoundFile(this, "popCat.wav");
+  shootSound = new SoundFile(this, "popCat.wav"); 
+  hitSound = new SoundFile(this, "catMeow1.wav");
+}
+
+void loadState() {
+  currmode = "Menu";
+  numPlayer = "0";
+  
+  chars = new ArrayList<Character>();
+  projectiles = new ArrayList<Projectiles>();
+  platforms = new ArrayList<Platforms>();
+  consumables = new ArrayList<Consumable>();
+  s = new screenSelect();
   
   modeInitialized = false;
   selectScreen = false;
-  p1Chosen = false; p2Chosen = false;
-  gameEnd = false; 
+  p1Chosen = false;
+  p2Chosen = false;
+  gameEnd = false;
   gamePause = false;
+  deathFrame = 0;
+  deathFinish = false;
 }
-
+  
 void draw() {
+  
+  if (!loaded) {
+    loadAssets();
+    loadState();
+    loaded = true;
+    return;
+  }
   
    if (currmode.equals("Boss")) {
     if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
@@ -279,7 +297,7 @@ void draw() {
   }
 
   if (keyPressed) {
-    if (currmode.equals("Menu")) { // for now go to versus, later create a second screen for character selection
+    if (currmode.equals("Menu") && !restarted) { // for now go to versus, later create a second screen for character selection
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
@@ -367,10 +385,13 @@ void keyPressed() {
       p2Chosen = false;
     }
     if (keyCode == ENTER && ((numPlayer.equals("1") && p1Chosen) || (numPlayer.equals("2") && p1Chosen && p2Chosen))) {
-      p1Char.xPos = 100;
+      p1Char.startX = 100;
+      p1Char.xPos = p1Char.startX;
       chars.add(p1Char);
       if (numPlayer.equals("2")) {
-        p2Char.xPos = 1150;
+        p2Char.isPlayerTwo = true;
+        p2Char.startX = 1150;
+        p2Char.xPos = p2Char.startX;
         p2Char.facingRight = false;
         p2Char.aimAngle = 180;
         chars.add(p2Char);
@@ -404,7 +425,8 @@ void keyPressed() {
   
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
-      setup();
+      loadState();
+      restarted = true;
     }
   }
 
@@ -448,7 +470,9 @@ void keyReleased() {
         } 
       }
     }
-    
+  }
+  if (currmode.equals("Menu") && restarted) {
+    restarted = false;
   }
 }
 
@@ -459,30 +483,22 @@ void mouseClicked() {
   if (gamePause) {
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
           mouseY >= height/1.80 - 20 && mouseY <= height/1.80 + 20) {
-      setup();
+      loadState();
     }
     if (mouseX >= width/2 - 55 && mouseX <= width/2 + 55 &&
           mouseY >= height/1.60 - 20 && mouseY <= height/1.60 + 20) {
-      while (chars.size() > 0) {
-        chars.remove(0);
-      }
-      while (projectiles.size() > 0) {
-        projectiles.remove(0);
-      }
-      while (platforms.size() > 0) {
-        platforms.remove(0);
-      }
-      modeInitialized = false;
-      gamePause = false;
+      restartGame();
     }
   }
 }
 
 void displayScreen() {
   if (currmode.equals("Menu")) {
+    float bgmVolume = 0.5;
     if (!selectScreen) {
       if (!startBGM.isPlaying()) {
         startBGM.loop();
+        startBGM.amp(bgmVolume);
       }
       background(start);
       image(title,width/4.3,height/4);
@@ -496,7 +512,10 @@ void displayScreen() {
     }
     else {
       s.display();
-      startBGM.amp(0.4);
+      if (bgmVolume != 0.1) {
+        bgmVolume = 0.2;
+        startBGM.amp(bgmVolume);
+      }
     }
   }
   else if (currmode.equals("CharacterSelect")) {
@@ -508,7 +527,9 @@ void displayScreen() {
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
-      startBGM.pause();
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
       modeInitialized = true;
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
@@ -542,7 +563,9 @@ void displayScreen() {
     }
     
     if (!modeInitialized) {
-      startBGM.pause();
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
       modeInitialized = true;
       boss = new Boss(640, height - 522);
       
@@ -676,6 +699,27 @@ void displayScreen() {
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
+}
+
+void restartGame() {
+  projectiles.clear();
+  platforms.clear();
+  consumables.clear();
+  
+  if (currmode.equals("Boss")) {
+    boss = null;
+  }
+  
+  for (Character c : chars) {
+    c.reset();
+  }
+
+  modeInitialized = false;
+  gameEnd = false;
+  gamePause = false;
+  deathFrame = 0;
+  deathFinish = false;
+
 }
 
 void deathAnimation(Character c) {
