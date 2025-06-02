@@ -49,6 +49,7 @@ public class screenSelect {
   }
   
   void displayCharSelect() {
+    pushStyle();
     background(0);
     textAlign(CENTER);
     fill(255);
@@ -92,6 +93,7 @@ public class screenSelect {
       }
       text(desc[i], x + previewW/2, y + previewH + 90);
     }
+    popStyle();
   }
   
   Character generateChar(int index) {
