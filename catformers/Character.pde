@@ -1,6 +1,6 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxLength;
-  int lives, jumpCharge, bulletCD, maxBulletCD;
+  int lives, maxLives, jumpCharge, bulletCD, maxBulletCD;
   int damageCD, shootTick;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
@@ -20,6 +20,7 @@ public class Character {
     hitboxLength = 70;
     maxLength = hitboxLength;
     lives = 3;
+    maxLives = lives;
 
     // horizontal movement
     this.walkspeed = walkspeed;

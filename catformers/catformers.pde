@@ -5,6 +5,8 @@ Character p1Char, p2Char;
 
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
+ArrayList<Consumable> consumables;
+
 Boss boss;
 String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
@@ -52,6 +54,7 @@ void setup() {
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
+  consumables = new ArrayList<Consumable>();
   s = new screenSelect();
   
   // graphicsss
@@ -536,6 +539,22 @@ void displayScreen() {
       
       platforms.add(new Platforms(304, height - 312, 174)); 
       platforms.add(new Platforms(802, height - 312, 174)); 
+    }
+    
+    if (boss.timer % 1000 == 0 && boss.timer != 0) {
+      Platforms p = platforms.get((int)(random(0,platforms.size())));
+      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-28, 20, 28));
+    }
+    
+    for (int x = 0; x < consumables.size(); x++) {
+      Consumable C = consumables.get(x);
+      C.display();
+      for (Character c : chars) {
+        if (C.checkUse(c)) {
+          consumables.remove(C);
+          x--;
+        }
+      }
     }
     
     int deathCount = 0;
