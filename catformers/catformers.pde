@@ -1,11 +1,12 @@
 import gifAnimation.*;
-import processing.sound.*;
 
 ArrayList<Character> chars;
 Character p1Char, p2Char;
 
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
+ArrayList<Consumable> consumables;
+
 Boss boss;
 String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
@@ -27,8 +28,15 @@ Gif cat1walkL;
 Gif cat1walkOpenR;
 Gif cat1walkOpenL;
 
-// sound effects
-//SoundFile .., ..
+Gif cat2walkR;
+Gif cat2walkL;
+Gif cat2walkOpenR;
+Gif cat2walkOpenL;
+
+Gif cat3walkR;
+Gif cat3walkL;
+Gif cat3walkOpenR;
+Gif cat3walkOpenL;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -46,6 +54,7 @@ void setup() {
   chars = new ArrayList<Character>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
+  consumables = new ArrayList<Consumable>();
   s = new screenSelect();
   
   // graphicsss
@@ -68,11 +77,31 @@ void setup() {
   cat1walkR.play();
   cat1walkL.play();
   
+  cat2walkR = new Gif(this,"cat2walkR.gif");
+  cat2walkL = new Gif(this,"cat2walkL.gif");
+  cat2walkR.play();
+  cat2walkL.play();
+  
+  cat3walkR = new Gif(this,"cat3walkR.gif");
+  cat3walkL = new Gif(this,"cat3walkL.gif");
+  cat3walkR.play();
+  cat3walkL.play();
+  
   // shooting frame
   cat1walkOpenR = new Gif(this, "cat1walkOpenR.gif");
   cat1walkOpenL = new Gif(this, "cat1walkOpenL.gif");
   cat1walkOpenR.play();
   cat1walkOpenL.play();
+  
+  cat2walkOpenR = new Gif(this, "cat2walkOpenR.gif");
+  cat2walkOpenL = new Gif(this, "cat2walkOpenL.gif");
+  cat2walkOpenR.play();
+  cat2walkOpenL.play();
+  
+  cat3walkOpenR = new Gif(this, "cat3walkOpenR.gif");
+  cat3walkOpenL = new Gif(this, "cat3walkOpenL.gif");
+  cat3walkOpenR.play();
+  cat3walkOpenL.play();
   
   modeInitialized = false;
   selectScreen = false;
@@ -311,7 +340,9 @@ void keyPressed() {
         p1Char = s.generateChar(s.p1Index);
         p1Chosen = true;
       }
-    }  
+    } else if (key == 'w' || key == 'W') {
+      p1Chosen = false;
+    }
     if (numPlayer.equals("2") && !p2Chosen) {
       if (keyCode == LEFT) s.p2Index = (s.p2Index + s.charOptions.size() - 1) % s.charOptions.size();
       if (keyCode == RIGHT) s.p2Index = (s.p2Index + 1) % s.charOptions.size();
@@ -319,6 +350,8 @@ void keyPressed() {
         p2Char = s.generateChar(s.p2Index);
         p2Chosen = true;
       }
+    } else if (p2Chosen && keyCode == UP) {
+      p2Chosen = false;
     }
     if (keyCode == ENTER && ((numPlayer.equals("1") && p1Chosen) || (numPlayer.equals("2") && p1Chosen && p2Chosen))) {
       p1Char.xPos = 100;
@@ -508,10 +541,27 @@ void displayScreen() {
       platforms.add(new Platforms(802, height - 312, 174)); 
     }
     
+    if (boss.timer % 1000 == 0 && boss.timer != 0) {
+      Platforms p = platforms.get((int)(random(0,platforms.size())));
+      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-28, 20, 28));
+    }
+    
+    for (int x = 0; x < consumables.size(); x++) {
+      Consumable C = consumables.get(x);
+      C.display();
+      for (Character c : chars) {
+        if (C.checkUse(c)) {
+          consumables.remove(C);
+          x--;
+        }
+      }
+    }
+    
     int deathCount = 0;
     for (Character c : chars) {
       if (!c.isAlive) {
         deathCount+=1; 
+        deathAnimation(c);
       }
     }
     if (deathCount == chars.size()) {
@@ -538,6 +588,7 @@ void displayScreen() {
       p.display();
     }
     for (Character c : chars) {
+      deathAnimation(c);
       c.display();
     }
 
@@ -609,14 +660,18 @@ void displayScreen() {
 }
 
 void deathAnimation(Character c) {
-  if (deathFrame == 17) {
-    deathFrame = 0;
-    deathFinish = true;
+  if (currmode.equals("Versus")) {
+    if (deathFrame == 17) {
+      deathFrame = 0;
+      deathFinish = true;
+    }
+    if (!deathFinish) {
+      image(deathFrames[deathFrame%300], c.deathX, c.deathY, 60,84);
+      deathFrame++;
+    }
+    c.xPos += 40;
+    c.yPos += c.deathSlope;
+  } else {
+    c.yPos -= 5.0;
   }
-  if (!deathFinish) {
-    image(deathFrames[deathFrame%300], c.deathX, c.deathY, 60,84);
-    deathFrame++;
-  }
-  c.xPos += 40;
-  c.yPos += c.deathSlope;
 }

@@ -1,6 +1,6 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxLength;
-  int lives, jumpCharge, bulletCD, maxBulletCD;
+  int lives, maxLives, jumpCharge, bulletCD, maxBulletCD;
   int damageCD, shootTick;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
@@ -20,6 +20,7 @@ public class Character {
     hitboxLength = 70;
     maxLength = hitboxLength;
     lives = 3;
+    maxLives = lives;
 
     // horizontal movement
     this.walkspeed = walkspeed;
@@ -212,9 +213,9 @@ public class Character {
       }
       
       if (horizontalJump && !onGround) {
-        if (facingRight) {
+        if (facingRight && xPos - 6.0 + hitboxWidth + abs(move)/2 < width) {
           xPos += abs(move)/2;
-        } else {
+        } else if (xPos + abs(move)/2 + 2.0 > 0) {
           xPos -= abs(move)/2;
         }
       }
