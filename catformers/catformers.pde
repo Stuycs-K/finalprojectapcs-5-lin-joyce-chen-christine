@@ -16,7 +16,7 @@ screenSelect s;
 // things for graphics
 Gif start;
 Gif death;
-PImage title;
+PImage loading, title;
 PImage bg, bgDark;
 PImage[] deathFrames;
 int deathFrame;
@@ -52,9 +52,16 @@ final int MAX_KEYCODE = 256;
 boolean[] p1Keys = new boolean[MAX_KEY];
 boolean[] p2Keys = new boolean[MAX_KEYCODE];
 boolean[] spamKeys = new boolean[MAX_KEYCODE];
+boolean loaded = false;
 
 void setup() {
-  size(1280, 720); // change size of screen if we need to
+  size(1280, 720);
+  // Loading Screen (hide that gray thingy at the start)
+  loading = loadImage("loadingScreen.png");
+  background(loading);
+}
+
+void loadAssets() {  
   currmode = "Menu";
   numPlayer = "0";
 
@@ -125,6 +132,12 @@ void setup() {
 }
 
 void draw() {
+  
+  if (!loaded) {
+    loadAssets();
+    loaded = true;
+    return;
+  }
   
    if (currmode.equals("Boss")) {
     if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
@@ -500,7 +513,7 @@ void displayScreen() {
     else {
       s.display();
       if (bgmVolume != 0.1) {
-        bgmVolume = 0.1;
+        bgmVolume = 0.2;
         startBGM.amp(bgmVolume);
       }
     }
