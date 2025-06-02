@@ -107,6 +107,7 @@ public class Projectiles {
             if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
                 yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
               c.lives -= 1;
+              hitSound.play();
               if (type.equals("grenade")) {
                 exploded = true;
               }
@@ -117,6 +118,7 @@ public class Projectiles {
             if(xPos + size*2 > c.xPos && xPos < c.xPos + c.hitboxWidth &&
                 yPos + size*2 > c.yPos && yPos < c.yPos + c.hitboxLength) {
               c.lives -= 1;
+              hitSound.play();
               return true;
             }
           }

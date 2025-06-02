@@ -96,6 +96,7 @@ public class Boss {
             if (p.xPos >= c.xPos && p.xPos <= c.xPos + c.hitboxWidth &&
             p.yPos >= c.yPos && p.yPos <= c.yPos + c.hitboxLength) {
               c.lives--;
+              hitSound.play();
               c.damageCD = 30;
               c.isAlive = c.lives > 0;
             }
@@ -179,6 +180,7 @@ public class Boss {
           if (xCor >= c.xPos && xCor <= c.xPos + c.hitboxWidth && 
           yCor >= c.yPos && yCor <= c.yPos + c.hitboxLength) {
             c.lives--;
+            hitSound.play();
             c.damageCD = 30;
             c.isAlive = c.lives > 0;
           }
@@ -269,6 +271,7 @@ public class Boss {
             }
             if (hit) {      
               c.lives--;
+              hitSound.play();
               c.isAlive = c.lives > 0;
               c.damageCD = 60;
             }

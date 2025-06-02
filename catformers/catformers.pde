@@ -43,7 +43,7 @@ Gif cat3walkOpenL;
 SoundFile startBGM;
 
 // sound effects
-SoundFile shootSound;
+SoundFile shootSound, hitSound;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -114,7 +114,8 @@ void setup() {
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   
   // sound effects
-  shootSound = new SoundFile(this, "popCat.wav");
+  shootSound = new SoundFile(this, "popCat.wav"); 
+  hitSound = new SoundFile(this, "catMeow1.wav");
   
   modeInitialized = false;
   selectScreen = false;
