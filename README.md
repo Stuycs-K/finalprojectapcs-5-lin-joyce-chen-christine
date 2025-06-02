@@ -31,7 +31,7 @@ During gameplay, all actions are controlled via the keyboard. The controls for e
 - **Charge Jump** displays a visible jump bar; the longer you hold before the bar maxes out, the higher you jump.
 - **Crouch** reduces your hitbox and movement speed, allowing for dodging or precise movements.
 - **Aiming** is reflected by a line coming from the Catformer's mouth. The aim angle never resets and each change must be made manually.
-- **Shooting** is subject to a _ second cooldown time.
+- **Shooting** is subject to a 1 second cooldown time.
   - **Projectiles** bounce 3 times off all walls, platforms, and the floor/ceiling before disapearing.
   - In **Boss Mode** friendly fire and self damage is disabled
   - In **Versus Mode**, players can take damage from their own projectiles if they bounce back.
@@ -52,3 +52,8 @@ From the pause screen, players can choose to:
 
 - **Traps** require players to spam keys 10 times to escape (shared in 2-Player Mode).
 - **Inverse Controls** temporarily flip left/right movement and are indicated with an on-screen warning.
+
+## Used Libraries
+
+- **GIFs:** GifAnimation (Patrick M., Jerome SC.)
+- **BGM + SFX:** Sound (Processing Foundation)
