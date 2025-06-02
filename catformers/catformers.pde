@@ -660,7 +660,7 @@ void displayScreen() {
 }
 
 void deathAnimation(Character c) {
-  if (currmode.equals("Versus")) {
+  if (prevMode.equals("Versus")) {
     if (deathFrame == 17) {
       deathFrame = 0;
       deathFinish = true;
