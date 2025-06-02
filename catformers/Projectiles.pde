@@ -1,6 +1,5 @@
 public class Projectiles {
   // add types when we start making different types of projectiles (i.e. with different types of effects)
-  // String type;
   float xVelocity, yVelocity, xPos, yPos;
   PVector a;
   int bounceCount, size;
