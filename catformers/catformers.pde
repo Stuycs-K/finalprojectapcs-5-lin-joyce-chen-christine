@@ -524,7 +524,9 @@ void displayScreen() {
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
-      startBGM.pause();
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
       modeInitialized = true;
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
@@ -558,7 +560,9 @@ void displayScreen() {
     }
     
     if (!modeInitialized) {
-      startBGM.pause();
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
       modeInitialized = true;
       boss = new Boss(640, height - 522);
       
