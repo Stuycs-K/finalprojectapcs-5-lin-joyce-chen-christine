@@ -10,7 +10,9 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, restarted;
+boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
+boolean restarted, transition, fadeOut;
+float transitionTick;
 screenSelect s;
 
 // things for graphics
@@ -132,6 +134,7 @@ void loadState() {
   gamePause = false;
   deathFrame = 0;
   deathFinish = false;
+  transition = false;
 }
   
 void draw() {
@@ -155,7 +158,7 @@ void draw() {
   
   boolean gameOver = currmode.equals("Victory") || currmode.equals("Loss");
   for (Character c : chars) {
-    if (c.isAlive && !gamePause) {
+    if (c.isAlive && !gamePause && (!transition || fadeOut)) {
       if (!gameOver && c.bulletCD > 0) {
         c.bulletCD--;
       }
@@ -163,7 +166,7 @@ void draw() {
         c.applyMovement();
       }
     }
-    if (!gameEnd) {
+    if (!gameEnd && (!transition || fadeOut)) {
       c.display();
     }
   }
@@ -266,10 +269,14 @@ void draw() {
     
   }
   
-  if (currmode.equals("Boss")) {
+  if (currmode.equals("Boss") && !transition) {
     boss.update();
     boss.display();
   }    
+  
+  if (transition) {
+    transitionScreen();
+  }
   
   if (gamePause) {
     fill(0);
@@ -301,7 +308,7 @@ void draw() {
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
-      if (!gamePause) {
+      if (!gamePause && !transition) {
         if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
           if (p1Keys['a']) {
@@ -396,7 +403,10 @@ void keyPressed() {
         p2Char.aimAngle = 180;
         chars.add(p2Char);
       }
-      currmode = s.selectedMode;
+      transition = true;
+      transitionTick = 0;
+      fadeOut = false;
+      transitionScreen();
       modeInitialized = false;
     }
   }
@@ -438,10 +448,10 @@ void keyReleased() {
   if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
   
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
-      if (key == ' ') {
+      if (key == ' ' && !transition) {
         gamePause = !gamePause;
       }
-     if (!gamePause) {
+     if (!gamePause && !transition) {
       // ==== Player 1 ====
       if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && chars.get(0).isAlive && key == 'w') {
         chars.get(0).jump();
@@ -736,5 +746,21 @@ void deathAnimation(Character c) {
     c.yPos += c.deathSlope;
   } else {
     c.yPos -= 5.0;
+  }
+}
+
+void transitionScreen() {
+  fill(0,transitionTick);
+  rect(0,0,width,height);
+  fill(255,255);
+  if (transitionTick < 255 && !fadeOut) {
+    transitionTick+=5;
+  } else if (transitionTick > 0) {
+    if (!modeInitialized) currmode = s.selectedMode;
+    fadeOut = true;
+    transitionTick-=5;
+  } else {
+    transition = false;
+    fadeOut = false;
   }
 }
