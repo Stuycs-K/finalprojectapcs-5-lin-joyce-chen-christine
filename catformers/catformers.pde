@@ -602,8 +602,8 @@ void displayScreen() {
       boss = new Boss(640, height - 522);
       
       if (!bossBGM.isPlaying()) {
-        bossBGM.amp(0.1);
         bossBGM.play();
+        bossBGM.amp(0.2);
       }
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
