@@ -42,7 +42,7 @@ Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
 //BGM 
-SoundFile startBGM;
+SoundFile startBGM, bossBGM;
 float bgmVolume;
 
 // sound effects
@@ -111,6 +111,7 @@ void loadAssets() {
   
   // BGM
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
+  bossBGM = new SoundFile(this, "Theme of Astrum Deus.mp3");
   
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav"); 
@@ -583,6 +584,11 @@ void displayScreen() {
       modeInitialized = true;
       boss = new Boss(640, height - 522);
       
+      if (!bossBGM.isPlaying()) {
+        bossBGM.amp(0.2);
+        bossBGM.play();
+      }
+      
       platforms.add(new Platforms(0, height - 20, width)); // floor
       
       platforms.add(new Platforms(0, height - 175, 284)); 
@@ -598,7 +604,7 @@ void displayScreen() {
       platforms.add(new Platforms(802, height - 312, 174)); 
     }
     
-    if (boss.timer % 1000 == 0 && boss.timer != 0) {
+    if (boss.timer % 800 == 0 && boss.timer != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
       consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
     }
@@ -634,6 +640,9 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Loss")) {
+    if (bossBGM.isPlaying()) {
+      bossBGM.pause();
+    }
     image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
@@ -696,6 +705,9 @@ void displayScreen() {
       text(winText,width/2, height/2.20);
       text("wins!",width/2, height/1.80);
     } else {
+      if (bossBGM.isPlaying()) {
+        bossBGM.pause();
+      }
       boss.update();
       boss.display();
       fill(0);

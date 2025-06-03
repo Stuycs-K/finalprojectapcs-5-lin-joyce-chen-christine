@@ -13,7 +13,7 @@ public class Consumable {
   boolean checkUse(Character c) {
     if (xPos < c.xPos + c.hitboxWidth && xPos + Width > c.xPos && 
           yPos < c.yPos + c.hitboxLength && yPos + Length > c.yPos &&
-          c.lives < c.maxLives) {
+          c.lives < c.maxLives && c.isAlive) {
       c.lives+=1;
       return true;
     }
