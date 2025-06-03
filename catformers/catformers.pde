@@ -10,7 +10,9 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, restarted;
+boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
+boolean restarted, transition, fadeOut;
+float transitionTick;
 screenSelect s;
 
 // things for graphics
@@ -40,10 +42,11 @@ Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
 //BGM 
-SoundFile startBGM;
+SoundFile startBGM, bossBGM;
+float bgmVolume;
 
 // sound effects
-SoundFile shootSound, hitSound;
+SoundFile shootSound, hitSound, selectSound;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -108,10 +111,12 @@ void loadAssets() {
   
   // BGM
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
+  bossBGM = new SoundFile(this, "Theme of Astrum Deus.mp3");
   
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav"); 
   hitSound = new SoundFile(this, "catMeow1.wav");
+  selectSound = new SoundFile(this, "selectSound.aiff");
 }
 
 void loadState() {
@@ -132,6 +137,7 @@ void loadState() {
   gamePause = false;
   deathFrame = 0;
   deathFinish = false;
+  transition = false;
 }
   
 void draw() {
@@ -155,7 +161,7 @@ void draw() {
   
   boolean gameOver = currmode.equals("Victory") || currmode.equals("Loss");
   for (Character c : chars) {
-    if (c.isAlive && !gamePause) {
+    if (c.isAlive && !gamePause && (!transition || fadeOut)) {
       if (!gameOver && c.bulletCD > 0) {
         c.bulletCD--;
       }
@@ -163,7 +169,7 @@ void draw() {
         c.applyMovement();
       }
     }
-    if (!gameEnd) {
+    if (!gameEnd && (!transition || fadeOut)) {
       c.display();
     }
   }
@@ -266,10 +272,14 @@ void draw() {
     
   }
   
-  if (currmode.equals("Boss")) {
+  if (currmode.equals("Boss") && !transition) {
     boss.update();
     boss.display();
   }    
+  
+  if (transition) {
+    transitionScreen();
+  }
   
   if (gamePause) {
     fill(0);
@@ -301,7 +311,7 @@ void draw() {
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
-      if (!gamePause) {
+      if (!gamePause && !transition) {
         if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
           if (p1Keys['a']) {
@@ -396,7 +406,12 @@ void keyPressed() {
         p2Char.aimAngle = 180;
         chars.add(p2Char);
       }
-      currmode = s.selectedMode;
+      transition = true;
+      transitionTick = 0;
+      fadeOut = false;
+      selectSound.jump(0.5);
+      selectSound.play();
+      transitionScreen();
       modeInitialized = false;
     }
   }
@@ -438,10 +453,10 @@ void keyReleased() {
   if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
   
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
-      if (key == ' ') {
+      if (key == ' ' && !transition) {
         gamePause = !gamePause;
       }
-     if (!gamePause) {
+     if (!gamePause && !transition) {
       // ==== Player 1 ====
       if (!chars.get(0).isTrapped && !chars.get(0).ifFalling && chars.get(0).isAlive && key == 'w') {
         chars.get(0).jump();
@@ -494,8 +509,8 @@ void mouseClicked() {
 
 void displayScreen() {
   if (currmode.equals("Menu")) {
-    float bgmVolume = 0.5;
     if (!selectScreen) {
+      bgmVolume = 0.5;
       if (!startBGM.isPlaying()) {
         startBGM.loop();
         startBGM.amp(bgmVolume);
@@ -569,6 +584,11 @@ void displayScreen() {
       modeInitialized = true;
       boss = new Boss(640, height - 522);
       
+      if (!bossBGM.isPlaying()) {
+        bossBGM.amp(0.2);
+        bossBGM.play();
+      }
+      
       platforms.add(new Platforms(0, height - 20, width)); // floor
       
       platforms.add(new Platforms(0, height - 175, 284)); 
@@ -584,9 +604,9 @@ void displayScreen() {
       platforms.add(new Platforms(802, height - 312, 174)); 
     }
     
-    if (boss.timer % 1000 == 0 && boss.timer != 0) {
+    if (boss.timer % 800 == 0 && boss.timer != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-28, 20, 28));
+      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
     }
     
     for (int x = 0; x < consumables.size(); x++) {
@@ -620,6 +640,9 @@ void displayScreen() {
     }
   }
   else if (currmode.equals("Loss")) {
+    if (bossBGM.isPlaying()) {
+      bossBGM.pause();
+    }
     image(bg, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
@@ -682,6 +705,9 @@ void displayScreen() {
       text(winText,width/2, height/2.20);
       text("wins!",width/2, height/1.80);
     } else {
+      if (bossBGM.isPlaying()) {
+        bossBGM.pause();
+      }
       boss.update();
       boss.display();
       fill(0);
@@ -736,5 +762,25 @@ void deathAnimation(Character c) {
     c.yPos += c.deathSlope;
   } else {
     c.yPos -= 5.0;
+  }
+}
+
+void transitionScreen() {
+  fill(0,transitionTick);
+  rect(0,0,width,height);
+  fill(255,255);
+  if (transitionTick < 255 && !fadeOut) {
+    transitionTick+=5;
+    if (bgmVolume != 0) {
+      bgmVolume -= 0.005;
+      startBGM.amp(bgmVolume);
+    }
+  } else if (transitionTick > 0) {
+    if (!modeInitialized) currmode = s.selectedMode;
+    fadeOut = true;
+    transitionTick-=5;
+  } else {
+    transition = false;
+    fadeOut = false;
   }
 }
