@@ -166,18 +166,26 @@ public class Projectiles {
     for (Platforms p : platforms) {
       if (xPos + size/2 > p.xPos && xPos - size/2 < p.xPos + p.platformWidth && 
       yPos + size/2 > p.yPos && yPos - size/2 < p.yPos + p.platformHeight) {
-        if (yPos < p.yPos || yPos > p.yPos + p.platformHeight) {
-          yVelocity *= -1;
-        } else {
-          xVelocity *= -1;
-          
-          if (type.equals("grenade")) {
+        
+        if (type.equals("grenade")) {
+          if ((yPos + yVelocity + size/2 > p.yPos && yPos + yVelocity - size/2 < p.yPos + p.platformHeight) &&
+          (yPos < p.yPos || yPos > p.yPos + p.platformHeight)) {
+            yVelocity *= -1;
+          } else {
+            xVelocity *= -1;
             if ((initialXV > 0 && xVelocity < 0) || (initialXV < 0 && xVelocity > 0)) {
               xVelocity *= -1;
             }
           }
+        } else {
           
+          if (yPos < p.yPos || yPos > p.yPos + p.platformHeight) {
+            yVelocity *= -1;
+          } else {
+            xVelocity *= -1;
+          }
         }
+        
         bounce = true;
       }
     }
