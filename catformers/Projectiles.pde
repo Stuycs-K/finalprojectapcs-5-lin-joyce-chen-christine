@@ -165,6 +165,16 @@ public class Projectiles {
     for (Platforms p : platforms) {
       if (xPos + size/2 > p.xPos && xPos - size/2 < p.xPos + p.platformWidth && 
       yPos + size/2 > p.yPos && yPos - size/2 < p.yPos + p.platformHeight) {
+        
+        if (type.equals("grenade")) {
+          if (min(abs((xPos + size/2) - p.xPos), abs((xPos - size/2) - (p.xPos + p.platformWidth))) <
+          min(abs((yPos + size/2) - p.yPos), abs((yPos - size/2) - (p.yPos + p.platformHeight)))) {
+            xVelocity *= -1;
+          } else {
+            yVelocity *= -1;
+          }
+        }
+        
         if (yPos < p.yPos || yPos > p.yPos + p.platformHeight) {
           yVelocity *= -1;
         } else {
