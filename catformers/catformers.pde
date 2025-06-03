@@ -43,9 +43,10 @@ Gif cat3walkOpenL;
 
 //BGM 
 SoundFile startBGM;
+float bgmVolume;
 
 // sound effects
-SoundFile shootSound, hitSound;
+SoundFile shootSound, hitSound, selectSound;
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -114,6 +115,7 @@ void loadAssets() {
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav"); 
   hitSound = new SoundFile(this, "catMeow1.wav");
+  selectSound = new SoundFile(this, "selectSound.aiff");
 }
 
 void loadState() {
@@ -406,6 +408,8 @@ void keyPressed() {
       transition = true;
       transitionTick = 0;
       fadeOut = false;
+      selectSound.jump(0.5);
+      selectSound.play();
       transitionScreen();
       modeInitialized = false;
     }
@@ -504,8 +508,8 @@ void mouseClicked() {
 
 void displayScreen() {
   if (currmode.equals("Menu")) {
-    float bgmVolume = 0.5;
     if (!selectScreen) {
+      bgmVolume = 0.5;
       if (!startBGM.isPlaying()) {
         startBGM.loop();
         startBGM.amp(bgmVolume);
@@ -596,7 +600,7 @@ void displayScreen() {
     
     if (boss.timer % 1000 == 0 && boss.timer != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-28, 20, 28));
+      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
     }
     
     for (int x = 0; x < consumables.size(); x++) {
@@ -755,6 +759,10 @@ void transitionScreen() {
   fill(255,255);
   if (transitionTick < 255 && !fadeOut) {
     transitionTick+=5;
+    if (bgmVolume != 0) {
+      bgmVolume -= 0.005;
+      startBGM.amp(bgmVolume);
+    }
   } else if (transitionTick > 0) {
     if (!modeInitialized) currmode = s.selectedMode;
     fadeOut = true;
