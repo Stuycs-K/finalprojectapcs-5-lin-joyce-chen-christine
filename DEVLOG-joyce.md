@@ -81,3 +81,10 @@ Fixed bug where horizontal jumps would lead to character jumping off the screen 
 stuff to do + consider for next session
 - get the bgm to fade out after you select a mode (maybe also add select sounds)
 - import bgm for versus and boss modes
+
+### 2025-06-02 - BGM and Transitions - 1.5 hours
+Added a method to implement screen transitions which causes the screen to fade into the versus or boss mode (with the bgm fading out). A selection sound effect was also added for when game is started. Boss bgm was imported and small bug where dead players can use hp potions was fixed.
+
+stuff to do + consider for next session
+- make bossBGM only play after boss has spawned in
+- maybe add a spawning animation for boss (will help with the first bullet point!!)
