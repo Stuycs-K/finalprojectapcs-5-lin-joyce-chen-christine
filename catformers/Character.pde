@@ -135,6 +135,14 @@ public class Character {
       }
     }
   }
+  
+  void mouseAim(PVector mousePos) {
+    aimAngle = degrees(atan2(mousePos.y - yPos, mousePos.x - xPos));
+    if (aimAngle < 0) {
+      aimAngle += 360;
+    }
+    facingRight = mousePos.x - xPos >= 0;
+  }
 
   void move(boolean goRight) {
     boolean finalGoRight;

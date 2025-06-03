@@ -48,6 +48,8 @@ float bgmVolume;
 // sound effects
 SoundFile shootSound, hitSound, selectSound;
 
+PVector mousePos = new PVector();
+
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
 final int MAX_KEY = 128;
@@ -148,6 +150,8 @@ void draw() {
     loaded = true;
     return;
   }
+  
+  mousePos.set(mouseX, mouseY);
   
    if (currmode.equals("Boss")) {
     if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
@@ -369,6 +373,11 @@ void draw() {
       }
     }
   }
+  
+  if (currmode.equals("Boss") && numPlayer.equals("1") && !gamePause && !gameEnd &&
+  chars.get(0).isAlive && !chars.get(0).isTrapped) {
+    chars.get(0).mouseAim(mousePos);
+  }
 
 }
 
@@ -510,7 +519,7 @@ void mouseClicked() {
 void displayScreen() {
   if (currmode.equals("Menu")) {
     if (!selectScreen) {
-      bgmVolume = 0.5;
+      bgmVolume = 0.6;
       if (!startBGM.isPlaying()) {
         startBGM.loop();
         startBGM.amp(bgmVolume);
@@ -527,7 +536,7 @@ void displayScreen() {
     }
     else {
       s.display();
-      if (bgmVolume != 0.1) {
+      if (bgmVolume != 0.2) {
         bgmVolume = 0.2;
         startBGM.amp(bgmVolume);
       }
@@ -585,7 +594,7 @@ void displayScreen() {
       boss = new Boss(640, height - 522);
       
       if (!bossBGM.isPlaying()) {
-        bossBGM.amp(0.2);
+        bossBGM.amp(0.1);
         bossBGM.play();
       }
       
