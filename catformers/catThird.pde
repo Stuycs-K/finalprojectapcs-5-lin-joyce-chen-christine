@@ -44,7 +44,11 @@ public class catThird extends Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     
-    projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    // offset
+    float offsetX = mouthX + cos(radians(aimAngle)) * 40;
+    float offsetY = mouthY + sin(radians(aimAngle)) * 40;
+    
+    projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, offsetX, offsetY));
     bulletCD = maxBulletCD;
     shootTick++;
     shootSound.play();
