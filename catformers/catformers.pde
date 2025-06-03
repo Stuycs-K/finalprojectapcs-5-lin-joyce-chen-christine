@@ -10,7 +10,7 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish;
+boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
 screenSelect s;
@@ -47,6 +47,8 @@ float bgmVolume;
 
 // sound effects
 SoundFile shootSound, hitSound, selectSound;
+
+PVector mousePos = new PVector();
 
 static float g = 3.5; // change gravity based on how fast we want them to fall!
 
@@ -148,6 +150,8 @@ void draw() {
     loaded = true;
     return;
   }
+  
+  mousePos.set(mouseX, mouseY);
   
    if (currmode.equals("Boss")) {
     if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
@@ -305,7 +309,7 @@ void draw() {
       text("restart",width/2, height/1.60);
     }
   }
-
+ 
   if (keyPressed) {
     if (currmode.equals("Menu") && !restarted) { // for now go to versus, later create a second screen for character selection
       selectScreen = true;
@@ -334,8 +338,10 @@ void draw() {
           }
           if (p1Keys['q']) {
             chars.get(0).aim(true);
+            mouseAim = false;
           } else if (p1Keys['e']) {
             chars.get(0).aim(false);
+            mouseAim = false;
           }
           if (p1Keys['r']) {
             chars.get(0).shoot();
@@ -369,7 +375,18 @@ void draw() {
       }
     }
   }
+  
+  if (currmode.equals("Boss") && numPlayer.equals("1") && !gamePause && !gameEnd &&
+  chars.get(0).isAlive && !chars.get(0).isTrapped) {
+    if (mouseAim) {
+      chars.get(0).mouseAim(mousePos);
+    }
+  }
 
+}
+
+void mouseMoved() {
+  mouseAim = true;
 }
 
 void keyPressed() {
@@ -510,7 +527,7 @@ void mouseClicked() {
 void displayScreen() {
   if (currmode.equals("Menu")) {
     if (!selectScreen) {
-      bgmVolume = 0.5;
+      bgmVolume = 0.6;
       if (!startBGM.isPlaying()) {
         startBGM.loop();
         startBGM.amp(bgmVolume);
@@ -527,7 +544,7 @@ void displayScreen() {
     }
     else {
       s.display();
-      if (bgmVolume != 0.1) {
+      if (bgmVolume != 0.2) {
         bgmVolume = 0.2;
         startBGM.amp(bgmVolume);
       }
@@ -585,8 +602,8 @@ void displayScreen() {
       boss = new Boss(640, height - 522);
       
       if (!bossBGM.isPlaying()) {
-        bossBGM.amp(0.2);
         bossBGM.play();
+        bossBGM.amp(0.2);
       }
       
       platforms.add(new Platforms(0, height - 20, width)); // floor

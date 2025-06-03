@@ -82,5 +82,9 @@ Future Improvements:
 - Improve grenade logic for Bomber Cat
 - Implement additional features (ex: revive system)
 
-### 2025-06-02 -
-Worked for _. Fixed array index out of bounds error by adding proper bounds checks for spamKeys array.
+### 2025-06-02 - Bug Fixing + Mouse Aiming
+Worked for 50 minutes. Fixed array index out of bounds error by adding proper bounds checks for spamKeys array. Increased volume for shooting sound and fixed logic for adjusting Boss BGM volume. Implemented aiming with mouse for single player and allowed for using either keyboard/mouse. Fixed bugs with grenade behavior by adding offset to spawn position + preventing them from bouncing backward and from falling through platforms.
+
+Future Improvements:
+- Adjust character/bullet speeds for better gameplay experience
+- Add more sound effects to Boss Mode  
