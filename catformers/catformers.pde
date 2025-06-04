@@ -397,12 +397,13 @@ void draw() {
     }
     if ((currmode.equals("Boss")) && numPlayer.equals("2")) {
       if (!p1Char.isAlive && p1Char.revivable && p2Char.isAlive) {
-        if (p2Keys[UP]) {
+        if (p2Keys[UP] && !spamKeys[UP]) {
           if (p2Char.xPos + p2Char.hitboxWidth > p1Char.xPos && p2Char.xPos < p1Char.xPos + p1Char.hitboxWidth &&
           p2Char.yPos + p2Char.hitboxLength > p1Char.yPos && p2Char.yPos < p1Char.yPos + p1Char.hitboxLength) {
             p1Char.spamCount++;
             if (p1Char.spamCount >= 5) {
               p1Char.isAlive = true;
+              p1Char.revivable = false;
               p1Char.lives = 1;
               p1Char.spamCount = 0;
               p1Char.yPos += 10;
@@ -411,12 +412,13 @@ void draw() {
         }
       }
       if (!p2Char.isAlive && p2Char.revivable && p1Char.isAlive) {
-        if (p1Keys['w']) {
+        if (p1Keys['w'] && !spamKeys['w']) {
           if (p1Char.xPos + p1Char.hitboxWidth > p2Char.xPos && p1Char.xPos < p2Char.xPos + p2Char.hitboxWidth &&
           p1Char.yPos + p1Char.hitboxLength > p2Char.yPos && p1Char.yPos < p2Char.yPos + p2Char.hitboxLength) {
             p2Char.spamCount++;
             if (p2Char.spamCount >= 5) {
               p2Char.isAlive = true;
+              p2Char.revivable = false;
               p2Char.lives = 1;
               p2Char.spamCount = 0;
               p2Char.yPos += 10;
