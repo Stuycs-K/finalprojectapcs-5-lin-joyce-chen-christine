@@ -8,7 +8,7 @@ public class Character {
   float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive, isPlayerTwo;
   boolean inverseControls, isTrapped, horizontalJump, revivable;
-  int spamCount, reviveCount;
+  int spamCount;
   PImage sprite;
   Gif walking;
 
