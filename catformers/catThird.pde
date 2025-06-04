@@ -4,6 +4,8 @@ public class catThird extends Character {
   
   public catThird (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
+    hitboxWidth = 51;
+    hitboxLength = 75;
     
     if (cat3idleR == null) cat3idleR = loadImage("cat3idleR.png");
     if (cat3idleL == null) cat3idleL = loadImage("cat3idleL.png");
@@ -59,22 +61,22 @@ public class catThird extends Character {
     if (facingRight) {
       if (shootTick > 0 && shootTick < 90) {
         PImage[] frames = cat3walkOpenR.getPImages();
-        image(frames[cat3walkR.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
+        image(frames[cat3walkR.currentFrame()],  xPos, yPos, hitboxWidth+5, hitboxLength);
         shootTick++;
       }
       else {
-        image(cat3walkR, xPos, yPos, hitboxWidth, hitboxLength);
+        image(cat3walkR, xPos, yPos, hitboxWidth+5, hitboxLength);
         shootTick = 0;
       }
     }
     else {
       if (shootTick > 0 && shootTick < 90) {
         PImage[] frames = cat3walkOpenL.getPImages();
-        image(frames[cat3walkL.currentFrame()],  xPos, yPos, hitboxWidth, hitboxLength);
+        image(frames[cat3walkL.currentFrame()],  xPos, yPos, hitboxWidth+5, hitboxLength);
         shootTick++;
       }
       else {
-        image(cat3walkL, xPos, yPos, hitboxWidth, hitboxLength);
+        image(cat3walkL, xPos, yPos, hitboxWidth+5, hitboxLength);
         shootTick = 0;
       }
     }
@@ -99,7 +101,7 @@ public class catThird extends Character {
         
     // display lives
     for (int x = 0; x < lives; x++) {
-      image(heartImg, 90+35*x, 35+50*(chars.indexOf(this)), 30,30);
+      image(heartImg, (width*chars.indexOf(this))+(pow(-1,chars.indexOf(this)+2))*(90+(40*chars.indexOf(this))+35*x), 35, 30,30);
     }
     flip();
     if (!isWalking) {

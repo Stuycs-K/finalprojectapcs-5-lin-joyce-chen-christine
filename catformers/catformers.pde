@@ -140,6 +140,9 @@ void loadState() {
   deathFrame = 0;
   deathFinish = false;
   transition = false;
+  
+  if (bossBGM.isPlaying()) bossBGM.pause();
+
 }
   
 void draw() {
@@ -472,6 +475,10 @@ void keyReleased() {
   if (currmode.equals("Versus") || currmode.equals("Boss")) {
       if (key == ' ' && !transition) {
         gamePause = !gamePause;
+        if (currmode.equals("Boss")) {
+          if (bossBGM.isPlaying()) bossBGM.pause();
+          else bossBGM.play();
+        }
       }
      if (!gamePause && !transition) {
       // ==== Player 1 ====
@@ -762,7 +769,7 @@ void restartGame() {
   gamePause = false;
   deathFrame = 0;
   deathFinish = false;
-
+  bossBGM.jump(0);
 }
 
 void deathAnimation(Character c) {
