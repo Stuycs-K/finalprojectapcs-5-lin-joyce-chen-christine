@@ -234,65 +234,69 @@ void draw() {
       gameEnd = true;
     }
     
-    if(c.isTrapped) {
-      pushStyle();
-      float bW = 180;
-      float bH = 38;
-      fill(0, 0, 0, 120);
-      noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-      fill(255);
-      text("TRAPPED!", c.xPos + c.hitboxWidth/2, c.yPos - 40);
-      text("Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
-
-      // trap cage bars
-      stroke(0);
-      strokeWeight(2);
-      float x = c.xPos - 4, y = c.yPos - 4, w = c.hitboxWidth + 8, h = c.hitboxLength + 8;
-      for (int i = 1; i <= 5; i++) {
-        float barX = x + (w/4) * (i - .5) - 7;
-        line(barX, y, barX, y + h);
+    if (!gameEnd) {
+    
+      if(c.isAlive && c.isTrapped) {
+        pushStyle();
+        float bW = 180;
+        float bH = 38;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("TRAPPED!", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+        text("Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
+  
+        // trap cage bars
+        stroke(0);
+        strokeWeight(2);
+        float x = c.xPos - 4, y = c.yPos - 4, w = c.hitboxWidth + 8, h = c.hitboxLength + 8;
+        for (int i = 1; i <= 5; i++) {
+          float barX = x + (w/4) * (i - .5) - 7;
+          line(barX, y, barX, y + h);
+        }
+        line(x, y, x + w, y);
+        line(x, y + h, x + w, y + h);
+        // warning sign
+        float size = 40;
+        image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 100, size, size);
+        
+        popStyle();
       }
-      line(x, y, x + w, y);
-      line(x, y + h, x + w, y + h);
-      // warning sign
-      float size = 40;
-      image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 100, size, size);
       
-      popStyle();
-    }
-    
-    if (c.inverseControls) {
-      pushStyle();
-      float bW = 160;
-      float bH = 30;
-      fill(0, 0, 0, 120);
-      noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-      fill(255);
-      text("Inverse Controls!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
-      float size = 40;
-      image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
-      popStyle();
-    }
-    
-    if (c.revivable) {
-      pushStyle();
-      float bW = 160;
-      float bH = 35;
-      fill(0, 0, 0, 120);
-      noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-      fill(255);
-      text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
-      text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
-      popStyle();
+      if (c.isAlive && c.inverseControls) {
+        pushStyle();
+        float bW = 160;
+        float bH = 30;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Inverse Controls!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+        float size = 40;
+        image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
+        popStyle();
+      }
+      
+      if (!c.isAlive && c.revivable) {
+        pushStyle();
+        float bW = 160;
+        float bH = 35;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+        text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
+        popStyle();
+      }
+      
     }
     
   }
@@ -397,12 +401,13 @@ void draw() {
     }
     if ((currmode.equals("Boss")) && numPlayer.equals("2")) {
       if (!p1Char.isAlive && p1Char.revivable && p2Char.isAlive) {
-        if (p2Keys[UP]) {
+        if (p2Keys[UP] && !spamKeys[UP]) {
           if (p2Char.xPos + p2Char.hitboxWidth > p1Char.xPos && p2Char.xPos < p1Char.xPos + p1Char.hitboxWidth &&
           p2Char.yPos + p2Char.hitboxLength > p1Char.yPos && p2Char.yPos < p1Char.yPos + p1Char.hitboxLength) {
             p1Char.spamCount++;
             if (p1Char.spamCount >= 5) {
               p1Char.isAlive = true;
+              p1Char.revivable = false;
               p1Char.lives = 1;
               p1Char.spamCount = 0;
               p1Char.yPos += 10;
@@ -411,12 +416,13 @@ void draw() {
         }
       }
       if (!p2Char.isAlive && p2Char.revivable && p1Char.isAlive) {
-        if (p1Keys['w']) {
+        if (p1Keys['w'] && !spamKeys['w']) {
           if (p1Char.xPos + p1Char.hitboxWidth > p2Char.xPos && p1Char.xPos < p2Char.xPos + p2Char.hitboxWidth &&
           p1Char.yPos + p1Char.hitboxLength > p2Char.yPos && p1Char.yPos < p2Char.yPos + p2Char.hitboxLength) {
             p2Char.spamCount++;
             if (p2Char.spamCount >= 5) {
               p2Char.isAlive = true;
+              p2Char.revivable = false;
               p2Char.lives = 1;
               p2Char.spamCount = 0;
               p2Char.yPos += 10;
@@ -843,7 +849,11 @@ void deathAnimation(Character c) {
     c.yPos += c.deathSlope;
   } else {
     if (numPlayer.equals("2")) {
-      c.yPos -=.5;
+      if (!p1Char.revivable && !p2Char.revivable) {
+        c.yPos -=5.0;
+      } else {
+        c.yPos -= .5;
+      }
     } else {
       c.yPos -= 5;
     }
