@@ -88,3 +88,8 @@ Added a method to implement screen transitions which causes the screen to fade i
 stuff to do + consider for next session
 - make bossBGM only play after boss has spawned in
 - maybe add a spawning animation for boss (will help with the first bullet point!!)
+
+### 2025-06-03 - Sprites and bugs - 1 hour
+Fixed character sprites to be as close to the sprites as possible and modified display so that the characters look similar in size ingame and in character selection screen. Bugs like hearts appearing in wrong place, boss bgm playing when paused or game exited, and cat2 homing to wrong target in boss mode were fixed.
+
+- google docs to do listtt
