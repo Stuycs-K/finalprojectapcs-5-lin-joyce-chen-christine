@@ -15,7 +15,7 @@ public class screenSelect {
     
     numPlayers.add(new Button(width/2-400,height/2-150,300,300, "1", "onep.png"));
     numPlayers.add(new Button(width/2+100,height/2-150,300,300, "2", "twop.png"));
-    demoToggle = new Button(width - 200, 20, 160, 40, "Demo Mode");
+    demoToggle = new Button(width - 100, 20, 60, 30, "Demo Mode");
     
     p1Index = 0; p2Index = 0;
     p1Chosen = false; p2Chosen = false;

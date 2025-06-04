@@ -32,21 +32,33 @@ public class Button {
     if (display != null) {
       image(display, xPos, yPos, buttonWidth, buttonHeight);
     } else {
-      if (isToggle) {
-        if (toggleState) {
-          fill(0, 200, 0);
-        } else {
-          fill(200);
-        }
-      } else {
-        fill(200);
-      }
-      rect(xPos, yPos, buttonWidth, buttonHeight);
-      fill(0);
-      text(value, xPos + buttonWidth/2, yPos + buttonWidth/2);
+      drawToggle();
     }
   }
   
+  void drawToggle () {
+    if (toggleState == true) {
+      fill(100, 255, 100);
+    } else {
+      fill(200);
+    }
+    noStroke();
+    rect(xPos, yPos, buttonWidth, buttonHeight, buttonHeight);
+
+    float circleX;
+    if (toggleState == true) {
+      circleX = xPos + buttonWidth - buttonHeight/2;
+    } else {
+      circleX = xPos + buttonHeight/2;
+    }
+    fill(255);
+    ellipse(circleX, yPos + buttonHeight/2, buttonHeight*0.8, buttonHeight*0.8);
+    
+    fill(255);
+    textSize(20);
+    text(value, xPos - 63, yPos + buttonHeight/2);
+  }
+
   void toggle() {
     if (isToggle) {
       toggleState = !toggleState;
