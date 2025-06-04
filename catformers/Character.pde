@@ -19,11 +19,7 @@ public class Character {
     hitboxWidth = 55;
     hitboxLength = 70;
     maxLength = hitboxLength;
-    if (demoMode) {
-      lives = 33;
-    } else {
-      lives = 3;
-    }
+    lives = getInitialLives();
     maxLives = lives;
 
     // horizontal movement
@@ -307,6 +303,12 @@ public class Character {
   
   PImage getPreview() {
     return sprite;
+  }
+  
+  int getInitialLives() {
+    if (demoMode && numPlayer.equals("1")) return 33;
+    if (demoMode && numPlayer.equals("2")) return 15;
+    return 3;
   }
 
   void display() {
