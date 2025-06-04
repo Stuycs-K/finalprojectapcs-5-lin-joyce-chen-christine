@@ -88,3 +88,9 @@ Worked for 50 minutes. Fixed array index out of bounds error by adding proper bo
 Future Improvements:
 - Adjust character/bullet speeds for better gameplay experience
 - Add more sound effects to Boss Mode  
+
+### 2025-06-03 - Demo Mode + Revive Feature
+Worked for 40 minutes. Added Demo Mode with toggle button displayed in player # selection screen for Boss Mode. Changed number of lives to 33 for 1 Player Mode and 15 to 2 Player Mode in Demo Boss Mode. Slowed down death animation for 2 Player Boss Mode to implement revive feature requiring 5 presses of jump key when hitboxes are overlapping. Fixed bugs with new feature; dislayed text to indicate revivable state.
+
+Future Improvements:
+- Draw new BG for other maps: google doc list!
