@@ -37,6 +37,7 @@ public class Button {
   }
   
   void drawToggle () {
+    pushStyle();
     if (toggleState == true) {
       fill(100, 255, 100);
     } else {
@@ -57,6 +58,7 @@ public class Button {
     fill(255);
     textSize(20);
     text(value, xPos - 63, yPos + buttonHeight/2);
+    popStyle();
   }
 
   void toggle() {
