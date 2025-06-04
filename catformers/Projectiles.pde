@@ -36,11 +36,25 @@ public class Projectiles {
       yPos += yVelocity;
     }
     else if (type.equals("laser")) {
-      for (Character c : chars) {
-        float dist, fmag;
-        PVector f;
-        if (c != player) {
-          PVector otherPos = new PVector(c.xPos+c.hitboxWidth/2, c.yPos+c.hitboxLength/2);
+      float dist, fmag;
+      PVector f;
+      if (currmode.equals("Versus")) {
+        for (Character c : chars) {
+          if (c != player) {
+            PVector otherPos = new PVector(c.xPos+c.hitboxWidth/2, c.yPos+c.hitboxLength/2);
+            dist = PVector.sub(new PVector(xPos,yPos), otherPos).mag();
+            fmag = 200000 / pow(dist,2);
+            f = PVector.sub(otherPos, new PVector(xPos,yPos));
+            f.normalize();
+            f.setMag(fmag);
+            a = a.add(f.div(10));
+            xVelocity += a.x;
+            yVelocity += a.y;
+            a.set(0,0);
+          }
+        }
+      } else {
+          PVector otherPos = new PVector(boss.xPos+boss.hitboxWidth/2, boss.yPos+boss.hitboxLength/2);
           dist = PVector.sub(new PVector(xPos,yPos), otherPos).mag();
           fmag = 200000 / pow(dist,2);
           f = PVector.sub(otherPos, new PVector(xPos,yPos));
@@ -50,7 +64,6 @@ public class Projectiles {
           xVelocity += a.x;
           yVelocity += a.y;
           a.set(0,0);
-        }
       }
       
       if (checkBounce()) {
