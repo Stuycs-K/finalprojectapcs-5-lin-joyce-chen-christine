@@ -19,7 +19,11 @@ public class Character {
     hitboxWidth = 55;
     hitboxLength = 70;
     maxLength = hitboxLength;
-    lives = 3;
+    if (demoMode) {
+      lives = 33;
+    } else {
+      lives = 3;
+    }
     maxLives = lives;
 
     // horizontal movement
