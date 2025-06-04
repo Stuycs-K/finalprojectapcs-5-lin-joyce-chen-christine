@@ -10,7 +10,7 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
+boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
 screenSelect s;
