@@ -236,7 +236,7 @@ void draw() {
     
     if (!gameEnd) {
     
-      if(c.isTrapped) {
+      if(c.isAlive && c.isTrapped) {
         pushStyle();
         float bW = 180;
         float bH = 38;
@@ -266,7 +266,7 @@ void draw() {
         popStyle();
       }
       
-      if (c.inverseControls) {
+      if (c.isAlive && c.inverseControls) {
         pushStyle();
         float bW = 160;
         float bH = 30;
@@ -282,7 +282,7 @@ void draw() {
         popStyle();
       }
       
-      if (c.revivable) {
+      if (!c.isAlive && c.revivable) {
         pushStyle();
         float bW = 160;
         float bH = 35;
@@ -849,7 +849,11 @@ void deathAnimation(Character c) {
     c.yPos += c.deathSlope;
   } else {
     if (numPlayer.equals("2")) {
-      c.yPos -=.5;
+      if (!p1Char.revivable && !p2Char.revivable) {
+        c.yPos -=5.0;
+      } else {
+        c.yPos -= .5;
+      }
     } else {
       c.yPos -= 5;
     }
