@@ -646,8 +646,10 @@ void displayScreen() {
     
     int deathCount = 0;
     for (Character c : chars) {
-      if (!c.isAlive) {
+      if (!c.isAlive && !c.revivable) {
         deathCount+=1; 
+      }
+      if (!c.isAlive) {
         deathAnimation(c);
       }
     }
@@ -785,7 +787,11 @@ void deathAnimation(Character c) {
     c.xPos += 40;
     c.yPos += c.deathSlope;
   } else {
-    c.yPos -= 5.0;
+    if (numPlayer.equals("2")) {
+      c.yPos -= 1.5;
+    } else {
+      c.yPos -= 5;
+    }
   }
 }
 
