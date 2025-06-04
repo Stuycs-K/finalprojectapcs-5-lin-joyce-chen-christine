@@ -74,24 +74,28 @@ public class screenSelect {
   
     for (int i = 0; i < charOptions.size(); i++) {
       float previewW = 150; 
-      float previewH = previewW * 70.0/55.0;
+      float previewH;
+      if (i!=0) previewH = (previewW - 10) * charOptions.get(i).hitboxLength/charOptions.get(i).hitboxWidth;
+      else previewH = (previewW + 10) * 70/55;
       float x = width / 2 - 320 + i * 250;
-      float y = height / 2 - 100;
+      float y; 
+      if (i==1) y = height / 2 - 115;
+      else y = height / 2 - 100;
       textSize(22);
-      text(names[i], x + previewW/2, y - 20);
+      text(names[i], x + previewW/2, height / 2 - 120);
       image(charOptions.get(i).getPreview(), x, y, previewW, previewH);
       textSize(18);
       if (i == p1Index) {
         if (p1Chosen) fill(255,0,0);
-        text("P1", x + previewW/2, y + previewH + 40);
+        text("P1", x + previewW/2, (height / 2 - 100) + ((previewW + 10) * 70/55) + 60);
         fill(200);
       }
       if (numPlayer.equals("2") && i == p2Index) {
         if (p2Chosen) fill(255,0,0);
-        text("P2", x + previewW/2, y + previewH + 60);
+        text("P2", x + previewW/2, (height / 2 - 100) + ((previewW + 10) * 70/55) + 80);
         fill(200);
       }
-      text(desc[i], x + previewW/2, y + previewH + 90);
+      text(desc[i], x + previewW/2, (height / 2 - 100) + ((previewW + 10) * 70/55) + 110);
     }
     popStyle();
   }
