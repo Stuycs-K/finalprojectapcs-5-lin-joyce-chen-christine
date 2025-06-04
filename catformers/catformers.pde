@@ -222,7 +222,9 @@ void draw() {
   for (Character c : chars) {
     if (c.lives <= 0 && c.isAlive) {
       c.isAlive = false;
-      c.revivable = true;
+      if (currmode.equals("Boss") && numPlayer.equals("2")) {
+        c.revivable = true;
+      }
       c.deathSlope = random(-5,5) * 10.0;
       while (c.deathSlope == 0.0) {
         c.deathSlope = random(-5,5) * 10.0;
@@ -281,14 +283,15 @@ void draw() {
     if (c.revivable) {
       pushStyle();
       float bW = 160;
-      float bH = 30;
+      float bH = 35;
       fill(0, 0, 0, 120);
       noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
       textAlign(CENTER, CENTER);
       textSize(16);
       fill(255);
-      text("Spam JUMP over me to REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+      text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+      text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
       popStyle();
     }
     
@@ -692,6 +695,12 @@ void displayScreen() {
     
     int deathCount = 0;
     for (Character c : chars) {
+      if (numPlayer.equals("2")) {
+        if (!p1Char.isAlive && !p2Char.isAlive) {
+          p1Char.revivable = false;
+          p2Char.revivable = false;
+        }
+      }
       if (!c.isAlive && !c.revivable) {
         deathCount+=1; 
       }
