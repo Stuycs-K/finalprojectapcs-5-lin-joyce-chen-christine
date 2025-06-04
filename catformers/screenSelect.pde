@@ -1,6 +1,7 @@
 public class screenSelect {
   ArrayList<Button> modes = new ArrayList<Button>();
   ArrayList<Button> numPlayers = new ArrayList<Button>();
+  Button demoToggle;
   
   // ==== Character Select ====  
   ArrayList<Character> charOptions = new ArrayList<Character>();
@@ -14,6 +15,7 @@ public class screenSelect {
     
     numPlayers.add(new Button(width/2-400,height/2-150,300,300, "1", "onep.png"));
     numPlayers.add(new Button(width/2+100,height/2-150,300,300, "2", "twop.png"));
+    demoToggle = new Button(width - 100, 20, 60, 30, "Demo Mode");
     
     p1Index = 0; p2Index = 0;
     p1Chosen = false; p2Chosen = false;
@@ -24,6 +26,12 @@ public class screenSelect {
   }
   
   void buttonClicked() {
+    if (demoToggle != null && 
+    mouseX >= demoToggle.xPos && mouseX <= demoToggle.xPos + demoToggle.buttonWidth &&
+    mouseY >= demoToggle.yPos && mouseY <= demoToggle.yPos + demoToggle.buttonHeight) {
+      demoToggle.toggle();
+      demoMode = demoToggle.toggleState;
+    }
     if (modes.size() == 2) {
       for (int x = 0; x < modes.size(); x++) {
         Button b = modes.get(x);
@@ -120,8 +128,7 @@ public class screenSelect {
       for (Button b : modes) {
         b.display();
       }
-    }
-    else {
+    } else {
       if (selectedMode.equals("Versus")) {
         selectScreen = false;
         currmode = selectedMode;
@@ -131,6 +138,7 @@ public class screenSelect {
         for (Button b : numPlayers) {
           b.display();
         }
+        demoToggle.display();
       }
     }
   }

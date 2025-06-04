@@ -183,6 +183,7 @@ public class Boss {
             hitSound.play();
             c.damageCD = 30;
             c.isAlive = c.lives > 0;
+            if (!c.isAlive) c.revivable = true;
           }
         }
       }
@@ -273,6 +274,7 @@ public class Boss {
               c.lives--;
               hitSound.play();
               c.isAlive = c.lives > 0;
+              if (!c.isAlive) c.revivable = true;
               c.damageCD = 60;
             }
           }

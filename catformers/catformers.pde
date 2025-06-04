@@ -10,7 +10,7 @@ ArrayList<Consumable> consumables;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
+boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
 screenSelect s;
@@ -222,6 +222,9 @@ void draw() {
   for (Character c : chars) {
     if (c.lives <= 0 && c.isAlive) {
       c.isAlive = false;
+      if (currmode.equals("Boss") && numPlayer.equals("2")) {
+        c.revivable = true;
+      }
       c.deathSlope = random(-5,5) * 10.0;
       while (c.deathSlope == 0.0) {
         c.deathSlope = random(-5,5) * 10.0;
@@ -274,6 +277,21 @@ void draw() {
       text("Inverse Controls!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
       float size = 40;
       image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
+      popStyle();
+    }
+    
+    if (c.revivable) {
+      pushStyle();
+      float bW = 160;
+      float bH = 35;
+      fill(0, 0, 0, 120);
+      noStroke();
+      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
+      textAlign(CENTER, CENTER);
+      textSize(16);
+      fill(255);
+      text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+      text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
       popStyle();
     }
     
@@ -377,6 +395,37 @@ void draw() {
         }
       }
     }
+    if ((currmode.equals("Boss")) && numPlayer.equals("2")) {
+      if (!p1Char.isAlive && p1Char.revivable && p2Char.isAlive) {
+        if (p2Keys[UP]) {
+          if (p2Char.xPos + p2Char.hitboxWidth > p1Char.xPos && p2Char.xPos < p1Char.xPos + p1Char.hitboxWidth &&
+          p2Char.yPos + p2Char.hitboxLength > p1Char.yPos && p2Char.yPos < p1Char.yPos + p1Char.hitboxLength) {
+            p1Char.spamCount++;
+            if (p1Char.spamCount >= 5) {
+              p1Char.isAlive = true;
+              p1Char.lives = 1;
+              p1Char.spamCount = 0;
+              p1Char.yPos += 10;
+            }
+          }
+        }
+      }
+      if (!p2Char.isAlive && p2Char.revivable && p1Char.isAlive) {
+        if (p1Keys['w']) {
+          if (p1Char.xPos + p1Char.hitboxWidth > p2Char.xPos && p1Char.xPos < p2Char.xPos + p2Char.hitboxWidth &&
+          p1Char.yPos + p1Char.hitboxLength > p2Char.yPos && p1Char.yPos < p2Char.yPos + p2Char.hitboxLength) {
+            p2Char.spamCount++;
+            if (p2Char.spamCount >= 5) {
+              p2Char.isAlive = true;
+              p2Char.lives = 1;
+              p2Char.spamCount = 0;
+              p2Char.yPos += 10;
+            }
+          }
+        }
+      }
+    }
+        
   }
   
   if (currmode.equals("Boss") && numPlayer.equals("1") && !gamePause && !gameEnd &&
@@ -646,8 +695,16 @@ void displayScreen() {
     
     int deathCount = 0;
     for (Character c : chars) {
-      if (!c.isAlive) {
+      if (numPlayer.equals("2")) {
+        if (!p1Char.isAlive && !p2Char.isAlive) {
+          p1Char.revivable = false;
+          p2Char.revivable = false;
+        }
+      }
+      if (!c.isAlive && !c.revivable) {
         deathCount+=1; 
+      }
+      if (!c.isAlive) {
         deathAnimation(c);
       }
     }
@@ -785,7 +842,14 @@ void deathAnimation(Character c) {
     c.xPos += 40;
     c.yPos += c.deathSlope;
   } else {
-    c.yPos -= 5.0;
+    if (numPlayer.equals("2")) {
+      c.yPos -=.5;
+    } else {
+      c.yPos -= 5;
+    }
+    if (c.yPos + c.hitboxLength < 0) {
+      c.revivable = false;
+    }
   }
 }
 
