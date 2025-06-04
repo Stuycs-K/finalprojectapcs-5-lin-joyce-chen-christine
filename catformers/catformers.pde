@@ -234,65 +234,69 @@ void draw() {
       gameEnd = true;
     }
     
-    if(c.isTrapped) {
-      pushStyle();
-      float bW = 180;
-      float bH = 38;
-      fill(0, 0, 0, 120);
-      noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-      fill(255);
-      text("TRAPPED!", c.xPos + c.hitboxWidth/2, c.yPos - 40);
-      text("Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
-
-      // trap cage bars
-      stroke(0);
-      strokeWeight(2);
-      float x = c.xPos - 4, y = c.yPos - 4, w = c.hitboxWidth + 8, h = c.hitboxLength + 8;
-      for (int i = 1; i <= 5; i++) {
-        float barX = x + (w/4) * (i - .5) - 7;
-        line(barX, y, barX, y + h);
+    if (!gameEnd) {
+    
+      if(c.isTrapped) {
+        pushStyle();
+        float bW = 180;
+        float bH = 38;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("TRAPPED!", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+        text("Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
+  
+        // trap cage bars
+        stroke(0);
+        strokeWeight(2);
+        float x = c.xPos - 4, y = c.yPos - 4, w = c.hitboxWidth + 8, h = c.hitboxLength + 8;
+        for (int i = 1; i <= 5; i++) {
+          float barX = x + (w/4) * (i - .5) - 7;
+          line(barX, y, barX, y + h);
+        }
+        line(x, y, x + w, y);
+        line(x, y + h, x + w, y + h);
+        // warning sign
+        float size = 40;
+        image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 100, size, size);
+        
+        popStyle();
       }
-      line(x, y, x + w, y);
-      line(x, y + h, x + w, y + h);
-      // warning sign
-      float size = 40;
-      image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 100, size, size);
       
-      popStyle();
-    }
-    
-    if (c.inverseControls) {
-      pushStyle();
-      float bW = 160;
-      float bH = 30;
-      fill(0, 0, 0, 120);
-      noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-      fill(255);
-      text("Inverse Controls!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
-      float size = 40;
-      image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
-      popStyle();
-    }
-    
-    if (c.revivable) {
-      pushStyle();
-      float bW = 160;
-      float bH = 35;
-      fill(0, 0, 0, 120);
-      noStroke();
-      rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-      fill(255);
-      text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
-      text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
-      popStyle();
+      if (c.inverseControls) {
+        pushStyle();
+        float bW = 160;
+        float bH = 30;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Inverse Controls!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+        float size = 40;
+        image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
+        popStyle();
+      }
+      
+      if (c.revivable) {
+        pushStyle();
+        float bW = 160;
+        float bH = 35;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 50, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
+        text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
+        popStyle();
+      }
+      
     }
     
   }
