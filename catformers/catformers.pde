@@ -652,9 +652,9 @@ void displayScreen() {
       modeInitialized = true;
       
       if (s.selectedMap.equals("Map2")) {
-        platforms.add(new Platforms(0, height - 20, 390));             
-        platforms.add(new Platforms(450, height - 20, 380));            
-        platforms.add(new Platforms(900, height - 20, 380));      
+        platforms.add(new Platforms(0, height - 20, 383));             
+        platforms.add(new Platforms(452, height - 20, 383));            
+        platforms.add(new Platforms(897, height - 20, 383));      
         
         platforms.add(new Platforms(100, height - 120, 200));
         platforms.add(new Platforms(980, height - 120, 200));
