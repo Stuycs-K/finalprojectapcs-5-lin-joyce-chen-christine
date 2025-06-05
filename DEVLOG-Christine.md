@@ -95,5 +95,9 @@ Worked for 40 minutes. Added Demo Mode with toggle button displayed in player # 
 Future Improvements:
 - Draw new BG for other maps: google doc list!
 
-### 2025-06-04 - _ + Bug Fixing
-Worked for _ + 15 min. Fixed style interference leading to aim line not properly showing. Fixed revivable text constantly displaying + used spamKeys to prevent key holds counting as presses. Fixed status displays still showing upon death and increased death animation speed when both players are dead in 2 Player Boss Mode.
+### 2025-06-04 - Bug Fixing + Drew Map
+Worked for 45 minutes. Fixed style interference leading to aim line not properly showing. Fixed revivable text constantly displaying + used spamKeys to prevent key holds counting as presses. Fixed status displays still showing upon death and increased death animation speed when both players are dead in 2 Player Boss Mode. Drew new background for Versus Mode, changed variables to match.
+
+Future Improvements:
+- Implement Map Selection screen
+- Increase volume for shooting SFX
