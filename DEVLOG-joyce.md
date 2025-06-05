@@ -93,3 +93,8 @@ stuff to do + consider for next session
 Fixed character sprites to be as close to the sprites as possible and modified display so that the characters look similar in size in game and in character selection screen. Bugs like hearts appearing in wrong place, boss bgm playing when paused or game exited, and cat2 homing to wrong target in boss mode were fixed.
 
 - google docs to do listtt
+
+### 2025-06-04 - Animation and SFX - 1 hour
+An explosion sfx was added to play when a player dies in versus. A gif for boss spawning was also created and a preliminary animation sequence was implemented.
+
+- make boss expand from really tiny for animation and also maybe find sfx for the spawning
