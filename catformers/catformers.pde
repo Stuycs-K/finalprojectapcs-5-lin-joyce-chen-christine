@@ -183,6 +183,9 @@ void draw() {
       }
       if (!gameOver) {
         c.applyMovement();
+        if (c.iFrameTimer > 0) {
+          c.iFrameTimer--;
+        }
         if (c.yPos + c.hitboxLength > height + 100) {
           c.reset(false);
         }
