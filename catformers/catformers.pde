@@ -181,6 +181,9 @@ void draw() {
       }
       if (!gameOver) {
         c.applyMovement();
+        if (c.yPos + c.hitboxLength > height + 100) {
+          c.reset(false);
+        }
       }
     }
     if (!gameEnd && (!transition || fadeOut)) {
@@ -628,13 +631,18 @@ void displayScreen() {
         startBGM.amp(bgmVolume);
       }
     }
-  }
-  else if (currmode.equals("CharacterSelect")) {
-    s.displayCharSelect();
+  } else if (currmode.equals("MapSelect")) {
+    s.display();
+  } else if (currmode.equals("CharacterSelect")) {
+    s.display();
   }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
-    background(bg1);
+    if (s.selectedMap.equals("Map2")) {
+      background(bg2);
+    } else {
+      background(bg1);
+    }
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
@@ -643,23 +651,47 @@ void displayScreen() {
       }
       modeInitialized = true;
       
-      platforms.add(new Platforms(0, height - 20, width)); // floor
+      if (s.selectedMap.equals("Map2")) {
+        platforms.add(new Platforms(0, height - 20, 383));             
+        platforms.add(new Platforms(452, height - 20, 383));            
+        platforms.add(new Platforms(897, height - 20, 383));      
+        
+        platforms.add(new Platforms(100, height - 120, 200));
+        platforms.add(new Platforms(980, height - 120, 200));
+        
+        platforms.add(new Platforms(230, height - 230, 180));
+        platforms.add(new Platforms(870, height - 230, 180));
+        
+        platforms.add(new Platforms(540, height - 200, 200)); 
+        
+        platforms.add(new Platforms(100, height - 390, 180));
+        platforms.add(new Platforms(1000, height - 390, 180));
+        
+        platforms.add(new Platforms(230, height - 480, 140));
+        platforms.add(new Platforms(900, height - 480, 140));
+        
+        platforms.add(new Platforms(540, height - 560, 200));
       
-      platforms.add(new Platforms(0, height - 125, 200)); 
-      platforms.add(new Platforms(350, height - 125, 200));
-      platforms.add(new Platforms(700, height - 125, 200));
-      platforms.add(new Platforms(1050, height - 125, width-1050));
+      } else {
+        platforms.add(new Platforms(0, height - 20, width)); // floor
+        
+        platforms.add(new Platforms(0, height - 125, 200)); 
+        platforms.add(new Platforms(350, height - 125, 200));
+        platforms.add(new Platforms(700, height - 125, 200));
+        platforms.add(new Platforms(1050, height - 125, width-1050));
+        
+        platforms.add(new Platforms(250, height - 250, 50));
+        platforms.add(new Platforms(600, height - 250, 50));
+        platforms.add(new Platforms(950, height - 250, 50));
+        
+        platforms.add(new Platforms(0, height - 375, 200)); 
+        platforms.add(new Platforms(350, height - 375, 200));
+        platforms.add(new Platforms(700, height - 375, 200));
+        platforms.add(new Platforms(1050, height - 375, width-1050));
+        
+        platforms.add(new Platforms(250, height - 525, 750));
+      }
       
-      platforms.add(new Platforms(250, height - 250, 50));
-      platforms.add(new Platforms(600, height - 250, 50));
-      platforms.add(new Platforms(950, height - 250, 50));
-      
-      platforms.add(new Platforms(0, height - 375, 200)); 
-      platforms.add(new Platforms(350, height - 375, 200));
-      platforms.add(new Platforms(700, height - 375, 200));
-      platforms.add(new Platforms(1050, height - 375, width-1050));
-      
-      platforms.add(new Platforms(250, height - 525, 750));
     }
     
     if (gameEnd) {
@@ -742,7 +774,11 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
-    image(bg1, 0, 0, width, height);
+    if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
+      background(bg2);
+    } else {
+      background(bg1);
+    }    
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
@@ -774,7 +810,11 @@ void displayScreen() {
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
   else if (currmode.equals("Victory")) {
-    image(bg1, 0, 0, width, height);
+    if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
+      background(bg2);
+    } else {
+      background(bg1);
+    }    
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     for (Platforms p : platforms) {
@@ -836,7 +876,7 @@ void restartGame() {
   }
   
   for (Character c : chars) {
-    c.reset();
+    c.reset(true);
   }
 
   modeInitialized = false;

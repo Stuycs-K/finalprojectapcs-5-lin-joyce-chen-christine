@@ -237,13 +237,6 @@ public class Character {
       yVelocity += g;
     }
 
-    if (yPos + hitboxLength > height) {
-      yPos = height - hitboxLength;
-      yVelocity = 0;
-      onGround = true;
-      ifFalling = false;
-    }
-
     if (yPos < 0) {
       yPos = 1;
       yVelocity = 0;
@@ -256,7 +249,7 @@ public class Character {
     
   }
   
-  void reset() {
+  void reset(boolean resetLives) {
     xPos = startX;
     yPos = height - 150;  
     xVelocity = 0.0;
@@ -283,8 +276,12 @@ public class Character {
       aimAngle = 0.0;
     }
     
-    lives = maxLives;
-    
+    if (resetLives) {
+      lives = maxLives;
+    } else {
+      lives--;
+    }
+
     inverseControls = false;
     isTrapped = false;
     spamCount = 0;
