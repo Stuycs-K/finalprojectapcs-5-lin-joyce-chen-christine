@@ -774,7 +774,11 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
-    image(bg1, 0, 0, width, height);
+    if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
+      background(bg2);
+    } else {
+      background(bg1);
+    }    
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
@@ -806,7 +810,11 @@ void displayScreen() {
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
   else if (currmode.equals("Victory")) {
-    image(bg1, 0, 0, width, height);
+    if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
+      background(bg2);
+    } else {
+      background(bg1);
+    }    
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     for (Platforms p : platforms) {
