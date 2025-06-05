@@ -308,7 +308,7 @@ void draw() {
   }
   
   if (currmode.equals("Boss") && !transition) {
-    if (boss.spawned || spawnTick == 240) {
+    if (boss.spawned || spawnTick == 300) {
       if (!boss.spawned) boss.spawned = true;
       if (!bossBGM.isPlaying()) {
         bossBGM.amp(0.2);
@@ -316,7 +316,7 @@ void draw() {
       }
       boss.update();
       boss.display();
-    } else if (spawnTick > 20) {
+    } else if (spawnTick > 40) {
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
       spawnTick++;
     } else spawnTick++;
