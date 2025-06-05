@@ -123,7 +123,7 @@ public class Boss {
       c.inverseControls = false;
       c.isTrapped = false;
       c.spamCount = 0;
-      background(bg);
+      background(bg1);
     }
   }
 
