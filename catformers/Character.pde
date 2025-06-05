@@ -280,7 +280,6 @@ public class Character {
       lives = maxLives;
     } else {
       lives--;
-      isAlive = lives > 0;
     }
 
     inverseControls = false;
