@@ -104,7 +104,8 @@ Future Improvements:
 - Adjust new BG saturation/colors
 
 ### 2025-06-05 -
-Worked for _ + 45 minutes. Added map selection screen for Versus Mode with previews. Applied chosen map as background and created new platforms layout with gaps in bottom platform. Allowed for falling off screen and repawning with -1 life.
+Worked for _ + 1.6 hours. Added map selection screen for Versus Mode with previews. Applied chosen map as background and created new platform layout with gaps in bottom platform. Allowed for falling off screen and repawning with -1 life. Drew background 3 and created another new platform layout. Implemented option to choose random map + question mark image display. Increased volume for shooting SFX. Added invincibility frames after falling off map with white flashing indicator lines.
 
 Future Improvements:
 - Fix Boss Mode BGM playing upon resetting game in both modes
+- SFX for falling off map
