@@ -120,20 +120,24 @@ public class Projectiles {
           if (!type.equals("grenade") || !exploded) {
             if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
                 yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
-              c.lives -= 1;
-              hitSound.play();
-              if (type.equals("grenade")) {
-                exploded = true;
+              if (c.iFrameTimer <= 0) {
+                c.lives -= 1;
+                hitSound.play();
+                if (type.equals("grenade")) {
+                  exploded = true;
+                }
+                return true;
               }
-              return true;
             }
           }
           else if (exploded) {
             if(xPos + size*2 > c.xPos && xPos < c.xPos + c.hitboxWidth &&
                 yPos + size*2 > c.yPos && yPos < c.yPos + c.hitboxLength) {
-              c.lives -= 1;
-              hitSound.play();
-              return true;
+              if (c.iFrameTimer <= 0) {
+                c.lives -= 1;
+                hitSound.play();
+                return true;
+              }
             }
           }
         }

@@ -1,7 +1,7 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxLength;
   int lives, maxLives, jumpCharge, bulletCD, maxBulletCD;
-  int damageCD, shootTick;
+  int damageCD, shootTick, iFrameTimer;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, startX;
@@ -280,6 +280,7 @@ public class Character {
       lives = maxLives;
     } else {
       lives--;
+      iFrameTimer = 100;
     }
 
     inverseControls = false;

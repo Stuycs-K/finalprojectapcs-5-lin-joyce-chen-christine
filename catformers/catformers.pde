@@ -21,7 +21,7 @@ Gif start;
 Gif death;
 Gif spawnAnim;
 PImage loading, title;
-PImage bg1, bg2, bg1Dark;
+PImage bg1, bg2, bg3, bg1Dark, bgRandom;
 PImage[] deathFrames;
 int deathFrame;
 PImage heartImg;
@@ -78,6 +78,8 @@ void loadAssets() {
   bg1 = loadImage("background1.png");
   bg1Dark = loadImage("darkBackground1.png");
   bg2 = loadImage("background2.png");
+  bg3 = loadImage("background3.png");
+  bgRandom = loadImage("backgroundRandom.png");
   
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
@@ -181,6 +183,9 @@ void draw() {
       }
       if (!gameOver) {
         c.applyMovement();
+        if (c.iFrameTimer > 0) {
+          c.iFrameTimer--;
+        }
         if (c.yPos + c.hitboxLength > height + 100) {
           c.reset(false);
         }
@@ -245,7 +250,16 @@ void draw() {
     }
     
     if (!gameEnd) {
-    
+      
+      if (c.isAlive && (c.iFrameTimer > 0 && frameCount % 6 < 3)) {
+        pushStyle();
+        noFill();
+        stroke(255);
+        strokeWeight(2);
+        rect(c.xPos, c.yPos, c.hitboxWidth, c.hitboxLength);
+        popStyle();
+      }
+
       if(c.isAlive && c.isTrapped) {
         pushStyle();
         float bW = 180;
@@ -640,6 +654,8 @@ void displayScreen() {
     prevMode = "Versus";
     if (s.selectedMap.equals("Map2")) {
       background(bg2);
+    } else if (s.selectedMap.equals("Map3")) {
+      background(bg3);
     } else {
       background(bg1);
     }
@@ -672,6 +688,34 @@ void displayScreen() {
         
         platforms.add(new Platforms(540, height - 560, 200));
       
+      } else if (s.selectedMap.equals("Map3")) {
+        platforms.add(new Platforms(80, height - 20, 80)); // P1 spawn
+        platforms.add(new Platforms(1130, height - 20, 80)); // P2 spawn
+        
+        platforms.add(new Platforms(240, height - 100, 80));  
+        platforms.add(new Platforms(960, height - 100, 80)); 
+        
+        platforms.add(new Platforms(480, height - 90, 100));
+        platforms.add(new Platforms(780, height - 85, 80));
+        
+        platforms.add(new Platforms(300, height - 200, 90));
+        platforms.add(new Platforms(640, height - 220, 120));
+        platforms.add(new Platforms(960, height - 200, 90));
+        
+        platforms.add(new Platforms(190, height - 250, 50));
+        platforms.add(new Platforms(120, height - 330, 80));
+        platforms.add(new Platforms(420, height - 320, 100));
+        platforms.add(new Platforms(750, height - 310, 100));
+        platforms.add(new Platforms(1080, height - 320, 80));
+        
+        platforms.add(new Platforms(250, height - 430, 100));
+        platforms.add(new Platforms(580, height - 450, 60));  
+        platforms.add(new Platforms(920, height - 430, 100));
+        
+        platforms.add(new Platforms(60, height - 550, 110));
+        platforms.add(new Platforms(490, height - 570, 130));
+        platforms.add(new Platforms(930, height - 550, 110));
+   
       } else {
         platforms.add(new Platforms(0, height - 20, width)); // floor
         
@@ -774,11 +818,7 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
-    if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
-      background(bg2);
-    } else {
-      background(bg1);
-    }    
+    background(bg1);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
@@ -812,9 +852,11 @@ void displayScreen() {
   else if (currmode.equals("Victory")) {
     if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
       background(bg2);
+    } else if (s.selectedMap != null && s.selectedMap.equals("Map3")) {
+      background(bg3);
     } else {
       background(bg1);
-    }    
+    }
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     for (Platforms p : platforms) {
