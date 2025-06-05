@@ -11,7 +11,7 @@ public class Platforms {
   }
 
   void display() {
-    image(loadImage("dirtplatform.png"), xPos, yPos, platformWidth, platformHeight);
+    image(loadImage("dirtPlatform.png"), xPos, yPos, platformWidth, platformHeight);
   }
 
 
