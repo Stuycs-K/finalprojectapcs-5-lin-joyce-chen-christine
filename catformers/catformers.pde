@@ -250,7 +250,16 @@ void draw() {
     }
     
     if (!gameEnd) {
-    
+      
+      if (c.isAlive && (c.iFrameTimer > 0 && frameCount % 6 < 3)) {
+        pushStyle();
+        noFill();
+        stroke(255);
+        strokeWeight(2);
+        rect(c.xPos, c.yPos, c.hitboxWidth, c.hitboxLength);
+        popStyle();
+      }
+
       if(c.isAlive && c.isTrapped) {
         pushStyle();
         float bW = 180;

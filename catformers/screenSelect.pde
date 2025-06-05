@@ -30,7 +30,7 @@ public class screenSelect {
     charOptions.add(new catFirst(20, 20, 60, 0, 0));
     charOptions.add(new catSecond(20, 20, 60, 0, 0));
     charOptions.add(new catThird(20, 20, 60, 0, 0));
-  } //<>// //<>//
+  } //<>//
   
   void buttonClicked() { 
     if (demoToggle != null && 
@@ -47,7 +47,7 @@ public class screenSelect {
           selectedMode = modes.remove(x).value;
           if (selectedMode.equals("Versus")) {
             numPlayer = "2";
-            currmode = "MapSelect"; //<>// //<>//
+            currmode = "MapSelect";
           }
         }
       }
@@ -157,9 +157,9 @@ public class screenSelect {
   }
   
   void display() {
-    background(0); //<>// //<>//
+    background(0);
     if (currmode.equals("CharacterSelect")) {
-      displayCharSelect(); //<>// //<>//
+      displayCharSelect();
     } else if (currmode.equals("MapSelect")) {
       displayMapSelect();
     }
