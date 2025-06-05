@@ -21,7 +21,7 @@ Gif start;
 Gif death;
 Gif spawnAnim;
 PImage loading, title;
-PImage bg, bgDark;
+PImage bg1, bg2, bg1Dark;
 PImage[] deathFrames;
 int deathFrame;
 PImage heartImg;
@@ -75,8 +75,9 @@ void loadAssets() {
   start.play();
   spawnAnim.play();
   title = loadImage("title.png");
-  bg = loadImage("background1.png");
-  bgDark = loadImage("background2.png");
+  bg1 = loadImage("background1.png");
+  bg1Dark = loadImage("darkBackground1.png");
+  bg2 = loadImage("background2.png");
   
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
@@ -164,9 +165,9 @@ void draw() {
   
    if (currmode.equals("Boss")) {
     if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
-      background(bgDark); 
+      background(bg1Dark); 
     } else {
-      background(bg);
+      background(bg1);
     }
   }
   
@@ -352,7 +353,7 @@ void draw() {
   }
  
   if (keyPressed) {
-    if (currmode.equals("Menu") && !restarted) { // for now go to versus, later create a second screen for character selection
+    if (currmode.equals("Menu") && !restarted) {
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss")) {
@@ -633,7 +634,7 @@ void displayScreen() {
   }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
-    background(bg);
+    background(bg1);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
@@ -741,7 +742,7 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
-    image(bg, 0, 0, width, height);
+    image(bg1, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
@@ -773,7 +774,7 @@ void displayScreen() {
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
   else if (currmode.equals("Victory")) {
-    image(bg, 0, 0, width, height);
+    image(bg1, 0, 0, width, height);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     for (Platforms p : platforms) {
