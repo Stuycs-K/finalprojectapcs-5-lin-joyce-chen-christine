@@ -13,11 +13,13 @@ String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
+int spawnTick;
 screenSelect s;
 
 // things for graphics
 Gif start;
 Gif death;
+Gif spawnAnim;
 PImage loading, title;
 PImage bg, bgDark;
 PImage[] deathFrames;
@@ -69,7 +71,9 @@ void setup() {
 void loadAssets() {  
   // graphicsss
   start = new Gif(this, "start.gif");
+  spawnAnim = new Gif(this, "spawnAnim.gif");
   start.play();
+  spawnAnim.play();
   title = loadImage("title.png");
   bg = loadImage("background1.png");
   bgDark = loadImage("background2.png");
@@ -141,6 +145,7 @@ void loadState() {
   deathFrame = 0;
   deathFinish = false;
   transition = false;
+  spawnTick = 0;
   
   if (bossBGM.isPlaying()) bossBGM.pause();
 
@@ -303,8 +308,18 @@ void draw() {
   }
   
   if (currmode.equals("Boss") && !transition) {
-    boss.update();
-    boss.display();
+    if (boss.spawned || spawnTick == 240) {
+      if (!boss.spawned) boss.spawned = true;
+      if (!bossBGM.isPlaying()) {
+        bossBGM.amp(0.2);
+        bossBGM.play();
+      }
+      boss.update();
+      boss.display();
+    } else if (spawnTick > 20) {
+      image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
+      spawnTick++;
+    } else spawnTick++;
   }    
   
   if (transition) {
@@ -663,11 +678,6 @@ void displayScreen() {
       }
       modeInitialized = true;
       boss = new Boss(640, height - 522);
-      
-      if (!bossBGM.isPlaying()) {
-        bossBGM.play();
-        bossBGM.amp(0.2);
-      }
       
       platforms.add(new Platforms(0, height - 20, width)); // floor
       

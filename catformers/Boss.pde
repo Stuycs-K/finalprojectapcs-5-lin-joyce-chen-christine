@@ -3,7 +3,7 @@ public class Boss {
   int phase, timer;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
-  boolean immune, homingPhase, warningPhase;
+  boolean immune, homingPhase, warningPhase, spawned;
   ArrayList<Projectiles> bossProjectiles; 
   PImage sprite;
 
@@ -18,6 +18,7 @@ public class Boss {
     timer = 0;
     immune = false;
     homingPhase = false;
+    spawned = false;
     bossProjectiles = new ArrayList<Projectiles>();
     sprite = loadImage("bossIdle.png");
   }
