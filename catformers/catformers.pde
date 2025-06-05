@@ -649,15 +649,25 @@ void displayScreen() {
       modeInitialized = true;
       
       if (s.selectedMap.equals("Map2")) {
-        platforms.add(new Platforms(0, height - 20, width));
-
-        platforms.add(new Platforms(250, height - 100, 200));
-        platforms.add(new Platforms(800, height - 100, 200));
-    
-        platforms.add(new Platforms(150, height - 250, 150));
-        platforms.add(new Platforms(1000, height - 250, 150));
-    
-        platforms.add(new Platforms(500, height - 400, 300));
+        platforms.add(new Platforms(0, height - 20, 390));             
+        platforms.add(new Platforms(450, height - 20, 380));            
+        platforms.add(new Platforms(900, height - 20, 380));      
+        
+        platforms.add(new Platforms(100, height - 120, 200));
+        platforms.add(new Platforms(980, height - 120, 200));
+        
+        platforms.add(new Platforms(230, height - 230, 180));
+        platforms.add(new Platforms(870, height - 230, 180));
+        
+        platforms.add(new Platforms(540, height - 200, 200)); 
+        
+        platforms.add(new Platforms(100, height - 390, 180));
+        platforms.add(new Platforms(1000, height - 390, 180));
+        
+        platforms.add(new Platforms(230, height - 480, 140));
+        platforms.add(new Platforms(900, height - 480, 140));
+        
+        platforms.add(new Platforms(540, height - 560, 200));
       
       } else {
         platforms.add(new Platforms(0, height - 20, width)); // floor
