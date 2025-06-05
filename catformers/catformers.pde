@@ -642,6 +642,8 @@ void displayScreen() {
     prevMode = "Versus";
     if (s.selectedMap.equals("Map2")) {
       background(bg2);
+    } else if (s.selectedMap.equals("Map3")) {
+      background(bg3);
     } else {
       background(bg1);
     }
@@ -776,11 +778,7 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
-    if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
-      background(bg2);
-    } else {
-      background(bg1);
-    }    
+    background(bg1);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
@@ -814,9 +812,11 @@ void displayScreen() {
   else if (currmode.equals("Victory")) {
     if (s.selectedMap != null && s.selectedMap.equals("Map2")) {
       background(bg2);
+    } else if (s.selectedMap != null && s.selectedMap.equals("Map3")) {
+      background(bg3);
     } else {
       background(bg1);
-    }    
+    }
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     for (Platforms p : platforms) {
