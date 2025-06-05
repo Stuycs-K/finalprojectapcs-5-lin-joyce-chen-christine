@@ -32,7 +32,7 @@ public class screenSelect {
     charOptions.add(new catThird(20, 20, 60, 0, 0));
   } //<>//
   
-  void buttonClicked() { //<>//
+  void buttonClicked() { 
     if (demoToggle != null && 
     mouseX >= demoToggle.xPos && mouseX <= demoToggle.xPos + demoToggle.buttonWidth &&
     mouseY >= demoToggle.yPos && mouseY <= demoToggle.yPos + demoToggle.buttonHeight) {
@@ -49,14 +49,19 @@ public class screenSelect {
             numPlayer = "2";
             currmode = "MapSelect"; //<>//
           }
-        } //<>//
+        }
       }
     } else if (currmode.equals("MapSelect")) {
       for (int i = 0; i < maps.size(); i++) {
         Button b = maps.get(i);
         if (mouseX >= b.xPos && mouseX <= b.xPos + b.buttonWidth &&
         mouseY >= b.yPos && mouseY <= b.yPos + b.buttonHeight) {
-          selectedMap = b.value;
+          if (b.value.equals("Random")) {
+            String[] options = {"Map1", "Map2", "Map3"};
+            selectedMap = options[int(random(options.length))];
+          } else {
+            selectedMap = b.value;
+          }
           currmode = "CharacterSelect";
         }
       }
@@ -152,16 +157,16 @@ public class screenSelect {
   }
   
   void display() {
-    background(0);
+    background(0); //<>//
     if (currmode.equals("CharacterSelect")) {
-      displayCharSelect();
+      displayCharSelect(); //<>//
     } else if (currmode.equals("MapSelect")) {
       displayMapSelect();
-    } //<>//
+    }
     else if (modes.size() == 2) {
-      for (Button b : modes) { //<>// //<>//
+      for (Button b : modes) { 
         b.display();
-      } //<>//
+      } 
     } else {
       if (selectedMode.equals("Versus")) {
         selectScreen = false;
