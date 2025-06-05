@@ -17,8 +17,8 @@ public class screenSelect {
     numPlayers.add(new Button(width/2-400,height/2-150,300,300, "1", "onep.png"));
     numPlayers.add(new Button(width/2+100,height/2-150,300,300, "2", "twop.png"));
     
-    maps.add(new Button(width/2 - 350, height/2 - 100, 320, 180, "Map1", "background1.png"));
-    maps.add(new Button(width/2 + 30, height/2 - 100, 320, 180, "Map2", "background2.png"));
+    maps.add(new Button(width/2 - 460, height/2 - 100, 440, 225, "Map1", "background1.png"));
+    maps.add(new Button(width/2 + 40, height/2 - 100, 440, 225, "Map2", "background2.png"));
 
     demoToggle = new Button(width - 100, 20, 60, 30, "Demo Mode");
     

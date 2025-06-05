@@ -635,7 +635,11 @@ void displayScreen() {
   }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
-    background(bg1);
+    if (s.selectedMap.equals("Map2")) {
+      background(bg2);
+    } else {
+      background(bg1);
+    }
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     if (!modeInitialized) {
