@@ -648,23 +648,37 @@ void displayScreen() {
       }
       modeInitialized = true;
       
-      platforms.add(new Platforms(0, height - 20, width)); // floor
+      if (s.selectedMap.equals("Map2")) {
+        platforms.add(new Platforms(0, height - 20, width));
+
+        platforms.add(new Platforms(250, height - 100, 200));
+        platforms.add(new Platforms(800, height - 100, 200));
+    
+        platforms.add(new Platforms(150, height - 250, 150));
+        platforms.add(new Platforms(1000, height - 250, 150));
+    
+        platforms.add(new Platforms(500, height - 400, 300));
       
-      platforms.add(new Platforms(0, height - 125, 200)); 
-      platforms.add(new Platforms(350, height - 125, 200));
-      platforms.add(new Platforms(700, height - 125, 200));
-      platforms.add(new Platforms(1050, height - 125, width-1050));
+      } else {
+        platforms.add(new Platforms(0, height - 20, width)); // floor
+        
+        platforms.add(new Platforms(0, height - 125, 200)); 
+        platforms.add(new Platforms(350, height - 125, 200));
+        platforms.add(new Platforms(700, height - 125, 200));
+        platforms.add(new Platforms(1050, height - 125, width-1050));
+        
+        platforms.add(new Platforms(250, height - 250, 50));
+        platforms.add(new Platforms(600, height - 250, 50));
+        platforms.add(new Platforms(950, height - 250, 50));
+        
+        platforms.add(new Platforms(0, height - 375, 200)); 
+        platforms.add(new Platforms(350, height - 375, 200));
+        platforms.add(new Platforms(700, height - 375, 200));
+        platforms.add(new Platforms(1050, height - 375, width-1050));
+        
+        platforms.add(new Platforms(250, height - 525, 750));
+      }
       
-      platforms.add(new Platforms(250, height - 250, 50));
-      platforms.add(new Platforms(600, height - 250, 50));
-      platforms.add(new Platforms(950, height - 250, 50));
-      
-      platforms.add(new Platforms(0, height - 375, 200)); 
-      platforms.add(new Platforms(350, height - 375, 200));
-      platforms.add(new Platforms(700, height - 375, 200));
-      platforms.add(new Platforms(1050, height - 375, width-1050));
-      
-      platforms.add(new Platforms(250, height - 525, 750));
     }
     
     if (gameEnd) {
