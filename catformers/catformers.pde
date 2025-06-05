@@ -22,6 +22,7 @@ Gif death;
 Gif spawnAnim;
 PImage loading, title;
 PImage bg1, bg2, bg3, bg1Dark, bgRandom;
+PImage dirtPlatform, cloudPlatform;
 PImage[] deathFrames;
 int deathFrame;
 PImage heartImg;
@@ -80,6 +81,8 @@ void loadAssets() {
   bg2 = loadImage("background2.png");
   bg3 = loadImage("background3.png");
   bgRandom = loadImage("backgroundRandom.png");
+  dirtPlatform = loadImage("dirtPlatform.png");
+  cloudPlatform = loadImage("cloudPlatform.png");
   
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
