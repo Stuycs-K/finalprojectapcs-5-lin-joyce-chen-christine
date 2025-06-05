@@ -1,13 +1,14 @@
 public class screenSelect {
   ArrayList<Button> modes = new ArrayList<Button>();
   ArrayList<Button> numPlayers = new ArrayList<Button>();
+  ArrayList<Button> maps = new ArrayList<Button>();
   Button demoToggle;
   
   // ==== Character Select ====  
   ArrayList<Character> charOptions = new ArrayList<Character>();
   int p1Index, p2Index;
   
-  String selectedMode;
+  String selectedMode, selectedMap;
   
   public screenSelect() {
     modes.add(new Button(width/2-400,height/2-150,300,300, "Versus", "versus.png"));
@@ -15,6 +16,10 @@ public class screenSelect {
     
     numPlayers.add(new Button(width/2-400,height/2-150,300,300, "1", "onep.png"));
     numPlayers.add(new Button(width/2+100,height/2-150,300,300, "2", "twop.png"));
+    
+    maps.add(new Button(width/2 - 350, height/2 - 100, 320, 180, "Map1", "background1.png"));
+    maps.add(new Button(width/2 + 30, height/2 - 100, 320, 180, "Map2", "background2.png"));
+
     demoToggle = new Button(width - 100, 20, 60, 30, "Demo Mode");
     
     p1Index = 0; p2Index = 0;
@@ -25,7 +30,7 @@ public class screenSelect {
     charOptions.add(new catThird(20, 20, 60, 0, 0));
   }
   
-  void buttonClicked() {
+  void buttonClicked() { //<>//
     if (demoToggle != null && 
     mouseX >= demoToggle.xPos && mouseX <= demoToggle.xPos + demoToggle.buttonWidth &&
     mouseY >= demoToggle.yPos && mouseY <= demoToggle.yPos + demoToggle.buttonHeight) {
@@ -40,8 +45,17 @@ public class screenSelect {
           selectedMode = modes.remove(x).value;
           if (selectedMode.equals("Versus")) {
             numPlayer = "2";
-            currmode = "CharacterSelect";
+            currmode = "MapSelect";
           }
+        } //<>//
+      }
+    } else if (currmode.equals("MapSelect")) {
+      for (int i = 0; i < maps.size(); i++) {
+        Button b = maps.get(i);
+        if (mouseX >= b.xPos && mouseX <= b.xPos + b.buttonWidth &&
+        mouseY >= b.yPos && mouseY <= b.yPos + b.buttonHeight) {
+          selectedMap = b.value;
+          currmode = "CharacterSelect";
         }
       }
     } else if (selectedMode.equals("Boss")) {
@@ -62,7 +76,7 @@ public class screenSelect {
     textAlign(CENTER);
     fill(255);
     textSize(32);
-    text("< Select a Catformer >", width / 2, 80);
+    text("< Select a Catformer >", width/2, 80);
     textSize(20);
     fill(200);
     if (numPlayer.equals("2")) {
@@ -108,6 +122,22 @@ public class screenSelect {
     popStyle();
   }
   
+  void displayMapSelect() {
+    pushStyle();
+    background(0);
+    textAlign(CENTER);
+    textSize(30);
+    fill(255);
+    text("< Select a Map >", width/2, 100);
+    for (Button b : maps) {
+      b.display();
+      textSize(20);
+      fill(255);
+      text(b.value, b.xPos + b.buttonWidth/2, b.yPos + b.buttonHeight + 25);
+    }
+    popStyle();
+  }
+  
   Character generateChar(int index) {
     if (index == 0) {
       return new catFirst(20, 20, 60, 0, height - 125);  // Chill Cat
@@ -123,11 +153,13 @@ public class screenSelect {
     background(0);
     if (currmode.equals("CharacterSelect")) {
       displayCharSelect();
-    } 
+    } else if (currmode.equals("MapSelect")) {
+      displayMapSelect();
+    }
     else if (modes.size() == 2) {
-      for (Button b : modes) {
+      for (Button b : modes) { //<>//
         b.display();
-      }
+      } //<>//
     } else {
       if (selectedMode.equals("Versus")) {
         selectScreen = false;

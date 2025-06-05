@@ -628,9 +628,10 @@ void displayScreen() {
         startBGM.amp(bgmVolume);
       }
     }
-  }
-  else if (currmode.equals("CharacterSelect")) {
-    s.displayCharSelect();
+  } else if (currmode.equals("MapSelect")) {
+    s.display();
+  } else if (currmode.equals("CharacterSelect")) {
+    s.display();
   }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
