@@ -181,6 +181,9 @@ void draw() {
       }
       if (!gameOver) {
         c.applyMovement();
+        if (c.yPos + c.hitboxLength > height + 100) {
+          c.reset(false);
+        }
       }
     }
     if (!gameEnd && (!transition || fadeOut)) {
@@ -865,7 +868,7 @@ void restartGame() {
   }
   
   for (Character c : chars) {
-    c.reset();
+    c.reset(true);
   }
 
   modeInitialized = false;
