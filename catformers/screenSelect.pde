@@ -30,7 +30,7 @@ public class screenSelect {
     charOptions.add(new catThird(20, 20, 60, 0, 0));
   }
   
-  void buttonClicked() { //<>//
+  void buttonClicked() { //<>// //<>//
     if (demoToggle != null && 
     mouseX >= demoToggle.xPos && mouseX <= demoToggle.xPos + demoToggle.buttonWidth &&
     mouseY >= demoToggle.yPos && mouseY <= demoToggle.yPos + demoToggle.buttonHeight) {
@@ -47,7 +47,7 @@ public class screenSelect {
             numPlayer = "2";
             currmode = "MapSelect";
           }
-        } //<>//
+        } //<>// //<>//
       }
     } else if (currmode.equals("MapSelect")) {
       for (int i = 0; i < maps.size(); i++) {
@@ -157,9 +157,9 @@ public class screenSelect {
       displayMapSelect();
     }
     else if (modes.size() == 2) {
-      for (Button b : modes) { //<>//
+      for (Button b : modes) { //<>// //<>//
         b.display();
-      } //<>//
+      } //<>// //<>//
     } else {
       if (selectedMode.equals("Versus")) {
         selectScreen = false;
