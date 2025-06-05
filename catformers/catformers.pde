@@ -46,7 +46,7 @@ SoundFile startBGM, bossBGM;
 float bgmVolume;
 
 // sound effects
-SoundFile shootSound, hitSound, selectSound;
+SoundFile shootSound, hitSound, selectSound, explosion;
 
 PVector mousePos = new PVector();
 
@@ -119,6 +119,7 @@ void loadAssets() {
   shootSound = new SoundFile(this, "popCat.wav"); 
   hitSound = new SoundFile(this, "catMeow1.wav");
   selectSound = new SoundFile(this, "selectSound.aiff");
+  explosion = new SoundFile(this, "explosion.wav");
 }
 
 void loadState() {
@@ -842,6 +843,11 @@ void deathAnimation(Character c) {
       deathFinish = true;
     }
     if (!deathFinish) {
+      if (!explosion.isPlaying() && deathFrame == 0) {
+        explosion.jump(0.2);
+        explosion.amp(0.5);
+        explosion.play();
+      }
       image(deathFrames[deathFrame%300], c.deathX, c.deathY, 60,84);
       deathFrame++;
     }
