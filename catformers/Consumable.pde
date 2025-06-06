@@ -12,6 +12,7 @@ public class Consumable {
     
     if (type.equals("hpPotion")) img = loadImage("hpPotion.png");
     if (type.equals("miniPotion")) img = loadImage("miniPotion.png");
+    if (type.equals("bulletPotion")) img = loadImage("bulletPotion.png");
   }
   
   boolean checkUse(Character c) {
