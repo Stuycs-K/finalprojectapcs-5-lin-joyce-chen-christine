@@ -112,10 +112,6 @@ Future Improvements:
 - Make cloud platforms look less odd!! Also make Map3 less difficult
 
 ### 2025-06-05 - Bug Fixing +
-Worked for _ + 10 minutes. Fixed bug with decreased hitboxes in mini mode leading to characters falling through platforms when jumping.
-
-To-Do List:
-- Fix bug with jump animation not displaying before mini mode
-- Fix hitbox not reverting properly after mini mode
+Worked for _ + 30 minutes. Fixed bug with decreased hitboxes in Mini Mode leading to characters falling through platforms when jumping. Fixed Mini Mode crouch/jump animations (in class w/ Joyce). Fixed revivable text displaying in 1 Player Boss Mode. Fixed Mini Mode not reverting to normal size and falling through platforms.
 
 Future-Improvements:
