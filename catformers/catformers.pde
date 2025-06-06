@@ -13,7 +13,7 @@ String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
-int spawnTick;
+int spawnTick, versusTick;
 screenSelect s;
 
 // things for graphics
@@ -234,6 +234,17 @@ void draw() {
       }
       if (x >= 0 && x < projectiles.size()) {
         projectiles.get(x).display();
+      }
+    }
+  }
+  
+  for (int x = 0; x < consumables.size(); x++) {
+    Consumable C = consumables.get(x);
+    C.display();
+    for (Character c : chars) {
+      if (C.checkUse(c)) {
+        consumables.remove(C);
+        x--;
       }
     }
   }
@@ -677,6 +688,7 @@ void displayScreen() {
         startBGM.pause();
       }
       modeInitialized = true;
+      versusTick = 0;
       
       if (s.selectedMap.equals("Map2")) {
         platforms.add(new Platforms(0, height - 20, 383));             
@@ -749,9 +761,16 @@ void displayScreen() {
       
     }
     
+    if (versusTick % 800 == 0 && versusTick != 0) {
+      Platforms p = platforms.get((int)(random(0,platforms.size())));
+      consumables.add(new Consumable("miniPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
+    }
+    
     if (gameEnd) {
       currmode = "Victory";
     }
+    
+    versusTick++;
   }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
@@ -784,18 +803,7 @@ void displayScreen() {
     
     if (boss.timer % 800 == 0 && boss.timer != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
-    }
-    
-    for (int x = 0; x < consumables.size(); x++) {
-      Consumable C = consumables.get(x);
-      C.display();
-      for (Character c : chars) {
-        if (C.checkUse(c)) {
-          consumables.remove(C);
-          x--;
-        }
-      }
+      consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
     }
     
     int deathCount = 0;

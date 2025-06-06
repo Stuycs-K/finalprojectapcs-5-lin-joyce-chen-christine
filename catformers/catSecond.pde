@@ -83,6 +83,13 @@ public class catSecond extends Character {
   }
   
   void display() {
+    if (miniMode) {
+      hitboxWidth *= 0.5;
+      hitboxLength *= 0.5;
+    } else {
+      hitboxWidth = maxWidth;
+      hitboxLength = maxLength;
+    }
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;

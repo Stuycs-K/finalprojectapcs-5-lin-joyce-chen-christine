@@ -1,13 +1,13 @@
 public class Character {
-  int hitboxWidth, hitboxLength, maxLength;
+  int hitboxWidth, hitboxLength, maxWidth, maxLength;
   int lives, maxLives, jumpCharge, bulletCD, maxBulletCD;
-  int damageCD, shootTick, iFrameTimer;
+  int damageCD, shootTick, miniTick, iFrameTimer;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, startX;
   float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive, isPlayerTwo;
-  boolean inverseControls, isTrapped, horizontalJump, revivable;
+  boolean inverseControls, isTrapped, horizontalJump, revivable, miniMode;
   int spamCount;
   PImage sprite;
   Gif walking;
@@ -18,6 +18,7 @@ public class Character {
     this.yPos = yPos;
     hitboxWidth = 55;
     hitboxLength = 70;
+    maxWidth = hitboxWidth;
     maxLength = hitboxLength;
     lives = getInitialLives();
     maxLives = lives;
@@ -48,6 +49,7 @@ public class Character {
     
     // animation variables
     shootTick = 0;
+    miniTick = 0;
     
     // boss effects
     inverseControls = false;
