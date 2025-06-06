@@ -329,13 +329,16 @@ void draw() {
   }
   
   if (currmode.equals("Boss") && !transition) {
-    if (boss.spawned || spawnTick == 300) {
-      if (!boss.spawned) boss.spawned = true;
+    if (boss.spawned || spawnTick >= 260) {
+      if (!boss.spawned) {
+        if (boss.dilationScale == 1.0) boss.spawned = true;
+        boss.spawnAnim();
+      }
+      else boss.update();
       if (!bossBGM.isPlaying()) {
         bossBGM.amp(0.2);
         bossBGM.play();
       }
-      boss.update();
       boss.display();
     } else if (spawnTick > 40) {
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
