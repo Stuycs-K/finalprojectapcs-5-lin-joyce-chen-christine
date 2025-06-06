@@ -81,7 +81,7 @@ void loadAssets() {
   bg2 = loadImage("background2.png");
   bg3 = loadImage("background3.png");
   bgRandom = loadImage("backgroundRandom.png");
-  dirtPlatform = loadImage("dirtplatform.png");
+  dirtPlatform = loadImage("dirtPlatform.png");
   cloudPlatform = loadImage("cloudPlatform.png");
   
   heartImg = loadImage("heart.png");
