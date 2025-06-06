@@ -75,24 +75,7 @@ public class catFirst extends Character {
     shootSound.play();
     }
   }
-  
-  void updateMiniMode() {
-    if (miniMode && miniTick <= 400) {
-      miniTick++;
-      if (!miniShrunk) {
-        hitboxWidth = (int)(maxWidth * 0.5);
-        hitboxLength = (int)(maxLength * 0.5);
-        miniShrunk = true;
-      }
-    } else {
-      miniTick = 0;
-      hitboxWidth = maxWidth;
-      hitboxLength = maxLength;
-      miniShrunk = false;
-    }
-  }
-
-  
+ 
   PImage getPreview() {
     return cat1idleR;
   }

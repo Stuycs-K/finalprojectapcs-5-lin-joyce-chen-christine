@@ -309,14 +309,24 @@ public class Character {
   }
   
   void updateMiniMode() {
-    if (miniMode && miniTick <= 400) {
+    if (miniMode) {
       miniTick++;
-      if (!miniShrunk) {
+      if (miniTick == 1) {
         hitboxWidth = (int)(maxWidth * 0.5);
         hitboxLength = (int)(maxLength * 0.5);
         miniShrunk = true;
       }
-    } 
+      if (miniTick > 400) {
+        miniMode = false;  
+      }
+    }
+    if (!miniMode && miniShrunk) {
+      miniTick = 0;
+      yPos -= (maxLength * 0.5);
+      hitboxWidth = maxWidth;
+      hitboxLength = maxLength;
+      miniShrunk = false;
+    }
   }
 
   void displayJumpBar() {
