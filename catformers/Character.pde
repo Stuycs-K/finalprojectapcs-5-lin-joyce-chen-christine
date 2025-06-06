@@ -83,7 +83,11 @@ public class Character {
   }
   
   void crouch() {
-    hitboxLength = (int)(maxLength/1.5);
+    if (miniMode) {
+      hitboxLength = (int)((maxLength*0.5)/1.5);
+    } else {
+      hitboxLength = (int)(maxLength/1.5);
+    }
     walkspeed = maxWalkSpeed/2;
   }
   
