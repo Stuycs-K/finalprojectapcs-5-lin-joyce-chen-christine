@@ -179,11 +179,7 @@ public class Character {
     }
   }
 
-  void applyMovement() {
-    if (miniMode) {
-      updateMiniMode(); 
-    }
-    
+  void applyMovement() {  
     ifFalling = false;
     if (xPos - 6.0 + hitboxWidth + xVelocity < width && xPos + 2.0 + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
@@ -297,6 +293,7 @@ public class Character {
     walkspeed = maxWalkSpeed;
     horizontalJump = false;
     miniShrunk = false;
+    miniMode = false;
   }
   
   void updateMiniMode() {
@@ -307,12 +304,7 @@ public class Character {
         hitboxLength = (int)(maxLength * 0.5);
         miniShrunk = true;
       }
-    } else {
-      miniTick = 0; 
-      hitboxWidth = maxWidth;
-      hitboxLength = maxLength;
-      miniShrunk = false;
-    }
+    } 
   }
 
   void displayJumpBar() {

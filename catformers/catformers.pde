@@ -187,6 +187,14 @@ void draw() {
       }
       if (!gameOver) {
         c.applyMovement();
+        if (c.miniMode) {
+          c.updateMiniMode(); 
+        } else if (c.miniTick != 0) {
+          c.miniTick = 0; 
+          c.hitboxWidth = c.maxWidth;
+          c.hitboxLength = c.maxLength;
+          c.miniShrunk = false;
+        }
         if (c.iFrameTimer > 0) {
           c.iFrameTimer--;
         }
