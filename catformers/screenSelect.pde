@@ -30,7 +30,7 @@ public class screenSelect {
     charOptions.add(new catFirst(20, 20, 60, 0, 0));
     charOptions.add(new catSecond(20, 20, 60, 0, 0));
     charOptions.add(new catThird(20, 20, 60, 0, 0));
-  } //<>//
+  } //<>// //<>//
   
   void buttonClicked() { 
     if (demoToggle != null && 
@@ -138,6 +138,8 @@ public class screenSelect {
     text("< Select a Map >", width/2, 100);
     for (Button b : maps) {
       b.display();
+      fill(0,125);
+      if (!mouseHover(b)) rect(b.xPos,b.yPos,b.buttonWidth,b.buttonHeight);
       textSize(20);
       fill(255);
       text(b.value, b.xPos + b.buttonWidth/2, b.yPos + b.buttonHeight + 25);
@@ -154,6 +156,11 @@ public class screenSelect {
       return new catThird(15, 15, 60, 0, height - 125);  // Bomber Cat
     }
     return new catFirst(15, 15, 60, 0, height - 125);
+  }
+  
+  boolean mouseHover(Button b) {
+    return (mouseX >= b.xPos && mouseX <= b.xPos + b.buttonWidth && 
+      mouseY >= b.yPos && mouseY <= b.yPos + b.buttonHeight);
   }
   
   void display() {

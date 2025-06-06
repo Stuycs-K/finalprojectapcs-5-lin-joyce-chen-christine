@@ -13,7 +13,7 @@ String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
-int spawnTick;
+int spawnTick, versusTick;
 screenSelect s;
 
 // things for graphics
@@ -49,7 +49,7 @@ SoundFile startBGM, bossBGM;
 float bgmVolume;
 
 // sound effects
-SoundFile shootSound, hitSound, selectSound, explosion;
+SoundFile shootSound, hitSound, selectSound, explosion, chargeSound;
 
 PVector mousePos = new PVector();
 
@@ -81,7 +81,7 @@ void loadAssets() {
   bg2 = loadImage("background2.png");
   bg3 = loadImage("background3.png");
   bgRandom = loadImage("backgroundRandom.png");
-  dirtPlatform = loadImage("dirtPlatform.png");
+  dirtPlatform = loadImage("dirtplatform.png");
   cloudPlatform = loadImage("cloudPlatform.png");
   
   heartImg = loadImage("heart.png");
@@ -130,6 +130,7 @@ void loadAssets() {
   hitSound = new SoundFile(this, "catMeow1.wav");
   selectSound = new SoundFile(this, "selectSound.aiff");
   explosion = new SoundFile(this, "explosion.wav");
+  chargeSound = new SoundFile(this, "charge.wav");
 }
 
 void loadState() {
@@ -236,6 +237,17 @@ void draw() {
       }
     }
   }
+  
+  for (int x = 0; x < consumables.size(); x++) {
+    Consumable C = consumables.get(x);
+    C.display();
+    for (Character c : chars) {
+      if (C.checkUse(c)) {
+        consumables.remove(C);
+        x--;
+      }
+    }
+  }
 
   for (Character c : chars) {
     if (c.lives <= 0 && c.isAlive) {
@@ -329,15 +341,22 @@ void draw() {
   }
   
   if (currmode.equals("Boss") && !transition) {
-    if (boss.spawned || spawnTick == 300) {
-      if (!boss.spawned) boss.spawned = true;
+    if (boss.spawned || spawnTick >= 260) {
+      if (chargeSound.isPlaying()) chargeSound.pause();
+      if (!boss.spawned) {
+        if (boss.dilationScale == 1.0) boss.spawned = true;
+        boss.spawnAnim();
+      }
+      else boss.update();
       if (!bossBGM.isPlaying()) {
         bossBGM.amp(0.2);
         bossBGM.play();
       }
-      boss.update();
       boss.display();
     } else if (spawnTick > 40) {
+      if (!chargeSound.isPlaying()) {
+        chargeSound.play();
+      }
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
       spawnTick++;
     } else spawnTick++;
@@ -669,6 +688,7 @@ void displayScreen() {
         startBGM.pause();
       }
       modeInitialized = true;
+      versusTick = 0;
       
       if (s.selectedMap.equals("Map2")) {
         platforms.add(new Platforms(0, height - 20, 383));             
@@ -741,9 +761,16 @@ void displayScreen() {
       
     }
     
+    if (versusTick % 800 == 0 && versusTick != 0) {
+      Platforms p = platforms.get((int)(random(0,platforms.size())));
+      consumables.add(new Consumable("miniPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
+    }
+    
     if (gameEnd) {
       currmode = "Victory";
     }
+    
+    versusTick++;
   }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
@@ -776,18 +803,7 @@ void displayScreen() {
     
     if (boss.timer % 800 == 0 && boss.timer != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable(random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
-    }
-    
-    for (int x = 0; x < consumables.size(); x++) {
-      Consumable C = consumables.get(x);
-      C.display();
-      for (Character c : chars) {
-        if (C.checkUse(c)) {
-          consumables.remove(C);
-          x--;
-        }
-      }
+      consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
     }
     
     int deathCount = 0;

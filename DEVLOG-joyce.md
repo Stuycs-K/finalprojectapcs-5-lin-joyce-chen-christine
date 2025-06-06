@@ -97,4 +97,14 @@ Fixed character sprites to be as close to the sprites as possible and modified d
 ### 2025-06-04 - Animation and SFX - 1 hour
 An explosion sfx was added to play when a player dies in versus. A gif for boss spawning was also created and a preliminary animation sequence was implemented.
 
+stuff to do + consider for next session
 - make boss expand from really tiny for animation and also maybe find sfx for the spawning
+
+### 2025-06-04 - Graphics and Implementation - 2.5 hours
+Small change was made to map selection screen so that when the mouse hovers over a map, it lights up. The boss was changed so that when it spawns, it goes from small to big and a sfx was added for the spawning part (may be changed). Implementation of power ups (the become smaller one) has begun (but graphics was made for multiple bullets one too).
+
+stuff to do + consider for next session
+- Finish making the become smaller power up (test and add increased walkspeed and jump power)
+- begin implementing other power ups
+- improve boss spawn animation
+- fix bug where when player 1 tries to jump when on a platform, they start clipping through the floor -- maybe also player 2??

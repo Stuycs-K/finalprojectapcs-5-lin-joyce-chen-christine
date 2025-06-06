@@ -1,6 +1,8 @@
 public class Boss {
   int lives, maxLives, hitboxWidth, hitboxLength;
+  int maxWidth, maxLength;
   int phase, timer;
+  double dilationScale;
   float xPos, yPos;
   float tpTick; // used to iterate teleportFigure8
   boolean immune, homingPhase, warningPhase, spawned;
@@ -13,9 +15,12 @@ public class Boss {
     maxLives = 10*chars.size();
     lives = maxLives;
     hitboxWidth = 200;
+    maxWidth = hitboxWidth;
     hitboxLength = 145;
+    maxLength = hitboxLength;
     phase = 0;
     timer = 0;
+    dilationScale = 0.1;
     immune = false;
     homingPhase = false;
     spawned = false;
@@ -328,6 +333,17 @@ public class Boss {
         p.xVelocity += (closestX - p.xPos)/100.0;
         p.yVelocity += (closestY - p.yPos)/100.0;
       }
+    }
+  }
+  
+  void spawnAnim() {
+    hitboxWidth = maxWidth;
+    hitboxLength = maxLength;
+    hitboxWidth*=dilationScale;
+    hitboxLength*=dilationScale;
+    dilationScale+=0.1;
+    if (dilationScale > 1.0) {
+      dilationScale = 1.0;
     }
   }
 
