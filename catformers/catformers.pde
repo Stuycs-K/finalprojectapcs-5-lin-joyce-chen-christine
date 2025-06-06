@@ -330,7 +330,7 @@ void draw() {
         popStyle();
       }
       
-      if (!c.isAlive && c.revivable) {
+      if (!c.isAlive && numPlayer.equals("2") && c.revivable) {
         pushStyle();
         float bW = 160;
         float bH = 35;
