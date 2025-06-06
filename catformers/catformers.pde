@@ -49,7 +49,7 @@ SoundFile startBGM, bossBGM;
 float bgmVolume;
 
 // sound effects
-SoundFile shootSound, hitSound, selectSound, explosion;
+SoundFile shootSound, hitSound, selectSound, explosion, chargeSound;
 
 PVector mousePos = new PVector();
 
@@ -130,6 +130,7 @@ void loadAssets() {
   hitSound = new SoundFile(this, "catMeow1.wav");
   selectSound = new SoundFile(this, "selectSound.aiff");
   explosion = new SoundFile(this, "explosion.wav");
+  chargeSound = new SoundFile(this, "charge.wav");
 }
 
 void loadState() {
@@ -330,6 +331,7 @@ void draw() {
   
   if (currmode.equals("Boss") && !transition) {
     if (boss.spawned || spawnTick >= 260) {
+      if (chargeSound.isPlaying()) chargeSound.pause();
       if (!boss.spawned) {
         if (boss.dilationScale == 1.0) boss.spawned = true;
         boss.spawnAnim();
@@ -341,6 +343,9 @@ void draw() {
       }
       boss.display();
     } else if (spawnTick > 40) {
+      if (!chargeSound.isPlaying()) {
+        chargeSound.play();
+      }
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
       spawnTick++;
     } else spawnTick++;
