@@ -87,10 +87,17 @@ public class catThird extends Character {
   }
   
   void display() {
-    if (miniMode) {
+    boolean blink = false;
+    if (miniMode && miniTick <= 400) {
+      miniTick++;
       hitboxWidth *= 0.5;
       hitboxLength *= 0.5;
+      if (miniTick > 300) {
+        if (miniTick % 20 == 0) blink = !blink;
+      }
     } else {
+      blink = false;
+      miniTick = 0;
       hitboxWidth = maxWidth;
       hitboxLength = maxLength;
     }
@@ -111,11 +118,13 @@ public class catThird extends Character {
       image(heartImg, (width*chars.indexOf(this))+(pow(-1,chars.indexOf(this)+2))*(90+(40*chars.indexOf(this))+35*x), 35, 30,30);
     }
     flip();
-    if (!isWalking) {
-      image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
-    }
-    else {
-      setAnimation();
+    if (!blink) {
+      if (!isWalking) {
+        image(sprite, xPos, yPos, hitboxWidth, hitboxLength);
+      }
+      else {
+        setAnimation();
+      }
     }
     if (jumpCharge > 0) {
       displayJumpBar();
