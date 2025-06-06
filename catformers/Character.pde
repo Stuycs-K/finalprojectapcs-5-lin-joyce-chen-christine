@@ -67,7 +67,11 @@ public class Character {
       yVelocity = -power * 1.6;
     }
     jumpCharge = 0;
-    hitboxLength = maxLength;
+    if (!miniMode) {
+      hitboxLength = maxLength;
+    } else {
+      hitboxLength = (int)(maxLength * 0.5);
+    }
   }
 
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
