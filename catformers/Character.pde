@@ -180,7 +180,9 @@ public class Character {
   }
 
   void applyMovement() {
-    updateMiniMode(); 
+    if (miniMode) {
+      updateMiniMode(); 
+    }
     
     ifFalling = false;
     if (xPos - 6.0 + hitboxWidth + xVelocity < width && xPos + 2.0 + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
@@ -294,6 +296,7 @@ public class Character {
     
     walkspeed = maxWalkSpeed;
     horizontalJump = false;
+    miniShrunk = false;
   }
   
   void updateMiniMode() {
@@ -305,7 +308,7 @@ public class Character {
         miniShrunk = true;
       }
     } else {
-      miniTick = 0;
+      miniTick = 0; 
       hitboxWidth = maxWidth;
       hitboxLength = maxLength;
       miniShrunk = false;
