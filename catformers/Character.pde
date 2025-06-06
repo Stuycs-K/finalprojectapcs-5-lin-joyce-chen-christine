@@ -67,7 +67,11 @@ public class Character {
       yVelocity = -power * 1.6;
     }
     jumpCharge = 0;
-    hitboxLength = maxLength;
+    if (!miniMode) {
+      hitboxLength = maxLength;
+    } else {
+      hitboxLength = (int)(maxLength * 0.5);
+    }
   }
 
   // in keypressed later add a while(jumpcharge < max_jump) so we can set a cap
@@ -85,7 +89,11 @@ public class Character {
   
   void unCrouch() {
     float oldLength = hitboxLength;
-    hitboxLength = maxLength;
+    if (!miniMode) {
+      hitboxLength = maxLength;
+    } else {
+      hitboxLength = (int)(maxLength * 0.5);
+    }
     yPos -= (hitboxLength - oldLength);
     walkspeed = maxWalkSpeed;
   }
@@ -179,9 +187,7 @@ public class Character {
     }
   }
 
-  void applyMovement() {
-    updateMiniMode(); 
-    
+  void applyMovement() {  
     ifFalling = false;
     if (xPos - 6.0 + hitboxWidth + xVelocity < width && xPos + 2.0 + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
@@ -294,6 +300,8 @@ public class Character {
     
     walkspeed = maxWalkSpeed;
     horizontalJump = false;
+    miniShrunk = false;
+    miniMode = false;
   }
   
   void updateMiniMode() {
@@ -304,12 +312,7 @@ public class Character {
         hitboxLength = (int)(maxLength * 0.5);
         miniShrunk = true;
       }
-    } else {
-      miniTick = 0;
-      hitboxWidth = maxWidth;
-      hitboxLength = maxLength;
-      miniShrunk = false;
-    }
+    } 
   }
 
   void displayJumpBar() {
