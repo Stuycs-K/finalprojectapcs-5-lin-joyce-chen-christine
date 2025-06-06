@@ -14,7 +14,7 @@ public class Platforms {
     if (s.selectedMap != null && s.selectedMap.equals("Map3")) {
       image(cloudPlatform, xPos, yPos, platformWidth, platformHeight);
     } else {
-    image(dirtplatform, xPos, yPos, platformWidth, platformHeight);
+    image(dirtPlatform, xPos, yPos, platformWidth, platformHeight);
     }
   }
 
