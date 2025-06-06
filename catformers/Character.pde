@@ -7,7 +7,7 @@ public class Character {
   float xVelocity, yVelocity, xPos, yPos, startX;
   float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive, isPlayerTwo;
-  boolean inverseControls, isTrapped, horizontalJump, revivable, miniMode;
+  boolean inverseControls, isTrapped, horizontalJump, revivable, miniMode, miniShrunk;
   int spamCount;
   PImage sprite;
   Gif walking;
@@ -180,6 +180,8 @@ public class Character {
   }
 
   void applyMovement() {
+    updateMiniMode(); 
+    
     ifFalling = false;
     if (xPos - 6.0 + hitboxWidth + xVelocity < width && xPos + 2.0 + xVelocity > 0) { //check for borders and anything else that would block horizontal movement
       xPos += xVelocity;
@@ -248,7 +250,7 @@ public class Character {
     if (damageCD > 0) {
       damageCD--;
     }
-    
+        
   }
   
   void reset(boolean resetLives) {
@@ -294,6 +296,22 @@ public class Character {
     horizontalJump = false;
   }
   
+  void updateMiniMode() {
+    if (miniMode && miniTick <= 400) {
+      miniTick++;
+      if (!miniShrunk) {
+        hitboxWidth = (int)(maxWidth * 0.5);
+        hitboxLength = (int)(maxLength * 0.5);
+        miniShrunk = true;
+      }
+    } else {
+      miniTick = 0;
+      hitboxWidth = maxWidth;
+      hitboxLength = maxLength;
+      miniShrunk = false;
+    }
+  }
+
   void displayJumpBar() {
     fill(50,205,50);
     rect(xPos - 15, yPos - 15, 20, 40.0);

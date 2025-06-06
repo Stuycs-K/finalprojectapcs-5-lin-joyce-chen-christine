@@ -190,7 +190,7 @@ void draw() {
         if (c.iFrameTimer > 0) {
           c.iFrameTimer--;
         }
-        if (c.yPos + c.hitboxLength > height + 100) {
+        if (c.yPos > height + 5000) {
           c.reset(false);
         }
       }

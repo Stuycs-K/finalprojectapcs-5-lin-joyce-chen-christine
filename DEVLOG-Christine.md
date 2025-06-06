@@ -103,10 +103,19 @@ Future Improvements:
 - Increase volume for shooting SFX
 - Adjust new BG saturation/colors
 
-### 2025-06-05 -
-Worked for _ + 1.7 hours. Added map selection screen for Versus Mode with previews. Applied chosen map as background and created new platform layout with gaps in bottom platform. Allowed for falling off screen and repawning with -1 life. Drew background 3 and created another new platform layout. Implemented option to choose random map + question mark image display. Increased volume for shooting SFX. Added invincibility frames after falling off map with white flashing indicator lines. Drew new cloud platform and applied to map 3; moved platform loading to loadAssets() for better performance/memory efficiency. 
+### 2025-06-05 - Map Selection/Graphics + Falling Feature
+Worked for 1.7 hours. Added map selection screen for Versus Mode with previews. Applied chosen map as background and created new platform layout with gaps in bottom platform. Allowed for falling off screen and repawning with -1 life. Drew background 3 and created another new platform layout. Implemented option to choose random map + question mark image display. Increased volume for shooting SFX. Added invincibility frames after falling off map with white flashing indicator lines. Drew new cloud platform and applied to map 3; moved platform loading to loadAssets() for better performance/memory efficiency.
 
 Future Improvements:
 - Fix Boss Mode BGM playing upon resetting game in both modes
 - SFX for falling off map
 - Make cloud platforms look less odd!! Also make Map3 less difficult
+
+### 2025-06-05 - Bug Fixing +
+Worked for _ + 10 minutes. Fixed bug with decreased hitboxes in mini mode leading to characters falling through platforms when jumping.
+
+To-Do List:
+- Fix bug with jump animation not displaying before mini mode
+- Fix hitbox not reverting properly after mini mode
+
+Future-Improvements:

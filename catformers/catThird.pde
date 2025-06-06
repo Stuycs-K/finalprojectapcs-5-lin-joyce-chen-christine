@@ -88,18 +88,8 @@ public class catThird extends Character {
   
   void display() {
     boolean blink = false;
-    if (miniMode && miniTick <= 400) {
-      miniTick++;
-      hitboxWidth *= 0.5;
-      hitboxLength *= 0.5;
-      if (miniTick > 300) {
-        if (miniTick % 20 == 0) blink = !blink;
-      }
-    } else {
-      blink = false;
-      miniTick = 0;
-      hitboxWidth = maxWidth;
-      hitboxLength = maxLength;
+    if (miniMode && miniTick > 300) {
+      if (miniTick % 20 < 10) blink = true;
     }
     // line to check aim angles
     float angle = radians(aimAngle);
