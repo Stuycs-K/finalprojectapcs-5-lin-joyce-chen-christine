@@ -7,6 +7,7 @@ Character p1Char, p2Char;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 ArrayList<Consumable> consumables;
+ArrayList<String> consumableTypes;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
@@ -142,6 +143,10 @@ void loadState() {
   platforms = new ArrayList<Platforms>();
   consumables = new ArrayList<Consumable>();
   s = new screenSelect();
+  
+  consumableTypes = new ArrayList<String>();
+  consumableTypes.add("miniPotion");
+  consumableTypes.add("bulletPotion");
   
   modeInitialized = false;
   selectScreen = false;
@@ -770,9 +775,10 @@ void displayScreen() {
       
     }
     
-    if (versusTick % 800 == 0 && versusTick != 0) {
+    if (versusTick % 1000 == 0 && versusTick != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable("miniPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
+      consumables.add(new Consumable(consumableTypes.get((int)(random(0,consumableTypes.size()))), 
+                        random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
     }
     
     if (gameEnd) {

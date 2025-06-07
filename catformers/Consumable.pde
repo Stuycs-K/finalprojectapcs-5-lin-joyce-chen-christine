@@ -30,6 +30,13 @@ public class Consumable {
         c.miniMode = true;
         return true;
       }
+    } else if (type.equals("bulletPotion")) {
+      if (xPos < c.xPos + c.hitboxWidth && xPos + Width > c.xPos && 
+            yPos < c.yPos + c.hitboxLength && yPos + Length > c.yPos &&
+            c.isAlive) {
+        c.bulletMode = true;
+        return true;
+      }
     }
     return false;
   }

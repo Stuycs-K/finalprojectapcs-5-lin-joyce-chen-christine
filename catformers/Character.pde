@@ -7,8 +7,10 @@ public class Character {
   float xVelocity, yVelocity, xPos, yPos, startX;
   float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive, isPlayerTwo;
-  boolean inverseControls, isTrapped, horizontalJump, revivable, miniMode, miniShrunk;
-  int spamCount;
+  boolean inverseControls, isTrapped, horizontalJump, revivable;
+  boolean miniMode, miniShrunk, bulletMode;
+  int spamCount, shootCount;
+  String projectileType;
   PImage sprite;
   Gif walking;
 
@@ -36,6 +38,7 @@ public class Character {
     // projectile info
     this.bulletspeed = bulletspeed;
     this.maxBulletCD = maxBulletCD;
+    projectileType = "normal";
     bulletCD = 0;
     aimAngle = 0.0;
 
@@ -55,6 +58,7 @@ public class Character {
     inverseControls = false;
     isTrapped = false;
     spamCount = 0;
+    shootCount = 0;
     damageCD = 0;
   }
 
@@ -300,12 +304,16 @@ public class Character {
     inverseControls = false;
     isTrapped = false;
     spamCount = 0;
+    shootCount = 0;
     damageCD = 0;
     
     walkspeed = maxWalkSpeed;
     horizontalJump = false;
+    
+    // potion booleans
     miniShrunk = false;
     miniMode = false;
+    bulletMode = false;
   }
   
   void updateMiniMode() {
@@ -326,6 +334,29 @@ public class Character {
       hitboxWidth = maxWidth;
       hitboxLength = maxLength;
       miniShrunk = false;
+    }
+  }
+  
+  void applyBulletMode() {
+    float mouthX;
+    if (facingRight) {
+      mouthX = xPos + hitboxWidth * 0.8;
+    } else {
+      mouthX = xPos + hitboxWidth * 0.2;
+    }
+    float mouthY = yPos+ hitboxLength * 0.47;
+    if (bulletMode && shootCount <= 20) {
+      if (shootCount > 0) {
+        if (shootCount % 10 == 0) {
+          projectiles.add(new Projectiles(projectileType, this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+          shootSound.play();
+          shootTick++;
+        }
+        shootCount++;
+      }
+    } else {
+      bulletMode = false;
+      shootCount = 0;
     }
   }
 
