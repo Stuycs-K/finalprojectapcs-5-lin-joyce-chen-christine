@@ -350,6 +350,20 @@ void draw() {
         popStyle();
       }
       
+      if (c.isAlive && c.bulletMode) {
+        pushStyle();
+        float bW = 160;
+        float bH = 30;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Multiple Bullets!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+        popStyle();
+      }
+      
     }
     
   }

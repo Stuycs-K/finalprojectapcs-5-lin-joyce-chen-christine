@@ -1,7 +1,7 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxWidth, maxLength;
   int lives, maxLives, jumpCharge, bulletCD, maxBulletCD;
-  int damageCD, shootTick, miniTick, iFrameTimer;
+  int damageCD, shootTick, miniTick, iFrameTimer, bulletTimer;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, startX;
@@ -345,15 +345,18 @@ public class Character {
       mouthX = xPos + hitboxWidth * 0.2;
     }
     float mouthY = yPos+ hitboxLength * 0.47;
-    if (bulletMode && shootCount <= 20) {
+    if (bulletMode && bulletTimer <= 400) {
       if (shootCount > 0) {
-        if (shootCount % 10 == 0) {
-          projectiles.add(new Projectiles(projectileType, this, radians(aimAngle), bulletspeed, mouthX, mouthY));
-          shootSound.play();
-          shootTick++;
-        }
-        shootCount++;
+        if (shootCount <= 20) {
+          if (shootCount % 10 == 0) {
+            projectiles.add(new Projectiles(projectileType, this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+            shootSound.play();
+            shootTick++;
+          }
+          shootCount++;
+        } else shootCount = 0;
       }
+      bulletTimer++;
     } else {
       bulletMode = false;
       shootCount = 0;
