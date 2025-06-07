@@ -6,6 +6,7 @@ public class catThird extends Character {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
     hitboxWidth = 51;
     hitboxLength = 75;
+    projectileType = "grenade";
     
     if (cat3idleR == null) cat3idleR = loadImage("cat3idleR.png");
     if (cat3idleL == null) cat3idleL = loadImage("cat3idleL.png");
@@ -51,6 +52,7 @@ public class catThird extends Character {
     float offsetY = mouthY + sin(radians(aimAngle)) * 40;
     
     projectiles.add(new Projectiles("grenade", this, radians(aimAngle), bulletspeed, offsetX, offsetY));
+    if (bulletMode) shootCount++;
     bulletCD = maxBulletCD;
     shootTick++;
     shootSound.play();
@@ -87,10 +89,14 @@ public class catThird extends Character {
   }
   
   void display() {
+    // power ups
     boolean blink = false;
     if (miniMode && miniTick > 300) {
       if (miniTick % 20 < 10) blink = true;
     }
+    applyBulletMode();
+    applySlowMode();
+    
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;

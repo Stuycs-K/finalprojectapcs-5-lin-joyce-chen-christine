@@ -4,6 +4,7 @@ public class catFirst extends Character {
   
   public catFirst (float walkspeed, float bulletspeed, int maxBulletCD, float xPos, float yPos) {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
+    projectileType = "normal";
     
     if (cat1idleR == null) cat1idleR = loadImage("cat1idleR.png");
     if (cat1idleL == null) cat1idleL = loadImage("cat1idleL.png");
@@ -70,6 +71,7 @@ public class catFirst extends Character {
     float mouthY = yPos+ hitboxLength * 0.47;
     
     projectiles.add(new Projectiles("normal", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    if (bulletMode) shootCount++;
     bulletCD = maxBulletCD;
     shootTick++;
     shootSound.play();
@@ -81,10 +83,14 @@ public class catFirst extends Character {
   }
   
   void display() {
+    // power ups
     boolean blink = false;
     if (miniMode && miniTick > 300) {
       if (miniTick % 20 < 10) blink = true;
     }
+    applyBulletMode();
+    applySlowMode();
+    
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;

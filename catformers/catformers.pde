@@ -7,6 +7,7 @@ Character p1Char, p2Char;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 ArrayList<Consumable> consumables;
+ArrayList<String> consumableTypes;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
@@ -142,6 +143,11 @@ void loadState() {
   platforms = new ArrayList<Platforms>();
   consumables = new ArrayList<Consumable>();
   s = new screenSelect();
+  
+  consumableTypes = new ArrayList<String>();
+  //consumableTypes.add("miniPotion");
+  //consumableTypes.add("bulletPotion");
+  consumableTypes.add("slowPotion");
   
   modeInitialized = false;
   selectScreen = false;
@@ -342,6 +348,34 @@ void draw() {
         fill(255);
         text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
         text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
+        popStyle();
+      }
+      
+      if (c.isAlive && c.bulletMode) {
+        pushStyle();
+        float bW = 160;
+        float bH = 30;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Multiple Bullets!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
+        popStyle();
+      }
+      
+      if (c.isAlive && c.slowMode) {
+        pushStyle();
+        float bW = 160;
+        float bH = 30;
+        fill(0, 0, 0, 120);
+        noStroke();
+        rect(c.xPos + c.hitboxWidth/2 - bW/2, c.yPos - 35, bW, bH, 8);
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(255);
+        text("Slowed Down!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
         popStyle();
       }
       
@@ -770,9 +804,10 @@ void displayScreen() {
       
     }
     
-    if (versusTick % 800 == 0 && versusTick != 0) {
+    if (versusTick % 1000 == 0 && versusTick != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable("miniPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
+      consumables.add(new Consumable(consumableTypes.get((int)(random(0,consumableTypes.size()))), 
+                        random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
     }
     
     if (gameEnd) {

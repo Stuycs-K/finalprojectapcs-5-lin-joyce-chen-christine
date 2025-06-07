@@ -6,6 +6,7 @@ public class catSecond extends Character {
     super(walkspeed, bulletspeed, maxBulletCD, xPos, yPos);
     hitboxWidth = 50;
     hitboxLength = 77;
+    projectileType = "laser";
     
     if (cat2idleR == null) cat2idleR = loadImage("cat2idleR.png");
     if (cat2idleL == null) cat2idleL = loadImage("cat2idleL.png");
@@ -47,6 +48,7 @@ public class catSecond extends Character {
     float mouthY = yPos+ hitboxLength * 0.47;
     
     projectiles.add(new Projectiles("laser", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+    if (bulletMode) shootCount++;
     bulletCD = maxBulletCD;
     shootTick++;
     shootSound.play();
@@ -83,10 +85,14 @@ public class catSecond extends Character {
   }
   
   void display() {
+    // power ups
     boolean blink = false;
     if (miniMode && miniTick > 300) {
       if (miniTick % 20 < 10) blink = true;
     }
+    applyBulletMode();
+    applySlowMode();
+    
     // line to check aim angles
     float angle = radians(aimAngle);
     float len = 40;

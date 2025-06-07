@@ -1,14 +1,17 @@
 public class Character {
   int hitboxWidth, hitboxLength, maxWidth, maxLength;
   int lives, maxLives, jumpCharge, bulletCD, maxBulletCD;
-  int damageCD, shootTick, miniTick, iFrameTimer;
+  int damageCD, shootTick, iFrameTimer;
+  int miniTick, slowTick, bulletTimer;
   float maxJumpCharge;
   float bulletspeed, walkspeed, maxWalkSpeed, aimAngle;
   float xVelocity, yVelocity, xPos, yPos, startX;
   float deathX, deathY, deathSlope;
   boolean onGround, bulletFired, ifFalling, isWalking, facingRight, isAlive, isPlayerTwo;
-  boolean inverseControls, isTrapped, horizontalJump, revivable, miniMode, miniShrunk;
-  int spamCount;
+  boolean inverseControls, isTrapped, horizontalJump, revivable;
+  boolean miniMode, miniShrunk, bulletMode, slowMode;
+  int spamCount, shootCount;
+  String projectileType;
   PImage sprite;
   Gif walking;
 
@@ -36,6 +39,7 @@ public class Character {
     // projectile info
     this.bulletspeed = bulletspeed;
     this.maxBulletCD = maxBulletCD;
+    projectileType = "normal";
     bulletCD = 0;
     aimAngle = 0.0;
 
@@ -50,11 +54,13 @@ public class Character {
     // animation variables
     shootTick = 0;
     miniTick = 0;
+    slowTick = 0;
     
     // boss effects
     inverseControls = false;
     isTrapped = false;
     spamCount = 0;
+    shootCount = 0;
     damageCD = 0;
   }
 
@@ -88,7 +94,7 @@ public class Character {
     } else {
       hitboxLength = (int)(maxLength/1.5);
     }
-    walkspeed = maxWalkSpeed/2;
+    walkspeed = walkspeed/2;
   }
   
   void unCrouch() {
@@ -99,7 +105,8 @@ public class Character {
       hitboxLength = (int)(maxLength * 0.5);
     }
     yPos -= (hitboxLength - oldLength);
-    walkspeed = maxWalkSpeed;
+    if (!slowMode) walkspeed = maxWalkSpeed;
+    else walkspeed = (int)(maxWalkSpeed * 0.25);
   }
 
   void shoot() {
@@ -300,12 +307,16 @@ public class Character {
     inverseControls = false;
     isTrapped = false;
     spamCount = 0;
+    shootCount = 0;
     damageCD = 0;
     
     walkspeed = maxWalkSpeed;
     horizontalJump = false;
+    
+    // potion booleans
     miniShrunk = false;
     miniMode = false;
+    bulletMode = false;
   }
   
   void updateMiniMode() {
@@ -326,6 +337,43 @@ public class Character {
       hitboxWidth = maxWidth;
       hitboxLength = maxLength;
       miniShrunk = false;
+    }
+  }
+  
+  void applySlowMode() {
+    if (slowMode && slowTick <= 400) {
+      walkspeed = (int)(maxWalkSpeed * 0.25);
+      slowTick++;
+    } else {
+      slowMode = false;
+      walkspeed = maxWalkSpeed;
+      slowTick = 0;
+    }
+  }
+  
+  void applyBulletMode() {
+    float mouthX;
+    if (facingRight) {
+      mouthX = xPos + hitboxWidth * 0.8;
+    } else {
+      mouthX = xPos + hitboxWidth * 0.2;
+    }
+    float mouthY = yPos+ hitboxLength * 0.47;
+    if (bulletMode && bulletTimer <= 400) {
+      if (shootCount > 0) {
+        if (shootCount <= 20) {
+          if (shootCount % 10 == 0) {
+            projectiles.add(new Projectiles(projectileType, this, radians(aimAngle), bulletspeed, mouthX, mouthY));
+            shootSound.play();
+            shootTick++;
+          }
+          shootCount++;
+        } else shootCount = 0;
+      }
+      bulletTimer++;
+    } else {
+      bulletMode = false;
+      shootCount = 0;
     }
   }
 

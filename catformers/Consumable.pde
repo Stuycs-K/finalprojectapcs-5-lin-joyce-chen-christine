@@ -13,6 +13,7 @@ public class Consumable {
     if (type.equals("hpPotion")) img = loadImage("hpPotion.png");
     if (type.equals("miniPotion")) img = loadImage("miniPotion.png");
     if (type.equals("bulletPotion")) img = loadImage("bulletPotion.png");
+    if (type.equals("slowPotion")) img = loadImage("slowPotion.png");
   }
   
   boolean checkUse(Character c) {
@@ -28,6 +29,22 @@ public class Consumable {
             yPos < c.yPos + c.hitboxLength && yPos + Length > c.yPos &&
             c.isAlive) {
         c.miniMode = true;
+        return true;
+      }
+    } else if (type.equals("bulletPotion")) {
+      if (xPos < c.xPos + c.hitboxWidth && xPos + Width > c.xPos && 
+            yPos < c.yPos + c.hitboxLength && yPos + Length > c.yPos &&
+            c.isAlive) {
+        c.bulletMode = true;
+        return true;
+      }
+    } else if (type.equals("slowPotion")) {
+      if (xPos < c.xPos + c.hitboxWidth && xPos + Width > c.xPos && 
+            yPos < c.yPos + c.hitboxLength && yPos + Length > c.yPos &&
+            c.isAlive) {
+        for (Character C : chars) {
+          if (C != c) C.slowMode = true;
+        }
         return true;
       }
     }

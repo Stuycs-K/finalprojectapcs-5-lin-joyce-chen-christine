@@ -100,7 +100,7 @@ An explosion sfx was added to play when a player dies in versus. A gif for boss 
 stuff to do + consider for next session
 - make boss expand from really tiny for animation and also maybe find sfx for the spawning
 
-### 2025-06-04 - Graphics and Implementation - 2.5 hours
+### 2025-06-05 - Graphics and Implementation - 2.5 hours
 Small change was made to map selection screen so that when the mouse hovers over a map, it lights up. The boss was changed so that when it spawns, it goes from small to big and a sfx was added for the spawning part (may be changed). Implementation of power ups (the become smaller one) has begun (but graphics was made for multiple bullets one too).
 
 stuff to do + consider for next session
@@ -108,3 +108,6 @@ stuff to do + consider for next session
 - begin implementing other power ups
 - improve boss spawn animation
 - fix bug where when player 1 tries to jump when on a platform, they start clipping through the floor -- maybe also player 2??
+
+### 2025-06-07 - Potions - 2 hours + __
+Implemented a multi bullet potion (increase number of projectiles shot out at a time) and a slow potion (slows enemy walkspeed down).
