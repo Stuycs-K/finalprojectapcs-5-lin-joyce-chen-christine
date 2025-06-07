@@ -91,6 +91,7 @@ public class catSecond extends Character {
       if (miniTick % 20 < 10) blink = true;
     }
     applyBulletMode();
+    applySlowMode();
     
     // line to check aim angles
     float angle = radians(aimAngle);
