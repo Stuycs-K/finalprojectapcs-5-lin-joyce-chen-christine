@@ -144,6 +144,7 @@ void loadState() {
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
   consumables = new ArrayList<Consumable>();
+  boss = null;
   s = new screenSelect();
   
   consumableTypes = new ArrayList<String>();
@@ -161,6 +162,8 @@ void loadState() {
   deathFinish = false;
   transition = false;
   spawnTick = 0;
+  demoMode = false;
+  storyMode = false;
   
   if (bossBGM.isPlaying()) bossBGM.pause();
 
