@@ -9,12 +9,13 @@ public class Story {
   String[] introDialogue = {
     "I'm so hungry!! The big bad dog stole our _ :(",
     "Wait...can dogs even eat _??",
-    "Um...Look, it's the Dog Gang!",
-    "We'll beat them and get our food back!!"
+    "Um...I smell dog in that direction!",
+    "Let's go look for them!!"
   };
   
   String[] scene2Dialogue = {
-    "..."
+    "Look it's the Dog Gang!",
+    "We'll beat them and get our food back!!"
   };
   
   String[] postFightDialogue = {
@@ -30,6 +31,9 @@ public class Story {
   };
 
   boolean storyOver;
+  
+  int storyPhaseNum = 0;
+  boolean phaseTriggered = false;
 
   Story() {
     setDialogue(introDialogue);
@@ -74,6 +78,30 @@ public class Story {
         storyOver = true;
       }
     }
+  }
+  
+  void updateStoryPhase() {
+    if (!phaseTriggered && p1Char.xPos > width - 100) {
+      phaseTriggered = true;
+      storyPhaseNum++;
+      setupNextPhase();
+      
+      p1Char.xPos = 0;
+      if (numPlayer.equals("2")) {
+        p2Char.xPos = 0;
+      }
+    }
+  }
+  
+  void setupNextPhase() {
+    if (storyPhaseNum == 1) {
+       platforms.add(new Platforms(200, 500, 150));
+      //platforms.add(new Platform(..)));
+    } else if (storyPhaseNum == 2) {
+      //
+    } else if (storyPhaseNum == 3) {
+    }
+    phaseTriggered = false;
   }
 
   void display() {

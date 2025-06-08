@@ -167,7 +167,6 @@ void loadState() {
 }
   
 void draw() {
-  
   if (!loaded) {
     loadAssets();
     loadState();
@@ -177,9 +176,13 @@ void draw() {
   
   mousePos.set(mouseX, mouseY);
   
-   if (currmode.equals("Boss") && boss != null) {
-    if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
-      background(bg1Dark); 
+   if (currmode.equals("Boss")) {
+     if (boss != null) {
+       if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
+         background(bg1Dark); 
+       } else {
+         background(bg1);
+      } 
     } else {
       background(bg1);
     }
@@ -217,7 +220,7 @@ void draw() {
     }
   }
 
-  if (!gameOver) {
+  if (!gameOver && !storyPhase) {
     for (Platforms p : platforms) {
       p.display();
     }
@@ -651,7 +654,7 @@ void keyReleased() {
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
   if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
   
-  if (currmode.equals("Versus") || currmode.equals("Boss")) {
+  if (currmode.equals("Versus") || currmode.equals("Boss") && chars.size() != 0) {
       if (key == ' ' && !transition) {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
@@ -853,7 +856,7 @@ void displayScreen() {
   }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
-    if (storyMode && !storyTriggered && p1Char.xPos > width - 50) {
+    if (storyMode && !storyTriggered && p1Char.xPos > width - 100) {
       story = new Story();
       story.setDialogue(story.scene2Dialogue);
       storyTriggered = true;
@@ -866,8 +869,9 @@ void displayScreen() {
       modeInitialized = true;
       
       if (storyPhase) {
-        //platforms.add(new Platforms(0, height - 80, width));
-      } else {
+        platforms.add(new Platforms(0, height - 20, width)); // floor
+      }
+      if (!storyMode || (storyMode && story.storyPhaseNum >= 5)) {
         boss = new Boss(640, height - 522);
         
         platforms.add(new Platforms(0, height - 20, width)); // floor
@@ -884,15 +888,21 @@ void displayScreen() {
         platforms.add(new Platforms(304, height - 312, 174)); 
         platforms.add(new Platforms(802, height - 312, 174)); 
       }
-    }
+    } 
     
-    if (storyMode && story != null && !story.storyOver) {
-      story.display();
-      if (story.storyOver) {
-        storyMode = false;
+    if (storyMode && story != null) {
+      if (!story.storyOver) {
+        story.display();
+        story.updateStoryPhase();
+        if (story.storyOver) {
+          storyPhase = false;
+          modeInitialized = false;
+        } 
+      } else {
         storyPhase = false;
         modeInitialized = false;
       }
+
     } else if (!storyPhase) {
       image(loadImage("p1.png"), 20, 30, 60, 44.4);
       if (numPlayer.equals("2")) {
