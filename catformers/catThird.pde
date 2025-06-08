@@ -85,6 +85,9 @@ public class catThird extends Character {
   }
   
   PImage getPreview() {
+    if (isPlayerTwo && storyPhase) {
+      return cat3idleL;
+    }
     return cat3idleR;
   }
   

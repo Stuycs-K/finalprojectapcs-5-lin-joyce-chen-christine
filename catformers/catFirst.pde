@@ -79,6 +79,9 @@ public class catFirst extends Character {
   }
  
   PImage getPreview() {
+    if (isPlayerTwo && storyPhase) {
+      return cat1idleL;
+    }
     return cat1idleR;
   }
   

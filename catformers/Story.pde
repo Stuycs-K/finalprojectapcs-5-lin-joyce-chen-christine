@@ -78,25 +78,35 @@ public class Story {
 
   void display() {
     background(bg1);
-    text(story.displayedText, width/2, height/2 + 60);
     typeDialogue();
-    fill(0, 200);
-    noStroke();
-    rect(0, height/2 - 80, width, height/2);
+    
+    pushStyle();
+    int boxH = 200, boxW = 900;
+    int boxX = (width - boxW)/2, boxY = height - boxH - 100;
+    fill(0, 100);
+    stroke(255, 100);
+    strokeWeight(2);
+    rect(boxX, boxY, boxW, boxH, 20);
+    int size = 500;
+    int textX = boxX + 30, textW = boxW - 60;
     if (currentSpeaker.equals("P1")) {
-      image(p1Char.getPreview(), 40, height/2 - 40, 500, 500);
+      image(p1Char.getPreview(), 20, height - size, size, size); 
+      textX = boxX + 300;
     } else if (currentSpeaker.equals("P2") && p2Char != null) {
-      image(p2Char.getPreview(), width-340, height/2 -40, 500, 500);
-    }
+      image(p2Char.getPreview(), width - size - 40, height - size, size, size); 
+      textX = boxX + 80;
+    } 
     fill(255);
-    textAlign(CENTER);
-    textSize(28);
-    text(story.displayedText, width/2, height/2 + 60);
-    if (story.lineOver && !story.storyOver) {
+    textAlign(LEFT);
+    textSize(24);
+    text(story.displayedText, textX, boxY + 50, textW, boxH - 60);
+    if (lineOver && !storyOver) {
       textSize(16);
       fill(220);
-      text("Press any key to continue", width/2, height/2 - 40);
+      textAlign(CENTER);
+      text("Press [ENTER] or click to continue", width/2, boxY + boxH - 20);
     }
+    popStyle();
   }
   
 }
