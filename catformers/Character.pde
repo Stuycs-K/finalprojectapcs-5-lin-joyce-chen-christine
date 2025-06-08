@@ -289,7 +289,7 @@ public class Character {
     facingRight = true;
     aimAngle = 0.0;
     
-    if (isPlayerTwo) {
+    if (isPlayerTwo && !storyMode) {
       facingRight = false;
       aimAngle = 180.0;
     } else {

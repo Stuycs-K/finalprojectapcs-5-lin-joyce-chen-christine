@@ -69,7 +69,7 @@ public class catFirst extends Character {
       mouthX = xPos + hitboxWidth * 0.2;
     }
     float mouthY = yPos+ hitboxLength * 0.47;
-    
+
     projectiles.add(new Projectiles("normal", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     if (bulletMode) shootCount++;
     bulletCD = maxBulletCD;

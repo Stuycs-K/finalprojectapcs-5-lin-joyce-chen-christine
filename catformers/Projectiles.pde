@@ -147,7 +147,7 @@ public class Projectiles {
       }
     }
     
-    if (currmode.equals("Boss") && !storyPhase && !boss.immune && player != null) {
+    if (currmode.equals("Boss") && !storyMode && !boss.immune && player != null && boss != null) {
       if (!type.equals("grenade") || !exploded) {
         if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&
               yPos >= boss.yPos - boss.hitboxLength/2 && yPos <= boss.yPos + boss.hitboxLength/2) {
