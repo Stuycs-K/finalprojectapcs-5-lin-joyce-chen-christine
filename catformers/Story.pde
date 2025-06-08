@@ -81,6 +81,8 @@ public class Story {
   }
   
   void updateStoryPhase() {
+    storyPhase = true;
+              
     if (!phaseTriggered) {
       storyPhaseNum++;
       setupNextPhase();

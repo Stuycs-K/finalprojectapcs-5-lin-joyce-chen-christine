@@ -876,11 +876,12 @@ void displayScreen() {
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
     if (storyMode && !storyTriggered) {
-      if (p1Char.xPos > width - 100 || (numPlayer.equals("2") && p2Char.xPos > width - 100)) {
-        storyTriggered = true;
-        storyPhase = true;
-        story.phaseTriggered = false;
-        story.updateStoryPhase();
+      if (story.storyPhaseNum == 1) {
+        if ((p1Char.xPos > width - 70 && p1Char.yPos <= 210) || (numPlayer.equals("2") && p2Char.xPos > width - 70 & p2Char.yPos <= 210)) {
+          storyTriggered = true;
+          story.phaseTriggered = false;
+          story.updateStoryPhase();
+        }
       }
     }
     if (!modeInitialized) {
