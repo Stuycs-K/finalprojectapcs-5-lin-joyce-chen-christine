@@ -54,6 +54,7 @@ public class Projectiles {
           }
         }
       } else {
+        if (boss != null) {
           PVector otherPos = new PVector(boss.xPos+boss.hitboxWidth/2, boss.yPos+boss.hitboxLength/2);
           dist = PVector.sub(new PVector(xPos,yPos), otherPos).mag();
           fmag = 200000 / pow(dist,2);
@@ -64,7 +65,9 @@ public class Projectiles {
           xVelocity += a.x;
           yVelocity += a.y;
           a.set(0,0);
+        }
       }
+      
       
       if (checkBounce()) {
         bounceCount+=1;
@@ -144,7 +147,7 @@ public class Projectiles {
       }
     }
     
-    if (currmode.equals("Boss") && !boss.immune && player != null) {
+    if (currmode.equals("Boss") && !storyPhase && !boss.immune && player != null) {
       if (!type.equals("grenade") || !exploded) {
         if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&
               yPos >= boss.yPos - boss.hitboxLength/2 && yPos <= boss.yPos + boss.hitboxLength/2) {

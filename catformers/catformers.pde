@@ -11,7 +11,7 @@ ArrayList<String> consumableTypes;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, storyMode, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
+boolean modeInitialized, selectScreen, storyMode, storyPhase, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
 int spawnTick, versusTick;
@@ -176,7 +176,7 @@ void draw() {
   
   mousePos.set(mouseX, mouseY);
   
-   if (currmode.equals("Boss")) {
+   if (currmode.equals("Boss") && boss != null) {
     if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
       background(bg1Dark); 
     } else {
@@ -384,7 +384,7 @@ void draw() {
     
   }
   
-  if (currmode.equals("Boss") && !transition) {
+  if (currmode.equals("Boss") && !transition && boss != null) {
     if (boss.spawned || spawnTick >= 260) {
       if (chargeSound.isPlaying()) chargeSound.pause();
       if (!boss.spawned) {
@@ -588,11 +588,12 @@ void keyPressed() {
       selectSound.play();
       transitionScreen();
       
-      if (s.selectedMode.equals("Boss") && s.storyToggle.toggleState) {
-        currmode = "Boss";
-        storyMode = true;
+      if (s.selectedMode.equals("Boss") && storyMode) {
         story = new Story();
+        storyPhase = true;
+        currmode = "Boss";
       } else {
+        storyPhase = false;
         currmode = s.selectedMode;
       } 
       modeInitialized = false;
@@ -826,25 +827,16 @@ void displayScreen() {
     versusTick++;
   }
   else if (currmode.equals("Boss")) {
-     prevMode = "Boss";
-    if (storyMode) {
-      story.typeDialogue();
-      story.display();
-      if (story.storyOver) {
-        storyMode = false;
-        modeInitialized = false;
+    prevMode = "Boss";
+    if (!modeInitialized) {
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
       }
-    } else {
-      image(loadImage("p1.png"), 20, 30, 60, 44.4);
-      if (numPlayer.equals("2")) {
-        image(loadImage("p2.png"), width-90, 30, 60, 44.4);
-      }
+      modeInitialized = true;
       
-      if (!modeInitialized) {
-        if (startBGM.isPlaying()) {
-          startBGM.pause();
-        }
-        modeInitialized = true;
+      if (storyPhase) {
+        platforms.add(new Platforms(0, height - 80, width));
+      } else {
         boss = new Boss(640, height - 522);
         
         platforms.add(new Platforms(0, height - 20, width)); // floor
@@ -861,7 +853,19 @@ void displayScreen() {
         platforms.add(new Platforms(304, height - 312, 174)); 
         platforms.add(new Platforms(802, height - 312, 174)); 
       }
-      
+    }
+    if (storyMode && story != null) {
+      story.typeDialogue();
+      story.display();
+      if (story.storyOver) {
+        storyMode = false;
+        modeInitialized = false;
+      }
+    } else {
+      image(loadImage("p1.png"), 20, 30, 60, 44.4);
+      if (numPlayer.equals("2")) {
+        image(loadImage("p2.png"), width-90, 30, 60, 44.4);
+      }
       if (boss.timer % 800 == 0 && boss.timer != 0) {
         Platforms p = platforms.get((int)(random(0,platforms.size())));
         consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
@@ -913,8 +917,10 @@ void displayScreen() {
       c.display();
     }
 
-    boss.update();
-    boss.display();
+    if (!storyPhase && boss != null) {
+      boss.update();
+      boss.display();
+    }
     
     fill(0);
     stroke(255);
@@ -970,8 +976,10 @@ void displayScreen() {
       if (bossBGM.isPlaying()) {
         bossBGM.pause();
       }
-      boss.update();
-      boss.display();
+      if (!storyPhase && boss != null) {
+        boss.update();
+        boss.display();
+      }
       fill(0);
       stroke(255);
       strokeWeight(5);
