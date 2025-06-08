@@ -977,7 +977,7 @@ void displayScreen() {
       c.display();
     }
 
-    if (!storyPhase && boss != null) {
+    if (!storyMode && boss != null) {
       boss.update();
       boss.display();
     }
@@ -1036,7 +1036,7 @@ void displayScreen() {
       if (bossBGM.isPlaying()) {
         bossBGM.pause();
       }
-      if (!storyPhase && boss != null) {
+      if (!storyMode && boss != null) {
         boss.update();
         boss.display();
       }
