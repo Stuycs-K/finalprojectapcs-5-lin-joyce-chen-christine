@@ -120,9 +120,9 @@ public class Story {
       platforms.clear();
       platforms.add(new Platforms(0, height-20, width));
       
-      enemies.add(new Enemies("normal", width - 320, 500, 40, 60));
-      enemies.add(new Enemies("normal", width - 240, 500, 40, 60));
-      enemies.add(new Enemies("normal", width - 160, 500, 40, 60));
+      enemies.add(new Enemies("normal", width - 320, height-90, 70, 70/1.38));
+      enemies.add(new Enemies("normal", width - 220, height-120, 100, 100/1.38));
+      enemies.add(new Enemies("normal", width - 80, height-170, 70, 70/1.38));
       
     } else if (storyPhaseNum == 3) {
     }

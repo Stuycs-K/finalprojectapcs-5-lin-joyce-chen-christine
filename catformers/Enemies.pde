@@ -2,8 +2,9 @@ public class Enemies {
   float xPos, yPos;
   float hitboxWidth, hitboxLength;
   float walkspeed;
+  int lives;
   String type;
-  boolean facingRight;
+  boolean facingRight, isAlive;
   PImage sprite;
   ArrayList<Projectiles> projectiles;
   
@@ -12,11 +13,14 @@ public class Enemies {
     this.yPos = yPos;
     this.hitboxWidth = hitboxWidth;
     this.hitboxLength = hitboxLength;
-    
     this.type = type;
     
-    //walkspeed = [insert speed];
-    //sprite = loadImage();
+    walkspeed = 1.5;
+    facingRight = false;
+    projectiles = new ArrayList<Projectiles>();
+    
+    
+    sprite = loadImage("enemyIdle.png");
   }
   
   void move() {
@@ -26,6 +30,6 @@ public class Enemies {
   }
   
   void display() {
-    rect(xPos, yPos, hitboxWidth, hitboxLength);
+    image(sprite, xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
   }
 }
