@@ -232,6 +232,12 @@ void draw() {
       p.display();
     }
   }
+  
+  if (!gameEnd && !storyPhase && (!transition || fadeOut)) {
+    for (Enemies e : enemies) {
+      e.display();
+    }
+  }
 
   for (int x = 0; x < projectiles.size(); x++) {
     if (!gameOver && projectiles.get(x).checkHit()) {
