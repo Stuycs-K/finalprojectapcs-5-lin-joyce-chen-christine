@@ -628,7 +628,7 @@ void keyPressed() {
     }
   }
 
-  if (storyPhase && story != null && !story.storyOver) {
+  if (storyPhase && story != null && !story.storyOver && !transition) {
     if (keyCode == ENTER || keyCode == RETURN) {
       if (!story.lineOver) {
         story.charIndex = story.dialogue[story.dialogueIndex].length();
@@ -927,13 +927,14 @@ void displayScreen() {
         storyPhase = false;
         modeInitialized = false;
       }
-
-    } else if (!storyPhase) {
+    } 
+    
+    if (!storyPhase) {
       image(loadImage("p1.png"), 20, 30, 60, 44.4);
       if (numPlayer.equals("2")) {
         image(loadImage("p2.png"), width-90, 30, 60, 44.4);
       }
-      if (boss.timer % 800 == 0 && boss.timer != 0) {
+      if (!storyMode && boss.timer % 800 == 0 && boss.timer != 0) {
         Platforms p = platforms.get((int)(random(0,platforms.size())));
         consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
       }
@@ -960,7 +961,7 @@ void displayScreen() {
         deathCount = 0;
       }
 
-      if (boss.lives <= 0) {
+      if (!storyMode && boss.lives <= 0) {
         gameEnd = true;
         currmode = "Victory";
       }
