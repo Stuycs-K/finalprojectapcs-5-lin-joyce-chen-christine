@@ -111,7 +111,11 @@ Future Improvements:
 - SFX for falling off map
 - Make cloud platforms look less odd!! Also make Map3 less difficult
 
-### 2025-06-05 - Bug Fixing +
-Worked for _ + 30 minutes. Fixed bug with decreased hitboxes in Mini Mode leading to characters falling through platforms when jumping. Fixed Mini Mode crouch/jump animations (in class w/ Joyce). Fixed revivable text displaying in 1 Player Boss Mode. Fixed Mini Mode not reverting to normal size and falling through platforms.
+### 2025-06-06 - Bug Fixing
+Worked for 30 minutes. Fixed bug with decreased hitboxes in Mini Mode leading to characters falling through platforms when jumping. Fixed Mini Mode crouch/jump animations (in class w/ Joyce). Fixed revivable text displaying in 1 Player Boss Mode. Fixed Mini Mode not reverting to normal size and falling through platforms.
 
 Future-Improvements:
+- Start storyline for Boss Mode; google doc list
+
+### 2025-06-07 -
+Worked for _.
