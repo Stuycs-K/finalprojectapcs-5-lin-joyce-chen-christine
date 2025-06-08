@@ -1051,7 +1051,13 @@ void restartGame() {
   for (Character c : chars) {
     c.reset(true);
   }
-
+  
+  story = new Story();
+  storyTriggered = false;
+  storyPhase = true;
+  story.storyPhaseNum = 0;
+  story.phaseTriggered = false;
+  
   modeInitialized = false;
   gameEnd = false;
   gamePause = false;
