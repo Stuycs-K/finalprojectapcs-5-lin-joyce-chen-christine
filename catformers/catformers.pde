@@ -11,11 +11,12 @@ ArrayList<String> consumableTypes;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
+boolean modeInitialized, selectScreen, storyMode, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
 int spawnTick, versusTick;
 screenSelect s;
+Story story;
 
 // things for graphics
 Gif start;

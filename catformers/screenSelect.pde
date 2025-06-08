@@ -2,7 +2,7 @@ public class screenSelect {
   ArrayList<Button> modes = new ArrayList<Button>();
   ArrayList<Button> numPlayers = new ArrayList<Button>();
   ArrayList<Button> maps = new ArrayList<Button>();
-  Button demoToggle;
+  Button demoToggle, storyToggle;
   
   // ==== Character Select ====  
   ArrayList<Character> charOptions = new ArrayList<Character>();
@@ -23,6 +23,7 @@ public class screenSelect {
     maps.add(new Button(width/2 + 80, height/2 + 40, 320, 180, "Random", "backgroundRandom.png"));
     
     demoToggle = new Button(width - 100, 20, 60, 30, "Demo Mode");
+    storyToggle = new Button(width - 300, 20, 60, 30, "Story Mode");
     
     p1Index = 0; p2Index = 0;
     p1Chosen = false; p2Chosen = false;
@@ -38,6 +39,12 @@ public class screenSelect {
     mouseY >= demoToggle.yPos && mouseY <= demoToggle.yPos + demoToggle.buttonHeight) {
       demoToggle.toggle();
       demoMode = demoToggle.toggleState;
+    }
+    if (storyToggle != null &&
+    mouseX >= storyToggle.xPos && mouseX <= storyToggle.xPos + storyToggle.buttonWidth &&
+    mouseY >= storyToggle.yPos && mouseY <= storyToggle.yPos + storyToggle.buttonHeight) {
+      storyToggle.toggle();
+      storyMode = storyToggle.toggleState;
     }
     if (modes.size() == 2) {
       for (int x = 0; x < modes.size(); x++) {
@@ -185,6 +192,7 @@ public class screenSelect {
           b.display();
         }
         demoToggle.display();
+        storyToggle.display();
       }
     }
   }
