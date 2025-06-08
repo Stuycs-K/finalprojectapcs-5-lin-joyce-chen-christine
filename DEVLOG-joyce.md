@@ -109,5 +109,7 @@ stuff to do + consider for next session
 - improve boss spawn animation
 - fix bug where when player 1 tries to jump when on a platform, they start clipping through the floor -- maybe also player 2??
 
-### 2025-06-07 - Potions - 2 hours + __
-Implemented a multi bullet potion (increase number of projectiles shot out at a time) and a slow potion (slows enemy walkspeed down).
+### 2025-06-07 - Potions - 4.5 hours
+Implemented a multi bullet potion (increase number of projectiles shot out at a time) and a slow potion (slows enemy walkspeed down). Began working on the little storyline part before boss mode and implemented a dialogue system.
+
+stuff to do + consider for next session

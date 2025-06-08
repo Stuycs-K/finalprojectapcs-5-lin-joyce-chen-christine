@@ -4,6 +4,7 @@ import processing.sound.*;
 ArrayList<Character> chars;
 Character p1Char, p2Char;
 
+ArrayList<Enemies> enemies;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 ArrayList<Consumable> consumables;
@@ -15,7 +16,7 @@ boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, ga
 boolean storyMode, storyPhase, storyTriggered;
 boolean restarted, transition, fadeOut;
 float transitionTick;
-int spawnTick, versusTick;
+int spawnTick, versusTick, dialogue, dialogueTick, stage;
 screenSelect s;
 Story story;
 
@@ -47,7 +48,7 @@ Gif cat3walkL;
 Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
-//BGM 
+//BGM
 SoundFile startBGM, bossBGM;
 float bgmVolume;
 
@@ -72,7 +73,7 @@ void setup() {
   background(loading);
 }
 
-void loadAssets() {  
+void loadAssets() {
   // graphicsss
   start = new Gif(this, "start.gif");
   spawnAnim = new Gif(this, "spawnAnim.gif");
@@ -86,50 +87,50 @@ void loadAssets() {
   bgRandom = loadImage("backgroundRandom.png");
   dirtPlatform = loadImage("dirtplatform.png");
   cloudPlatform = loadImage("cloudPlatform.png");
-  
+
   heartImg = loadImage("heart.png");
   deathFrames = Gif.getPImages(this, "explosion.gif");
-  
+
   warningSign = loadImage("warningSign.png");
-  
+
   // walking animation
   cat1walkR = new Gif(this,"cat1walkR.gif");
   cat1walkL = new Gif(this,"cat1walkL.gif");
   cat1walkR.play();
   cat1walkL.play();
-  
+
   cat2walkR = new Gif(this,"cat2walkR.gif");
   cat2walkL = new Gif(this,"cat2walkL.gif");
   cat2walkR.play();
   cat2walkL.play();
-  
+
   cat3walkR = new Gif(this,"cat3walkR.gif");
   cat3walkL = new Gif(this,"cat3walkL.gif");
   cat3walkR.play();
   cat3walkL.play();
-  
+
   // shooting frame
   cat1walkOpenR = new Gif(this, "cat1walkOpenR.gif");
   cat1walkOpenL = new Gif(this, "cat1walkOpenL.gif");
   cat1walkOpenR.play();
   cat1walkOpenL.play();
-  
+
   cat2walkOpenR = new Gif(this, "cat2walkOpenR.gif");
   cat2walkOpenL = new Gif(this, "cat2walkOpenL.gif");
   cat2walkOpenR.play();
   cat2walkOpenL.play();
-  
+
   cat3walkOpenR = new Gif(this, "cat3walkOpenR.gif");
   cat3walkOpenL = new Gif(this, "cat3walkOpenL.gif");
   cat3walkOpenR.play();
   cat3walkOpenL.play();
-  
+
   // BGM
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   bossBGM = new SoundFile(this, "Theme of Astrum Deus.mp3");
-  
+
   // sound effects
-  shootSound = new SoundFile(this, "popCat.wav"); 
+  shootSound = new SoundFile(this, "popCat.wav");
   hitSound = new SoundFile(this, "catMeow1.wav");
   selectSound = new SoundFile(this, "selectSound.aiff");
   explosion = new SoundFile(this, "explosion.wav");
@@ -139,19 +140,20 @@ void loadAssets() {
 void loadState() {
   currmode = "Menu";
   numPlayer = "0";
-  
+
   chars = new ArrayList<Character>();
+  enemies = new ArrayList<Enemies>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
   consumables = new ArrayList<Consumable>();
   boss = null;
   s = new screenSelect();
-  
+
   consumableTypes = new ArrayList<String>();
-  //consumableTypes.add("miniPotion");
-  //consumableTypes.add("bulletPotion");
+  consumableTypes.add("miniPotion");
+  consumableTypes.add("bulletPotion");
   consumableTypes.add("slowPotion");
-  
+
   modeInitialized = false;
   selectScreen = false;
   p1Chosen = false;
@@ -164,11 +166,13 @@ void loadState() {
   spawnTick = 0;
   demoMode = false;
   storyMode = false;
-  
+  dialogue = -1;
+  stage = 1;
+
   if (bossBGM.isPlaying()) bossBGM.pause();
 
 }
-  
+
 void draw() {
   if (!loaded) {
     loadAssets();
@@ -176,23 +180,23 @@ void draw() {
     loaded = true;
     return;
   }
-  
+
   mousePos.set(mouseX, mouseY);
-  
+
    if (currmode.equals("Boss")) {
      if (boss != null) {
        if (modeInitialized && (boss.phase == 1 || boss.phase == 2)) {
-         background(bg1Dark); 
+         background(bg1Dark);
        } else {
          background(bg1);
-      } 
+      }
     } else {
       background(bg1);
     }
   }
-  
+
   displayScreen();
-  
+
   boolean gameOver = currmode.equals("Victory") || currmode.equals("Loss");
   for (Character c : chars) {
     if (c.isAlive && !gamePause && (!transition || fadeOut)) {
@@ -202,9 +206,9 @@ void draw() {
       if (!gameOver) {
         c.applyMovement();
         if (c.miniMode) {
-          c.updateMiniMode(); 
+          c.updateMiniMode();
         } else if (c.miniTick != 0) {
-          c.miniTick = 0; 
+          c.miniTick = 0;
           c.yPos -= (int)(c.maxLength * 0.5);
           c.hitboxWidth = c.maxWidth;
           c.hitboxLength = c.maxLength;
@@ -260,7 +264,7 @@ void draw() {
       }
     }
   }
-  
+
   for (int x = 0; x < consumables.size(); x++) {
     Consumable C = consumables.get(x);
     C.display();
@@ -275,7 +279,7 @@ void draw() {
   for (Character c : chars) {
     if (c.lives <= 0 && c.isAlive) {
       c.isAlive = false;
-      if (currmode.equals("Boss") && numPlayer.equals("2")) {
+      if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("2")) {
         c.revivable = true;
       }
       c.deathSlope = random(-5,5) * 10.0;
@@ -286,9 +290,9 @@ void draw() {
       c.deathY = c.yPos;
       gameEnd = true;
     }
-    
+
     if (!gameEnd) {
-      
+
       if (!storyPhase && c.isAlive && (c.iFrameTimer > 0 && frameCount % 6 < 3)) {
         pushStyle();
         noFill();
@@ -310,7 +314,7 @@ void draw() {
         fill(255);
         text("TRAPPED!", c.xPos + c.hitboxWidth/2, c.yPos - 40);
         text("Spam to Escape!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
-  
+
         // trap cage bars
         stroke(0);
         strokeWeight(2);
@@ -324,10 +328,10 @@ void draw() {
         // warning sign
         float size = 40;
         image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 100, size, size);
-        
+
         popStyle();
       }
-      
+
       if (c.isAlive && c.inverseControls) {
         pushStyle();
         float bW = 160;
@@ -343,7 +347,7 @@ void draw() {
         image(warningSign, c.xPos + c.hitboxWidth/2 - size/2, c.yPos - 80, size, size);
         popStyle();
       }
-      
+
       if (!c.isAlive && numPlayer.equals("2") && c.revivable) {
         pushStyle();
         float bW = 160;
@@ -355,10 +359,10 @@ void draw() {
         textSize(16);
         fill(255);
         text("Spam JUMP Over Me", c.xPos + c.hitboxWidth/2, c.yPos - 40);
-        text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);      
+        text("To REVIVE!", c.xPos + c.hitboxWidth/2, c.yPos - 26);
         popStyle();
       }
-      
+
       if (c.isAlive && c.bulletMode) {
         pushStyle();
         float bW = 160;
@@ -372,7 +376,7 @@ void draw() {
         text("Multiple Bullets!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
         popStyle();
       }
-      
+
       if (c.isAlive && c.slowMode) {
         pushStyle();
         float bW = 160;
@@ -386,11 +390,11 @@ void draw() {
         text("Slowed Down!", c.xPos + c.hitboxWidth/2, c.yPos - 20);
         popStyle();
       }
-      
+
     }
-    
+
   }
-  
+
   if (currmode.equals("Boss") && !transition && boss != null) {
     if (boss.spawned || spawnTick >= 260) {
       if (chargeSound.isPlaying()) chargeSound.pause();
@@ -411,12 +415,20 @@ void draw() {
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
       spawnTick++;
     } else spawnTick++;
-  }    
-  
+  }
+
+  if (dialogue > 0 && dialogue < 2) {
+    String text = "";
+    if (dialogue == 1) text = "wahhwafawgwagawgges";
+    if (printDialogue(text)) {
+      dialogue++;
+    }
+  }
+
   if (transition) {
     transitionScreen();
   }
-  
+
   if (gamePause) {
     fill(0);
     stroke(255);
@@ -426,6 +438,7 @@ void draw() {
     stroke(0);
     fill(255);
     textSize(70);
+    textAlign(CENTER,CENTER);
     text("MENU",width/2, height/2.20);
     textSize(40);
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
@@ -441,12 +454,12 @@ void draw() {
       text("restart",width/2, height/1.60);
     }
   }
- 
+
   if (keyPressed) {
     if (currmode.equals("Menu") && !restarted) {
       selectScreen = true;
     }
-    else if (currmode.equals("Versus") || currmode.equals("Boss")) {
+    else if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
       if (!gamePause && !transition) {
         if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
@@ -479,7 +492,7 @@ void draw() {
             chars.get(0).shoot();
           }
         }
-  
+
         // ===== Player 2 =====
         if (numPlayer.equals("2") && !chars.get(1).isTrapped && chars.get(1).isAlive) {
           if (p2Keys[LEFT]) {
@@ -506,7 +519,7 @@ void draw() {
         }
       }
     }
-    if ((currmode.equals("Boss")) && numPlayer.equals("2")) {
+    if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("2")) {
       if (!p1Char.isAlive && p1Char.revivable && p2Char.isAlive) {
         if (p2Keys[UP] && !spamKeys[UP]) {
           if (p2Char.xPos + p2Char.hitboxWidth > p1Char.xPos && p2Char.xPos < p1Char.xPos + p1Char.hitboxWidth &&
@@ -538,10 +551,10 @@ void draw() {
         }
       }
     }
-        
+
   }
-  
-  if (currmode.equals("Boss") && numPlayer.equals("1") && !gamePause && !gameEnd &&
+
+  if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("1") && !gamePause && !gameEnd &&
   chars.get(0).isAlive && !chars.get(0).isTrapped) {
     if (mouseAim) {
       chars.get(0).mouseAim(mousePos);
@@ -594,7 +607,7 @@ void keyPressed() {
       selectSound.jump(0.5);
       selectSound.play();
       transitionScreen();
-      
+
       if (s.selectedMode.equals("Boss") && storyMode) {
         story = new Story();
         storyPhase = true;
@@ -603,12 +616,12 @@ void keyPressed() {
       } else {
         storyPhase = false;
         currmode = s.selectedMode;
-      } 
+      }
       selectScreen = false;
       modeInitialized = false;
     }
   }
-  
+
   if (storyPhase && story != null && !story.storyOver) {
     if (keyCode == ENTER || keyCode == RETURN) {
       if (!story.lineOver) {
@@ -620,10 +633,10 @@ void keyPressed() {
       }
     }
   }
-    
+
   if (key < MAX_KEY) p1Keys[key] = true;
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = true;
-  
+
   if (!gameEnd) {
     if (keyCode < MAX_KEYCODE && !spamKeys[keyCode]) {
       spamKeys[keyCode] = true;
@@ -642,7 +655,7 @@ void keyPressed() {
       }
     }
   }
-  
+
   if (currmode.equals("Victory") || currmode.equals("Loss")) {
     if (keyCode == ENTER || keyCode == RETURN) {
       loadState();
@@ -656,8 +669,8 @@ void keyReleased() {
   if (key < MAX_KEY) p1Keys[key] = false;
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
   if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
-  
-  if (currmode.equals("Versus") || currmode.equals("Boss") && chars.size() != 0) {
+
+  if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
       if (key == ' ' && !transition) {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
@@ -673,12 +686,12 @@ void keyReleased() {
       // turn walking animation off
       if (key == 'd' || key == 'a') {
         chars.get(0).isWalking = false;
-      } 
-      
+      }
+
       if (key == 's') {
         chars.get(0).unCrouch();
       }
-  
+
       // ==== Player 2 ====
       if (numPlayer.equals("2")) {
         if (!chars.get(1).isTrapped && !chars.get(1).ifFalling && chars.get(1).isAlive && keyCode == UP) {
@@ -687,11 +700,11 @@ void keyReleased() {
         // turn walking animation off
         if (keyCode == RIGHT || keyCode == LEFT) {
           chars.get(1).isWalking = false;
-        } 
-        
+        }
+
         if (keyCode == DOWN) {
           chars.get(1).unCrouch();
-        } 
+        }
       }
     }
   }
@@ -755,7 +768,7 @@ void displayScreen() {
     s.display();
   } else if (currmode.equals("CharacterSelect")) {
     s.display();
-  } 
+  }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
     if (s.selectedMap.equals("Map2")) {
@@ -773,89 +786,92 @@ void displayScreen() {
       }
       modeInitialized = true;
       versusTick = 0;
-      
+
       if (s.selectedMap.equals("Map2")) {
-        platforms.add(new Platforms(0, height - 20, 383));             
-        platforms.add(new Platforms(452, height - 20, 383));            
-        platforms.add(new Platforms(897, height - 20, 383));      
-        
+        platforms.add(new Platforms(0, height - 20, 383));
+        platforms.add(new Platforms(452, height - 20, 383));
+        platforms.add(new Platforms(897, height - 20, 383));
+
         platforms.add(new Platforms(100, height - 120, 200));
         platforms.add(new Platforms(980, height - 120, 200));
-        
+
         platforms.add(new Platforms(230, height - 230, 180));
         platforms.add(new Platforms(870, height - 230, 180));
-        
-        platforms.add(new Platforms(540, height - 200, 200)); 
-        
+
+        platforms.add(new Platforms(540, height - 200, 200));
+
         platforms.add(new Platforms(100, height - 390, 180));
         platforms.add(new Platforms(1000, height - 390, 180));
-        
+
         platforms.add(new Platforms(230, height - 480, 140));
         platforms.add(new Platforms(900, height - 480, 140));
-        
+
         platforms.add(new Platforms(540, height - 560, 200));
-      
+
       } else if (s.selectedMap.equals("Map3")) {
         platforms.add(new Platforms(80, height - 20, 80)); // P1 spawn
         platforms.add(new Platforms(1130, height - 20, 80)); // P2 spawn
-        
-        platforms.add(new Platforms(240, height - 100, 80));  
-        platforms.add(new Platforms(960, height - 100, 80)); 
-        
+
+        platforms.add(new Platforms(240, height - 100, 80));
+        platforms.add(new Platforms(960, height - 100, 80));
+
         platforms.add(new Platforms(480, height - 90, 100));
         platforms.add(new Platforms(780, height - 85, 80));
-        
+
         platforms.add(new Platforms(300, height - 200, 90));
         platforms.add(new Platforms(640, height - 220, 120));
         platforms.add(new Platforms(960, height - 200, 90));
-        
+
         platforms.add(new Platforms(190, height - 250, 50));
         platforms.add(new Platforms(120, height - 330, 80));
         platforms.add(new Platforms(420, height - 320, 100));
         platforms.add(new Platforms(750, height - 310, 100));
         platforms.add(new Platforms(1080, height - 320, 80));
-        
+
         platforms.add(new Platforms(250, height - 430, 100));
-        platforms.add(new Platforms(580, height - 450, 60));  
+        platforms.add(new Platforms(580, height - 450, 60));
         platforms.add(new Platforms(920, height - 430, 100));
-        
+
         platforms.add(new Platforms(60, height - 550, 110));
         platforms.add(new Platforms(490, height - 570, 130));
         platforms.add(new Platforms(930, height - 550, 110));
-   
+
       } else {
         platforms.add(new Platforms(0, height - 20, width)); // floor
-        
-        platforms.add(new Platforms(0, height - 125, 200)); 
+
+        platforms.add(new Platforms(0, height - 125, 200));
         platforms.add(new Platforms(350, height - 125, 200));
         platforms.add(new Platforms(700, height - 125, 200));
         platforms.add(new Platforms(1050, height - 125, width-1050));
-        
+
         platforms.add(new Platforms(250, height - 250, 50));
         platforms.add(new Platforms(600, height - 250, 50));
         platforms.add(new Platforms(950, height - 250, 50));
-        
-        platforms.add(new Platforms(0, height - 375, 200)); 
+
+        platforms.add(new Platforms(0, height - 375, 200));
         platforms.add(new Platforms(350, height - 375, 200));
         platforms.add(new Platforms(700, height - 375, 200));
         platforms.add(new Platforms(1050, height - 375, width-1050));
-        
+
         platforms.add(new Platforms(250, height - 525, 750));
       }
-      
+
     }
-    
+
     if (versusTick % 1000 == 0 && versusTick != 0) {
       Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable(consumableTypes.get((int)(random(0,consumableTypes.size()))), 
+      consumables.add(new Consumable(consumableTypes.get((int)(random(0,consumableTypes.size()))),
                         random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
     }
-    
+
     if (gameEnd) {
       currmode = "Victory";
     }
-    
+
     versusTick++;
+  }
+  else if (currmode.equals("preBoss")){
+    loadPreBoss();
   }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
@@ -870,29 +886,29 @@ void displayScreen() {
         startBGM.pause();
       }
       modeInitialized = true;
-      
+
       if (storyPhase) {
         platforms.add(new Platforms(0, height - 20, width)); // floor
       }
       if (!storyMode || (storyMode && story.storyPhaseNum >= 5)) {
         boss = new Boss(640, height - 522);
-        
+
         platforms.add(new Platforms(0, height - 20, width)); // floor
-        
-        platforms.add(new Platforms(0, height - 175, 284)); 
+
+        platforms.add(new Platforms(0, height - 175, 284));
         platforms.add(new Platforms(0, height - 450, 284));
-        
-        platforms.add(new Platforms(498, height - 175, 284)); 
-        platforms.add(new Platforms(498, height - 450, 284)); 
-        
-        platforms.add(new Platforms(996, height - 175, 284)); 
+
+        platforms.add(new Platforms(498, height - 175, 284));
+        platforms.add(new Platforms(498, height - 450, 284));
+
+        platforms.add(new Platforms(996, height - 175, 284));
         platforms.add(new Platforms(996, height - 450, 284));
-        
-        platforms.add(new Platforms(304, height - 312, 174)); 
-        platforms.add(new Platforms(802, height - 312, 174)); 
+
+        platforms.add(new Platforms(304, height - 312, 174));
+        platforms.add(new Platforms(802, height - 312, 174));
       }
-    } 
-    
+    }
+
     if (storyMode && story != null) {
       if (!story.storyOver) {
         story.display();
@@ -900,7 +916,7 @@ void displayScreen() {
         if (story.storyOver) {
           storyPhase = false;
           modeInitialized = false;
-        } 
+        }
       } else {
         storyPhase = false;
         modeInitialized = false;
@@ -915,7 +931,7 @@ void displayScreen() {
         Platforms p = platforms.get((int)(random(0,platforms.size())));
         consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
       }
-      
+
       int deathCount = 0;
       for (Character c : chars) {
         if (numPlayer.equals("2")) {
@@ -925,7 +941,7 @@ void displayScreen() {
           }
         }
         if (!c.isAlive && !c.revivable) {
-          deathCount+=1; 
+          deathCount+=1;
         }
         if (!c.isAlive) {
           deathAnimation(c);
@@ -937,7 +953,7 @@ void displayScreen() {
       } else {
         deathCount = 0;
       }
-      
+
       if (boss.lives <= 0) {
         gameEnd = true;
         currmode = "Victory";
@@ -953,7 +969,7 @@ void displayScreen() {
     if (numPlayer.equals("2")) {
       image(loadImage("p2.png"), width-90, 30, 60, 44.4);
     }
-    
+
     for (Platforms p : platforms) {
       p.display();
     }
@@ -966,18 +982,18 @@ void displayScreen() {
       boss.update();
       boss.display();
     }
-    
+
     fill(0);
     stroke(255);
     strokeWeight(5);
     rect(width/3.25, height/3.25, 500, 300);
     strokeWeight(1);
     stroke(0);
-    
+
     fill(255);
     textSize(80);
     text("You Lose :(",width/2, height/2);
-    
+
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
@@ -1031,12 +1047,12 @@ void displayScreen() {
       rect(width/3.25, height/3.25, 500, 300);
       strokeWeight(1);
       stroke(0);
-      
+
       fill(255);
       textSize(80);
       text("You Win :D",width/2, height/2);
     }
-    
+
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
   }
@@ -1046,27 +1062,31 @@ void restartGame() {
   projectiles.clear();
   platforms.clear();
   consumables.clear();
-  
+
   if (currmode.equals("Boss")) {
     boss = null;
   }
-  
+
   for (Character c : chars) {
     c.reset(true);
   }
-  
+
   story = new Story();
   storyTriggered = false;
   storyPhase = true;
   story.storyPhaseNum = 0;
   story.phaseTriggered = false;
-  
+
   modeInitialized = false;
   gameEnd = false;
   gamePause = false;
   deathFrame = 0;
   deathFinish = false;
+  dialogue = -1;
+  dialogueTick = 0;
+  stage = 1;
   bossBGM.jump(0);
+  if (!currmode.equals("Boss")) bossBGM.pause();
 }
 
 void deathAnimation(Character c) {
@@ -1120,4 +1140,65 @@ void transitionScreen() {
     transition = false;
     fadeOut = false;
   }
+}
+
+void loadPreBoss() {
+  if (stage == 1) {
+    background(bg1);
+    if (dialogue < 0) dialogue = 1;
+  } else if (stage == 2) {
+    background(bg1);
+  } else {
+    modeInitialized = false;
+    currmode = "Boss";
+  }
+
+  for (Enemies e : enemies) {
+    e.display();
+  }
+
+  if (currmode.equals("preBoss")) {
+    if (!modeInitialized) {
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
+      modeInitialized = true;
+
+      platforms.add(new Platforms(0, height - 20, width/4)); // floor
+      if (stage == 1) {
+      } else {
+      }
+    }
+
+    /*if (enemies.size() == 0 && modeInitialized) {
+      modeInitialized = false;
+      stage++;
+    }*/
+  }
+}
+
+boolean printDialogue(String text) {
+  image(p1Char.getPreview(),20, height-(7*height/12), p1Char.hitboxWidth*5, p1Char.hitboxLength*5);
+  if (keyPressed) {
+    if (keyCode == SHIFT) {
+      if (dialogueTick < text.length()*15) {
+        dialogueTick = text.length()*15;
+      } else if (dialogueTick > text.length()*15+15) {
+        dialogueTick = text.length()*20;
+      }
+    }
+  }
+  strokeWeight(4);
+  fill(255);
+  rect(-5, height - (height/4), width+5, height/4);
+  strokeWeight(1);
+  fill(0);
+  textSize(20);
+  textAlign(LEFT,CENTER);
+  if (dialogueTick/15 < text.length()) {
+    text(text.substring(0, dialogueTick/15), 20, height - (height/8));
+  } else text(text, 20, height - (height/8));
+  textAlign(BASELINE,BASELINE);
+  if (!gamePause) dialogueTick++;
+  return (dialogueTick/20) == text.length();
 }

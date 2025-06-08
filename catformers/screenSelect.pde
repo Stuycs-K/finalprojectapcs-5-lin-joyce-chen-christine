@@ -12,7 +12,7 @@ public class screenSelect {
   
   public screenSelect() {
     modes.add(new Button(width/2-400,height/2-150,300,300, "Versus", "versus.png"));
-    modes.add(new Button(width/2+100,height/2-150,300,300, "Boss", "boss.png"));
+    modes.add(new Button(width/2+100,height/2-150,300,300, "preBoss", "boss.png"));
     
     numPlayers.add(new Button(width/2-400,height/2-150,300,300, "1", "onep.png"));
     numPlayers.add(new Button(width/2+100,height/2-150,300,300, "2", "twop.png"));
@@ -72,7 +72,7 @@ public class screenSelect {
           currmode = "CharacterSelect";
         }
       }
-    } else if (selectedMode.equals("Boss")) {
+    } else if (selectedMode.equals("preBoss")) {
       for (int x = 0; x < numPlayers.size(); x++) {
         Button b = numPlayers.get(x);
         if (mouseX >= b.xPos && mouseX <= b.xPos + b.buttonWidth &&
