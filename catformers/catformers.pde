@@ -587,6 +587,14 @@ void keyPressed() {
       selectSound.jump(0.5);
       selectSound.play();
       transitionScreen();
+      
+      if (s.selectedMode.equals("Boss") && s.storyToggle.toggleState) {
+        currmode = "Boss";
+        storyMode = true;
+        story = new Story();
+      } else {
+        currmode = s.selectedMode;
+      } 
       modeInitialized = false;
     }
   }
@@ -715,7 +723,7 @@ void displayScreen() {
     s.display();
   } else if (currmode.equals("CharacterSelect")) {
     s.display();
-  }
+  } 
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
     if (s.selectedMap.equals("Map2")) {
@@ -818,64 +826,73 @@ void displayScreen() {
     versusTick++;
   }
   else if (currmode.equals("Boss")) {
-    prevMode = "Boss";
-    image(loadImage("p1.png"), 20, 30, 60, 44.4);
-    if (numPlayer.equals("2")) {
-      image(loadImage("p2.png"), width-90, 30, 60, 44.4);
-    }
-    
-    if (!modeInitialized) {
-      if (startBGM.isPlaying()) {
-        startBGM.pause();
+     prevMode = "Boss";
+    if (storyMode) {
+      story.typeDialogue();
+      story.display();
+      if (story.storyOver) {
+        storyMode = false;
+        modeInitialized = false;
       }
-      modeInitialized = true;
-      boss = new Boss(640, height - 522);
-      
-      platforms.add(new Platforms(0, height - 20, width)); // floor
-      
-      platforms.add(new Platforms(0, height - 175, 284)); 
-      platforms.add(new Platforms(0, height - 450, 284));
-      
-      platforms.add(new Platforms(498, height - 175, 284)); 
-      platforms.add(new Platforms(498, height - 450, 284)); 
-      
-      platforms.add(new Platforms(996, height - 175, 284)); 
-      platforms.add(new Platforms(996, height - 450, 284));
-      
-      platforms.add(new Platforms(304, height - 312, 174)); 
-      platforms.add(new Platforms(802, height - 312, 174)); 
-    }
-    
-    if (boss.timer % 800 == 0 && boss.timer != 0) {
-      Platforms p = platforms.get((int)(random(0,platforms.size())));
-      consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
-    }
-    
-    int deathCount = 0;
-    for (Character c : chars) {
+    } else {
+      image(loadImage("p1.png"), 20, 30, 60, 44.4);
       if (numPlayer.equals("2")) {
-        if (!p1Char.isAlive && !p2Char.isAlive) {
-          p1Char.revivable = false;
-          p2Char.revivable = false;
+        image(loadImage("p2.png"), width-90, 30, 60, 44.4);
+      }
+      
+      if (!modeInitialized) {
+        if (startBGM.isPlaying()) {
+          startBGM.pause();
+        }
+        modeInitialized = true;
+        boss = new Boss(640, height - 522);
+        
+        platforms.add(new Platforms(0, height - 20, width)); // floor
+        
+        platforms.add(new Platforms(0, height - 175, 284)); 
+        platforms.add(new Platforms(0, height - 450, 284));
+        
+        platforms.add(new Platforms(498, height - 175, 284)); 
+        platforms.add(new Platforms(498, height - 450, 284)); 
+        
+        platforms.add(new Platforms(996, height - 175, 284)); 
+        platforms.add(new Platforms(996, height - 450, 284));
+        
+        platforms.add(new Platforms(304, height - 312, 174)); 
+        platforms.add(new Platforms(802, height - 312, 174)); 
+      }
+      
+      if (boss.timer % 800 == 0 && boss.timer != 0) {
+        Platforms p = platforms.get((int)(random(0,platforms.size())));
+        consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
+      }
+      
+      int deathCount = 0;
+      for (Character c : chars) {
+        if (numPlayer.equals("2")) {
+          if (!p1Char.isAlive && !p2Char.isAlive) {
+            p1Char.revivable = false;
+            p2Char.revivable = false;
+          }
+        }
+        if (!c.isAlive && !c.revivable) {
+          deathCount+=1; 
+        }
+        if (!c.isAlive) {
+          deathAnimation(c);
         }
       }
-      if (!c.isAlive && !c.revivable) {
-        deathCount+=1; 
+      if (deathCount == chars.size()) {
+        gameEnd = true;
+        currmode = "Loss";
+      } else {
+        deathCount = 0;
       }
-      if (!c.isAlive) {
-        deathAnimation(c);
+      
+      if (boss.lives <= 0) {
+        gameEnd = true;
+        currmode = "Victory";
       }
-    }
-    if (deathCount == chars.size()) {
-      gameEnd = true;
-      currmode = "Loss";
-    } else {
-      deathCount = 0;
-    }
-    
-    if (boss.lives <= 0) {
-      gameEnd = true;
-      currmode = "Victory";
     }
   }
   else if (currmode.equals("Loss")) {

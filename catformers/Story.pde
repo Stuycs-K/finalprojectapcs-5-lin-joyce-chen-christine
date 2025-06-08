@@ -1,16 +1,16 @@
 public class Story {
   // ==== Typewriter Effect ====
   String[] dialogue;
-  String displayedText;
+  String displayedText, currentSpeaker;
   int dialogueIndex, charIndex;
   boolean lineOver;
 
   // ==== Dialogue ====
   String[] introDialogue = {
-    "I'm so hungry!! The big bad dog stole our _ :(",
-    "Wait...can dogs even eat _??",
-    "Um...Look, it's the Dog Gang!",
-    "We'll beat them and get our food back!!"
+    "P1: I'm so hungry!! The big bad dog stole our _ :(",
+    "P2: Wait...can dogs even eat _??",
+    "P1: Um...Look, it's the Dog Gang!",
+    "P2: We'll beat them and get our food back!!"
   };
   
   String[] postFightDialogue = {
@@ -38,6 +38,7 @@ public class Story {
     charIndex = 0;
     lineOver = false;
     storyOver = false;
+    currentSpeaker = "P1";
   }
 
   //typewriter effect
@@ -60,9 +61,44 @@ public class Story {
         displayedText = "";
         charIndex = 0;
         lineOver = false;
+        
+        String line = dialogue[dialogueIndex];
+        if (line.startsWith("P1:") || line.startsWith("P2:")) {
+          currentSpeaker = line.substring(0, 2);
+          line = line.substring(3);
+        } else {
+          currentSpeaker = "P1";
+        }
+        dialogue[dialogueIndex] = line;
+        displayedText = "";
+        charIndex = 0;
+        lineOver = false;
       } else {
         storyOver = true;
       }
+    }
+  }
+  
+  void display() {
+    background(bg1);
+    platforms.add(new Platforms(0, height - 80, width)); 
+    typeDialogue();
+    fill(0, 200);
+    noStroke();
+    rect(0, height/2, width, height/2);
+    if (currentSpeaker.equals("P1")) {
+      image(p1Char.getPreview(), 20, height/2 - 160, 180, 180);
+    } else if (currentSpeaker.equals("P2") && p2Char != null) {
+      image(p2Char.getPreview(), width-200, height/2 -160, 180, 180);
+    }
+    fill(255);
+    textAlign(CENTER);
+    textSize(28);
+    text(story.displayedText, width/2, height/2 + 60);
+    if (story.lineOver && !story.storyOver) {
+      textSize(16);
+      fill(220);
+      text("Press any key to continue", width/2, height/2 - 40);
     }
   }
   
