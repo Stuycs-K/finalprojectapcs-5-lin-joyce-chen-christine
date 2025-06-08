@@ -4,6 +4,7 @@ import processing.sound.*;
 ArrayList<Character> chars;
 Character p1Char, p2Char;
 
+ArrayList<Enemies> enemies;
 ArrayList<Projectiles> projectiles;
 ArrayList<Platforms> platforms;
 ArrayList<Consumable> consumables;
@@ -14,7 +15,7 @@ String currmode, numPlayer, prevMode;
 boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
 boolean restarted, transition, fadeOut;
 float transitionTick;
-int spawnTick, versusTick;
+int spawnTick, versusTick, dialogue, dialogueTick, stage;
 screenSelect s;
 
 // things for graphics
@@ -139,14 +140,15 @@ void loadState() {
   numPlayer = "0";
   
   chars = new ArrayList<Character>();
+  enemies = new ArrayList<Enemies>();
   projectiles = new ArrayList<Projectiles>();
   platforms = new ArrayList<Platforms>();
   consumables = new ArrayList<Consumable>();
   s = new screenSelect();
   
   consumableTypes = new ArrayList<String>();
-  //consumableTypes.add("miniPotion");
-  //consumableTypes.add("bulletPotion");
+  consumableTypes.add("miniPotion");
+  consumableTypes.add("bulletPotion");
   consumableTypes.add("slowPotion");
   
   modeInitialized = false;
@@ -159,6 +161,8 @@ void loadState() {
   deathFinish = false;
   transition = false;
   spawnTick = 0;
+  dialogue = -1;
+  stage = 1;
   
   if (bossBGM.isPlaying()) bossBGM.pause();
 
@@ -267,7 +271,7 @@ void draw() {
   for (Character c : chars) {
     if (c.lives <= 0 && c.isAlive) {
       c.isAlive = false;
-      if (currmode.equals("Boss") && numPlayer.equals("2")) {
+      if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("2")) {
         c.revivable = true;
       }
       c.deathSlope = random(-5,5) * 10.0;
@@ -405,6 +409,14 @@ void draw() {
     } else spawnTick++;
   }    
   
+  if (dialogue > 0 && dialogue < 2) {
+    String text = "";
+    if (dialogue == 1) text = "wahhwafawgwagawgges"; 
+    if (printDialogue(text)) {
+      dialogue++;
+    }
+  }
+  
   if (transition) {
     transitionScreen();
   }
@@ -418,6 +430,7 @@ void draw() {
     stroke(0);
     fill(255);
     textSize(70);
+    textAlign(CENTER,CENTER);
     text("MENU",width/2, height/2.20);
     textSize(40);
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
@@ -438,7 +451,7 @@ void draw() {
     if (currmode.equals("Menu") && !restarted) {
       selectScreen = true;
     }
-    else if (currmode.equals("Versus") || currmode.equals("Boss")) {
+    else if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
       if (!gamePause && !transition) {
         if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
@@ -498,7 +511,7 @@ void draw() {
         }
       }
     }
-    if ((currmode.equals("Boss")) && numPlayer.equals("2")) {
+    if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("2")) {
       if (!p1Char.isAlive && p1Char.revivable && p2Char.isAlive) {
         if (p2Keys[UP] && !spamKeys[UP]) {
           if (p2Char.xPos + p2Char.hitboxWidth > p1Char.xPos && p2Char.xPos < p1Char.xPos + p1Char.hitboxWidth &&
@@ -533,7 +546,7 @@ void draw() {
         
   }
   
-  if (currmode.equals("Boss") && numPlayer.equals("1") && !gamePause && !gameEnd &&
+  if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("1") && !gamePause && !gameEnd &&
   chars.get(0).isAlive && !chars.get(0).isTrapped) {
     if (mouseAim) {
       chars.get(0).mouseAim(mousePos);
@@ -626,7 +639,7 @@ void keyReleased() {
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
   if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
   
-  if (currmode.equals("Versus") || currmode.equals("Boss")) {
+  if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
       if (key == ' ' && !transition) {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
@@ -816,6 +829,9 @@ void displayScreen() {
     
     versusTick++;
   }
+  else if (currmode.equals("preBoss")){
+    loadPreBoss();
+  }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
@@ -989,7 +1005,11 @@ void restartGame() {
   gamePause = false;
   deathFrame = 0;
   deathFinish = false;
+  dialogue = -1;
+  dialogueTick = 0;
+  stage = 1;
   bossBGM.jump(0);
+  if (!currmode.equals("Boss")) bossBGM.pause();
 }
 
 void deathAnimation(Character c) {
@@ -1043,4 +1063,65 @@ void transitionScreen() {
     transition = false;
     fadeOut = false;
   }
+}
+
+void loadPreBoss() {
+  if (stage == 1) {
+    background(bg1);
+    if (dialogue < 0) dialogue = 1;
+  } else if (stage == 2) {
+    background(bg1);
+  } else {
+    modeInitialized = false; 
+    currmode = "Boss";
+  }
+  
+  for (Enemies e : enemies) {
+    e.display();
+  }
+  
+  if (currmode.equals("preBoss")) {
+    if (!modeInitialized) {
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
+      modeInitialized = true;
+      
+      platforms.add(new Platforms(0, height - 20, width/4)); // floor
+      if (stage == 1) {
+      } else {
+      }
+    }
+    
+    /*if (enemies.size() == 0 && modeInitialized) {
+      modeInitialized = false;
+      stage++;
+    }*/
+  }
+}
+
+boolean printDialogue(String text) {
+  image(p1Char.getPreview(),20, height-(7*height/12), p1Char.hitboxWidth*5, p1Char.hitboxLength*5);
+  if (keyPressed) {
+    if (keyCode == SHIFT) {
+      if (dialogueTick < text.length()*15) {
+        dialogueTick = text.length()*15;
+      } else if (dialogueTick > text.length()*15+15) {
+        dialogueTick = text.length()*20;
+      }
+    }
+  }
+  strokeWeight(4);
+  fill(255);
+  rect(-5, height - (height/4), width+5, height/4);
+  strokeWeight(1);
+  fill(0);
+  textSize(20);
+  textAlign(LEFT,CENTER);
+  if (dialogueTick/15 < text.length()) {
+    text(text.substring(0, dialogueTick/15), 20, height - (height/8));
+  } else text(text, 20, height - (height/8));
+  textAlign(BASELINE,BASELINE);
+  if (!gamePause) dialogueTick++;
+  return (dialogueTick/20) == text.length();
 }
