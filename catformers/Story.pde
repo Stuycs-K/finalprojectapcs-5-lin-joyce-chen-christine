@@ -86,9 +86,11 @@ public class Story {
       setupNextPhase();
       phaseTriggered = true;
       
-      p1Char.xPos = 0;
+      p1Char.startX = 0;
+      p1Char.xPos = p1Char.startX;
       if (numPlayer.equals("2")) {
-        p2Char.xPos = 0;
+        p2Char.startX = 0;
+        p2Char.xPos = p2Char.startX;
         p2Char.facingRight = true;
         p2Char.aimAngle = p1Char.aimAngle;
       }
@@ -96,13 +98,25 @@ public class Story {
   }
   
   void setupNextPhase() {
-    if (storyPhaseNum == 1) {
-      platforms.add(new Platforms(0, height - 20, width)); // floor
-      //platforms.add(new Platform(..)));
+    if (storyPhaseNum == 1) {   
+      platforms.add(new Platforms(0, height - 20, 50));
+    
+      platforms.add(new Platforms(100, 550, 100));
+      platforms.add(new Platforms(250, 500, 100));
+      platforms.add(new Platforms(400, 440, 100));
+      
+      platforms.add(new Platforms(600, 390, 80));
+      platforms.add(new Platforms(720, 350, 80));
+    
+      platforms.add(new Platforms(850, 300, 100));
+      platforms.add(new Platforms(1000, 250, 150));
+      
+      platforms.add(new Platforms(1200, 200, 100));
+
     } else if (storyPhaseNum == 2) {
       story.setDialogue(scene2Dialogue);
-      platforms.add(new Platforms(200, 500, 150));
-      //
+      platforms.clear();
+      platforms.add(new Platforms(0, height-20, width));
     } else if (storyPhaseNum == 3) {
     }
     phaseTriggered = false;
