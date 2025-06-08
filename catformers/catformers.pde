@@ -1096,18 +1096,28 @@ void loadPreBoss() {
 }
 
 boolean printDialogue(String text) {
+  if (keyPressed) {
+    if (key == ' ') {
+      if (dialogueTick < text.length()*15) {
+        dialogueTick = text.length()*15;
+      } else if (dialogueTick > text.length()*15+15) {
+        dialogueTick = text.length()*20;
+      }
+    }
+  }
   stroke(0);
   strokeWeight(4);
   fill(255);
-  print("runs");
   rect(0, height - (height/4), width, height/4);
   stroke(255);
   strokeWeight(0);
   fill(0);
   textSize(20);
   textAlign(LEFT,CENTER);
-  text(text.substring(0, dialogueTick/15), 20, height - (height/8));
+  if (dialogueTick/15 < text.length()) {
+    text(text.substring(0, dialogueTick/15), 20, height - (height/8));
+  } else text(text, 20, height - (height/8));
   textAlign(BASELINE,BASELINE);
   dialogueTick++;
-  return (dialogueTick/15)+1 == text.length();
+  return (dialogueTick/20) == text.length();
 }
