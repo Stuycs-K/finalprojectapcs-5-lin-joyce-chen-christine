@@ -4,18 +4,42 @@ public class Story {
   String displayedText;
   int dialogueIndex, charIndex;
   boolean lineOver;
+
+  // ==== Dialogue ====
+  String[] introDialogue = {
+    "I'm so hungry!! The big bad dog stole our _ :(",
+    "Wait...can dogs even eat _??",
+    "Um...Look, it's the Dog Gang!",
+    "We'll beat them and get our food back!!"
+  };
   
+  String[] postFightDialogue = {
+    ".."
+  };
+  
+  String[] winDialogue = {
+    "We did it!"
+  };
+  
+  String[] loseDialogue = {
+    ".."
+  };
+
   boolean storyOver;
+
+  Story() {
+    setDialogue(introDialogue);
+  }
   
-  Story(String[] dialogue) {
-    this.dialogue = dialogue;
+  void setDialogue(String[] nextDialogue) {
+    dialogue = nextDialogue;
     displayedText = "";
     dialogueIndex = 0;
     charIndex = 0;
     lineOver = false;
     storyOver = false;
   }
-  
+
   //typewriter effect
   void typeDialogue() {
     if (!lineOver && dialogueIndex < dialogue.length) {
@@ -28,7 +52,7 @@ public class Story {
       }
     }
   }
-  
+
   void advanceDialogue() {
     if (lineOver) {
       dialogueIndex++;
@@ -43,4 +67,3 @@ public class Story {
   }
   
 }
-    
