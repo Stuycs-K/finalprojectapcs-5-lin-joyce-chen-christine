@@ -11,7 +11,8 @@ ArrayList<String> consumableTypes;
 
 Boss boss;
 String currmode, numPlayer, prevMode;
-boolean modeInitialized, selectScreen, storyMode, storyPhase, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
+boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, gamePause, deathFinish, mouseAim;
+boolean storyMode, storyPhase, storyTriggered;
 boolean restarted, transition, fadeOut;
 float transitionTick;
 int spawnTick, versusTick;
@@ -591,12 +592,25 @@ void keyPressed() {
       if (s.selectedMode.equals("Boss") && storyMode) {
         story = new Story();
         storyPhase = true;
+        storyTriggered = false;
         currmode = "Boss";
       } else {
         storyPhase = false;
         currmode = s.selectedMode;
       } 
       modeInitialized = false;
+    }
+  }
+  
+  if (storyPhase && story != null && !story.storyOver) {
+    if (keyCode == ENTER || keyCode == RETURN) {
+      if (!story.lineOver) {
+        story.charIndex = story.dialogue[story.dialogueIndex].length();
+        story.displayedText = story.dialogue[story.dialogueIndex];
+        story.lineOver = true;
+      } else {
+        story.advanceDialogue();
+      }
     }
   }
     
@@ -693,6 +707,16 @@ void mouseClicked() {
       restartGame();
     }
   }
+  if (storyPhase && story != null && !story.storyOver) {
+    if (!story.lineOver) {
+      story.charIndex = story.dialogue[story.dialogueIndex].length();
+      story.displayedText = story.dialogue[story.dialogueIndex];
+      story.lineOver = true;
+    } else {
+      story.advanceDialogue();
+    }
+  }
+
 }
 
 void displayScreen() {
