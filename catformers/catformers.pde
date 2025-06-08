@@ -875,11 +875,13 @@ void displayScreen() {
   }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
-    if (storyMode && !storyTriggered && p1Char.xPos > width - 100) {
-      story = new Story();
-      story.setDialogue(story.scene2Dialogue);
-      storyTriggered = true;
-      storyPhase = true;
+    if (storyMode && !storyTriggered) {
+      if (p1Char.xPos > width - 100 || (numPlayer.equals("2") && p2Char.xPos > width - 100)) {
+        storyTriggered = true;
+        storyPhase = true;
+        story.phaseTriggered = false;
+        story.updateStoryPhase();
+      }
     }
     if (!modeInitialized) {
       if (startBGM.isPlaying()) {
@@ -887,9 +889,6 @@ void displayScreen() {
       }
       modeInitialized = true;
 
-      if (storyPhase) {
-        platforms.add(new Platforms(0, height - 20, width)); // floor
-      }
       if (!storyMode || (storyMode && story.storyPhaseNum >= 5)) {
         boss = new Boss(640, height - 522);
 

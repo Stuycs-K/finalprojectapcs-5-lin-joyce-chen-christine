@@ -81,10 +81,10 @@ public class Story {
   }
   
   void updateStoryPhase() {
-    if (!phaseTriggered && p1Char.xPos > width - 100) {
-      phaseTriggered = true;
+    if (!phaseTriggered) {
       storyPhaseNum++;
       setupNextPhase();
+      phaseTriggered = true;
       
       p1Char.xPos = 0;
       if (numPlayer.equals("2")) {
@@ -95,9 +95,11 @@ public class Story {
   
   void setupNextPhase() {
     if (storyPhaseNum == 1) {
-       platforms.add(new Platforms(200, 500, 150));
+      platforms.add(new Platforms(0, height - 20, width)); // floor
       //platforms.add(new Platform(..)));
     } else if (storyPhaseNum == 2) {
+      story.setDialogue(scene2Dialogue);
+      platforms.add(new Platforms(200, 500, 150));
       //
     } else if (storyPhaseNum == 3) {
     }
