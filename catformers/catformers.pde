@@ -1096,6 +1096,7 @@ void loadPreBoss() {
 }
 
 boolean printDialogue(String text) {
+  image(p1Char.getPreview(),20, height-(7*height/12), p1Char.hitboxWidth*5, p1Char.hitboxLength*5);
   if (keyPressed) {
     if (key == ' ') {
       if (dialogueTick < text.length()*15) {
