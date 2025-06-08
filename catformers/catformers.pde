@@ -271,7 +271,7 @@ void draw() {
   for (Character c : chars) {
     if (c.lives <= 0 && c.isAlive) {
       c.isAlive = false;
-      if (currmode.equals("Boss") && numPlayer.equals("2")) {
+      if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("2")) {
         c.revivable = true;
       }
       c.deathSlope = random(-5,5) * 10.0;
@@ -409,16 +409,16 @@ void draw() {
     } else spawnTick++;
   }    
   
-  if (transition) {
-    transitionScreen();
-  }
-  
   if (dialogue > 0 && dialogue < 2) {
     String text = "";
     if (dialogue == 1) text = "wahhwafawgwagawgges"; 
     if (printDialogue(text)) {
       dialogue++;
     }
+  }
+  
+  if (transition) {
+    transitionScreen();
   }
   
   if (gamePause) {
@@ -430,6 +430,7 @@ void draw() {
     stroke(0);
     fill(255);
     textSize(70);
+    textAlign(CENTER,CENTER);
     text("MENU",width/2, height/2.20);
     textSize(40);
     if (mouseX >= width/2 - 32 && mouseX <= width/2 + 32 &&
@@ -450,7 +451,7 @@ void draw() {
     if (currmode.equals("Menu") && !restarted) {
       selectScreen = true;
     }
-    else if (currmode.equals("Versus") || currmode.equals("Boss")) {
+    else if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
       if (!gamePause && !transition) {
         if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
@@ -510,7 +511,7 @@ void draw() {
         }
       }
     }
-    if ((currmode.equals("Boss")) && numPlayer.equals("2")) {
+    if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("2")) {
       if (!p1Char.isAlive && p1Char.revivable && p2Char.isAlive) {
         if (p2Keys[UP] && !spamKeys[UP]) {
           if (p2Char.xPos + p2Char.hitboxWidth > p1Char.xPos && p2Char.xPos < p1Char.xPos + p1Char.hitboxWidth &&
@@ -545,7 +546,7 @@ void draw() {
         
   }
   
-  if (currmode.equals("Boss") && numPlayer.equals("1") && !gamePause && !gameEnd &&
+  if ((currmode.equals("Boss") || currmode.equals("preBoss")) && numPlayer.equals("1") && !gamePause && !gameEnd &&
   chars.get(0).isAlive && !chars.get(0).isTrapped) {
     if (mouseAim) {
       chars.get(0).mouseAim(mousePos);
@@ -638,7 +639,7 @@ void keyReleased() {
   if (keyCode < MAX_KEYCODE) p2Keys[keyCode] = false;
   if (keyCode < MAX_KEYCODE) spamKeys[keyCode] = false;
   
-  if (currmode.equals("Versus") || currmode.equals("Boss")) {
+  if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
       if (key == ' ' && !transition) {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
@@ -1008,6 +1009,7 @@ void restartGame() {
   dialogueTick = 0;
   stage = 1;
   bossBGM.jump(0);
+  if (!currmode.equals("Boss")) bossBGM.pause();
 }
 
 void deathAnimation(Character c) {
@@ -1080,6 +1082,9 @@ void loadPreBoss() {
   
   if (currmode.equals("preBoss")) {
     if (!modeInitialized) {
+      if (startBGM.isPlaying()) {
+        startBGM.pause();
+      }
       modeInitialized = true;
       
       platforms.add(new Platforms(0, height - 20, width/4)); // floor
@@ -1098,7 +1103,7 @@ void loadPreBoss() {
 boolean printDialogue(String text) {
   image(p1Char.getPreview(),20, height-(7*height/12), p1Char.hitboxWidth*5, p1Char.hitboxLength*5);
   if (keyPressed) {
-    if (key == ' ') {
+    if (keyCode == SHIFT) {
       if (dialogueTick < text.length()*15) {
         dialogueTick = text.length()*15;
       } else if (dialogueTick > text.length()*15+15) {
@@ -1106,12 +1111,10 @@ boolean printDialogue(String text) {
       }
     }
   }
-  stroke(0);
   strokeWeight(4);
   fill(255);
-  rect(0, height - (height/4), width, height/4);
-  stroke(255);
-  strokeWeight(0);
+  rect(-5, height - (height/4), width+5, height/4);
+  strokeWeight(1);
   fill(0);
   textSize(20);
   textAlign(LEFT,CENTER);
@@ -1119,6 +1122,6 @@ boolean printDialogue(String text) {
     text(text.substring(0, dialogueTick/15), 20, height - (height/8));
   } else text(text, 20, height - (height/8));
   textAlign(BASELINE,BASELINE);
-  dialogueTick++;
+  if (!gamePause) dialogueTick++;
   return (dialogueTick/20) == text.length();
 }
