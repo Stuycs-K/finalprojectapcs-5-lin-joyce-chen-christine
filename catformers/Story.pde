@@ -89,6 +89,8 @@ public class Story {
       p1Char.xPos = 0;
       if (numPlayer.equals("2")) {
         p2Char.xPos = 0;
+        p2Char.facingRight = true;
+        p2Char.aimAngle = p1Char.aimAngle;
       }
     }
   }

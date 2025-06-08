@@ -119,13 +119,6 @@ public class Character {
     }
     float mouthY = yPos+ hitboxLength * 0.47;
     
-    if (projectiles == null) {
-  println("!!! projectiles list is NULL !!!");
-} else {
-  println("projectiles count = " + projectiles.size());
-}
-
-    
     projectiles.add(new Projectiles("normal", this, radians(aimAngle), bulletspeed, mouthX, mouthY));
     bulletCD = maxBulletCD;
     }
