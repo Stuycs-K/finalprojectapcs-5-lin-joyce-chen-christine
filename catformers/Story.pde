@@ -81,15 +81,14 @@ public class Story {
   
   void display() {
     background(bg1);
-    platforms.add(new Platforms(0, height - 80, width)); 
     typeDialogue();
     fill(0, 200);
     noStroke();
-    rect(0, height/2, width, height/2);
+    rect(0, height/2 - 80, width, height/2);
     if (currentSpeaker.equals("P1")) {
-      image(p1Char.getPreview(), 20, height/2 - 160, 180, 180);
+      image(p1Char.getPreview(), 40, height/2 - 40, 500, 500);
     } else if (currentSpeaker.equals("P2") && p2Char != null) {
-      image(p2Char.getPreview(), width-200, height/2 -160, 180, 180);
+      image(p2Char.getPreview(), width-340, height/2 -40, 500, 500);
     }
     fill(255);
     textAlign(CENTER);
