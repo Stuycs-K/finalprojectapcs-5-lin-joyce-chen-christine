@@ -212,7 +212,7 @@ void draw() {
         }
       }
     }
-    if (!gameEnd && (!transition || fadeOut)) {
+    if (!gameEnd && !storyPhase && (!transition || fadeOut)) {
       c.display();
     }
   }
@@ -283,7 +283,7 @@ void draw() {
     
     if (!gameEnd) {
       
-      if (c.isAlive && (c.iFrameTimer > 0 && frameCount % 6 < 3)) {
+      if (!storyPhase && c.isAlive && (c.iFrameTimer > 0 && frameCount % 6 < 3)) {
         pushStyle();
         noFill();
         stroke(255);
@@ -598,6 +598,7 @@ void keyPressed() {
         storyPhase = false;
         currmode = s.selectedMode;
       } 
+      selectScreen = false;
       modeInitialized = false;
     }
   }
@@ -852,6 +853,12 @@ void displayScreen() {
   }
   else if (currmode.equals("Boss")) {
     prevMode = "Boss";
+    if (storyMode && !storyTriggered && p1Char.xPos > width - 50) {
+      story = new Story();
+      story.setDialogue(story.scene2Dialogue);
+      storyTriggered = true;
+      storyPhase = true;
+    }
     if (!modeInitialized) {
       if (startBGM.isPlaying()) {
         startBGM.pause();
@@ -859,7 +866,7 @@ void displayScreen() {
       modeInitialized = true;
       
       if (storyPhase) {
-        platforms.add(new Platforms(0, height - 80, width));
+        //platforms.add(new Platforms(0, height - 80, width));
       } else {
         boss = new Boss(640, height - 522);
         
@@ -878,14 +885,15 @@ void displayScreen() {
         platforms.add(new Platforms(802, height - 312, 174)); 
       }
     }
-    if (storyMode && story != null) {
-      story.typeDialogue();
+    
+    if (storyMode && story != null && !story.storyOver) {
       story.display();
       if (story.storyOver) {
         storyMode = false;
+        storyPhase = false;
         modeInitialized = false;
       }
-    } else {
+    } else if (!storyPhase) {
       image(loadImage("p1.png"), 20, 30, 60, 44.4);
       if (numPlayer.equals("2")) {
         image(loadImage("p2.png"), width-90, 30, 60, 44.4);

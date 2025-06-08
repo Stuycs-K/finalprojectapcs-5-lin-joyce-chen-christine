@@ -7,10 +7,14 @@ public class Story {
 
   // ==== Dialogue ====
   String[] introDialogue = {
-    "P1: I'm so hungry!! The big bad dog stole our _ :(",
-    "P2: Wait...can dogs even eat _??",
-    "P1: Um...Look, it's the Dog Gang!",
-    "P2: We'll beat them and get our food back!!"
+    "I'm so hungry!! The big bad dog stole our _ :(",
+    "Wait...can dogs even eat _??",
+    "Um...Look, it's the Dog Gang!",
+    "We'll beat them and get our food back!!"
+  };
+  
+  String[] scene2Dialogue = {
+    "..."
   };
   
   String[] postFightDialogue = {
@@ -61,26 +65,20 @@ public class Story {
         displayedText = "";
         charIndex = 0;
         lineOver = false;
-        
-        String line = dialogue[dialogueIndex];
-        if (line.startsWith("P1:") || line.startsWith("P2:")) {
-          currentSpeaker = line.substring(0, 2);
-          line = line.substring(3);
-        } else {
+        if (dialogueIndex % 2 == 0) {
           currentSpeaker = "P1";
+        } else {
+          currentSpeaker = "P2";
         }
-        dialogue[dialogueIndex] = line;
-        displayedText = "";
-        charIndex = 0;
-        lineOver = false;
       } else {
         storyOver = true;
       }
     }
   }
-  
+
   void display() {
     background(bg1);
+    text(story.displayedText, width/2, height/2 + 60);
     typeDialogue();
     fill(0, 200);
     noStroke();
