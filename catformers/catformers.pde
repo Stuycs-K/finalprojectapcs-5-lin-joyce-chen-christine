@@ -460,7 +460,7 @@ void draw() {
       selectScreen = true;
     }
     else if (currmode.equals("Versus") || currmode.equals("Boss") || currmode.equals("preBoss")) {
-      if (!gamePause && !transition) {
+      if (!storyPhase && !gamePause && !transition) {
         if (!chars.get(0).isTrapped && chars.get(0).isAlive) {
           // ===== Player 1 =====
           if (p1Keys['a']) {
