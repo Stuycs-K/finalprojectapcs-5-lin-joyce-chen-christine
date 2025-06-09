@@ -3,10 +3,9 @@ public class Enemies {
   float hitboxWidth, hitboxLength;
   float walkspeed;
   float moveX, moveY;
-  int lives, maxLives, moveTick;
+  int lives, maxLives, moveTick, shootTick;
   boolean facingRight, isAlive;
   PImage sprite;
-  ArrayList<Projectiles> projectiles;
   
   public Enemies (float xPos, float yPos, float hitboxWidth, float hitboxLength) {
     this.xPos = xPos;
@@ -20,7 +19,6 @@ public class Enemies {
     walkspeed = 6;
     moveTick = 0;
     facingRight = false;
-    projectiles = new ArrayList<Projectiles>();
     
     
     sprite = loadImage("enemyIdle.png");
@@ -47,6 +45,7 @@ public class Enemies {
   }
   
   void shoot() {
+    
   }
   
   void display() {
