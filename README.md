@@ -17,7 +17,7 @@ After launching and entering *Catformers*, players are prompted to choose betwee
 
 Once all selections are made, players are taken to the **character selection screen**, where each player chooses their Catformer using the displayed keyboard controls.
 
-During gameplay, all actions are controlled via the keyboard. The controls for each player are as follow:
+During gameplay, player actions are primarily controlled via the keyboard, with optional mouse controls available in 1-player Boss Mode. The controls for each player are as follows:
 
 ### Controls
 
@@ -32,6 +32,8 @@ During gameplay, all actions are controlled via the keyboard. The controls for e
 | Shoot                     | R                          | .                                   |
 
 ### Control Notes & Gameplay Mechanics
+
+- **Mouse Aiming** is enabled in **1-player Boss Mode**.
 
 - **Charge Jump** displays a visible jump bar; the longer you hold before the bar maxes out, the higher you jump.
 - **Crouch** reduces your hitbox and movement speed, allowing for dodging or precise movements.
@@ -51,12 +53,14 @@ From the pause screen, players can choose to:
 
 **HP Indicator**:
 - **Players** remaining lives are shown at the top of the screen as heart icons.
-- **Boss** health bar is displayed above the boss' head.
+- **Boss** and **Enemy** health bars are displayed above their heads.
 
 ### Boss Mode: Additional Mechanics
 
-- **Traps** require players to spam keys 10 times to escape (shared in 2-Player Mode).
-- **Inverse Controls** temporarily flip left/right movement and are indicated with an on-screen warning.
+- **Revive** is enabled in **2-player** mode. A defeated player will float upwards and can be revived by the other player by spamming the **jump key 5x** over their hitbox, as indicated by the on-screen text.
+  - This feature only works if at least one player remains alive, and the revive must be completed before the floating player leaves the screen. The revived player will respawn at their current position with **1 life**.
+- **Traps** require players to **spam keys 10x** to escape (shared in 2-Player Mode) and are indicated with an on-screen warning.
+- **Inverse Controls** temporarily **flip left/right movement** and are indicated with an on-screen warning.
 
 ## Used Libraries
 
