@@ -55,10 +55,17 @@ From the pause screen, players can choose to:
 - **Players** remaining lives are shown at the top of the screen as heart icons.
 - **Boss** and **Enemy** health bars are displayed above their heads.
 
+**Falling**
+- In certain maps and modes, bottom platforms are not enclosed, allowing players to fall off the screen.
+- This causes players to lose **1 life** and triggers a respawn at their original spawning position.
+
+**Invincibility Frames**:
+- Players will gain **3 seconds** of invincibility after respawning from **Falling** off the map.
+- The invincibility accounts for all damage recieved besides for falling off the map again.
+- Invincbility is indicated by flashing white lines around the player's hitbox.
+
 **Buff Potions**:
-- Occasionally appear in both Boss and Versus mode and can be collected by walking over them.
- seconds
- ### Buff Potions
+- Potions appear every 1000 frames on randomly selected platforms and remain on the map until a player collects them by walking over them.
 
 | Potion Name       | Appearance                                | Effect                                                  | Duration     | Mode(s)            |
 |------------------|--------------------------------------------|---------------------------------------------------------|--------------|--------------------|
