@@ -156,13 +156,13 @@ public class screenSelect {
   
   Character generateChar(int index) {
     if (index == 0) {
-      return new catFirst(20, 20, 60, 0, height - 125);  // Chill Cat
+      return new catFirst(15, 15, 60, 0, height - 125);  // Chill Cat
     } else if (index == 1) {
-      return new catSecond(15, 15, 60, 0, height - 125); // Alien Cat
+      return new catSecond(10, 10, 60, 0, height - 125); // Alien Cat
     } else if (index == 2) {
-      return new catThird(15, 15, 60, 0, height - 125);  // Bomber Cat
+      return new catThird(10, 20, 60, 0, height - 125);  // Bomber Cat
     }
-    return new catFirst(20, 20, 60, 0, height - 125);
+    return new catFirst(15, 15, 60, 0, height - 125);
   }
   
   boolean mouseHover(Button b) {
