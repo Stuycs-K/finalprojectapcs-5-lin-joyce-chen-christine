@@ -245,6 +245,28 @@ void draw() {
       Enemies e = enemies.get(x);
       if (e.lives > 0) {
         e.display();
+        for (int i = e.enemyProjectiles.size() - 1; i >= 0; i--) {
+          Projectiles p = e.enemyProjectiles.get(i);
+          if (!gamePause && !gameEnd) {
+            p.move();
+          }
+          p.display();
+          if (p.type.equals("enemy") && !gamePause) {
+            for (Character c : chars) {
+              if (c.damageCD == 0 && c.isAlive &&
+              p.xPos >= c.xPos && p.xPos <= c.xPos + c.hitboxWidth &&
+              p.yPos >= c.yPos && p.yPos <= c.yPos + c.hitboxLength) {
+                c.lives--;
+                hitSound.play();
+                c.damageCD = 30;
+                c.isAlive = c.lives > 0;
+                e.enemyProjectiles.remove(i);
+              }
+            }
+          } else if (p.xPos < 0 || p.xPos > width || p.yPos < 0 || p.yPos > height) {
+            e.enemyProjectiles.remove(i);
+          }
+        }
       } else {
         enemies.remove(e);
         x--;

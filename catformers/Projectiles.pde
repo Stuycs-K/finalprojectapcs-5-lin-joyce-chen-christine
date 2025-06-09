@@ -86,7 +86,7 @@ public class Projectiles {
       xPos += xVelocity;
       yPos += yVelocity;
     }
-    else if (type.equals("boss")) {
+    else if (type.equals("boss") || type.equals("enemy")) {
       xPos += xVelocity;
       yPos += yVelocity;
     }
