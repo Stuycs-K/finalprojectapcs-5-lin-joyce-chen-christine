@@ -53,7 +53,7 @@ SoundFile startBGM, bossBGM, pvpBGM;
 float bgmVolume;
 
 // sound effects
-SoundFile shootSound, hitSound, selectSound, explosion, chargeSound;
+SoundFile shootSound, hitSound, selectSound, explosion, chargeSound, lose, win;
 
 PVector mousePos = new PVector();
 
@@ -136,6 +136,8 @@ void loadAssets() {
   selectSound = new SoundFile(this, "selectSound.aiff");
   explosion = new SoundFile(this, "explosion.wav");
   chargeSound = new SoundFile(this, "charge.wav");
+  lose = new SoundFile(this, "lose.wav");
+  win = new SoundFile(this, "win.wav");
 }
 
 void loadState() {
@@ -875,6 +877,8 @@ void displayScreen() {
 
     if (gameEnd) {
       currmode = "Victory";
+      win.amp(0.5);
+      win.play();
     }
 
     versusTick++;
@@ -960,6 +964,8 @@ void displayScreen() {
       if (deathCount == chars.size()) {
         gameEnd = true;
         currmode = "Loss";
+        lose.amp(0.5);
+        lose.play();
       } else {
         deathCount = 0;
       }
@@ -967,6 +973,8 @@ void displayScreen() {
       if (!storyMode && boss.lives <= 0) {
         gameEnd = true;
         currmode = "Victory";
+        win.amp(0.5);
+        win.play();
       }
     }
   }
