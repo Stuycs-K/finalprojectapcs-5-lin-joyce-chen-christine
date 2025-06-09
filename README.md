@@ -19,7 +19,7 @@ Once all selections are made, players are taken to the **character selection scr
 
 During gameplay, player actions are primarily controlled via the keyboard, with optional mouse controls available in 1-player Boss Mode. The controls for each player are as follows:
 
-### Controls
+## Controls
 
 | Action                    | Player 1                   | Player 2 (if Versus / 2P Boss Mode) |
 |---------------------------|----------------------------|-------------------------------------|
@@ -39,7 +39,7 @@ During gameplay, player actions are primarily controlled via the keyboard, with 
 - **Crouch** reduces your hitbox and movement speed, allowing for dodging or precise movements.
 - **Aiming** is reflected by a line coming from the Catformer's mouth. The aim angle never resets and each change must be made manually.
 - **Shooting** is subject to a 1 second cooldown time.
-  - **Projectiles** bounce 3 times off all walls, platforms, and the floor/ceiling before disapearing.
+  - **Projectiles** bounce **3x** off all walls, platforms, and the floor/ceiling before disapearing.
   - In **Boss Mode** friendly fire and self damage is disabled
   - In **Versus Mode**, players can take damage from their own projectiles if they bounce back.
 
@@ -54,6 +54,18 @@ From the pause screen, players can choose to:
 **HP Indicator**:
 - **Players** remaining lives are shown at the top of the screen as heart icons.
 - **Boss** and **Enemy** health bars are displayed above their heads.
+
+**Buff Potions**:
+- Occasionally appear in both Boss and Versus mode and can be collected by walking over them.
+ seconds
+ ### Buff Potions
+
+| Potion Name       | Appearance                                | Effect                                                  | Duration     | Mode(s)            |
+|------------------|--------------------------------------------|---------------------------------------------------------|--------------|--------------------|
+| **HP Potion**    | ![HP](catformers/data/hpPotion.png)         | Restores 1 life (if not at max)                        | Instant      | Versus, Boss       |
+| **Mini Potion**  | ![Mini](catformers/data/miniPotion.png)     | Shrinks hitbox to 50% (Mini Mode)                      | 400 frames   | Versus only        |
+| **Bullet Potion**| ![Bullet](catformers/data/bulletPotion.png) | Fires 2 extra auto-shots per manual shot (Bullet Mode) | 400 frames   | Versus only        |
+| **Slow Potion**  | ![Slow](catformers/data/slowPotion.png)     | Slows all other players to 25% speed (2P only)         | 400 frames   | Versus only        |
 
 ### Boss Mode: Additional Mechanics
 
