@@ -441,8 +441,16 @@ void draw() {
     } else spawnTick++;
   }
   
-  if (currmode.equals("Boss") && storyMode && story.storyPhaseNum == 1) {
-    if (!gamePause && !storyP1BGM.isPlaying()) storyP1BGM.play();
+  if (currmode.equals("Boss") && storyMode && !gamePause) {
+    if (story.storyPhaseNum == 1 && (!transition || fadeOut)) {
+      if (!transition) storyP1BGM.amp(0.5);
+      if (!storyP1BGM.isPlaying()) storyP1BGM.play();
+    } 
+    else if (story.storyPhaseNum == 2) {
+      if (storyP1BGM.isPlaying()) storyP1BGM.pause();
+      storyP2BGM.amp(0.5);
+      if (!storyP2BGM.isPlaying()) storyP2BGM.play();
+    }
   }
 
   if (transition) {
@@ -694,6 +702,10 @@ void keyReleased() {
         if (currmode.equals("Boss")) {
           if (bossBGM.isPlaying()) bossBGM.pause();
           else if (boss != null && boss.spawned) bossBGM.play();
+          if (storyP1BGM.isPlaying()) storyP1BGM.pause();
+          else if (story.storyPhaseNum == 1) storyP1BGM.play();
+          if (storyP2BGM.isPlaying()) storyP2BGM.pause();
+          else if (story.storyPhaseNum == 2) storyP2BGM.play();
         }
       }
      if (!gamePause && !transition) {
@@ -1098,6 +1110,10 @@ void restartGame() {
     chargeSound.pause();
     bossBGM.jump(0);
     bossBGM.pause();
+    storyP1BGM.jump(0);
+    storyP1BGM.pause();
+    storyP2BGM.jump(0);
+    storyP2BGM.pause();
   }
   
   if (currmode.equals("Versus")) {
