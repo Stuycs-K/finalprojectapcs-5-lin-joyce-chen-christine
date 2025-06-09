@@ -13,6 +13,11 @@ public class Story {
     "Let's go look for them!!"
   };
   
+  String[] introDialogue1P = {
+    "I know you're scared of heights, don't worry, \nI'll carry you!!",
+    "Really...thank you so much!!"
+  };
+  
   String[] scene2Dialogue = {
     "That was so exciting!",
     "We made it!——And look, it's the Dog Gang!",
@@ -20,9 +25,19 @@ public class Story {
     "We'll beat them and get our food back."
   };
   
+  String[] scene2Dialogue1P = {
+    "No, wait——I'm training to be buff! \nYou can hide, I'll fight for us!!",
+    "All right, stay safe, I believe in you!"
+  };
+  
   String[] postFightDialogue = {
     "Dogs are strong...",
     "Wait, look! What is that??"
+  };
+  
+  String[] postFightDialogue1P = {
+    "If I fight the big dog by myself, \nI'll be the world's strongest cat!",
+    "You already are. But, okay, I'll watch you then!"
   };
   
   String[] winDialogue = {
@@ -42,7 +57,11 @@ public class Story {
   boolean phaseTriggered = false;
 
   Story() {
-    setDialogue(introDialogue);
+    if (numPlayer.equals("1")) {
+      setDialogue(concat(introDialogue, introDialogue1P));
+    } else {
+      setDialogue(introDialogue);
+    }
   }
   
   void setDialogue(String[] nextDialogue) {
@@ -82,6 +101,14 @@ public class Story {
         }
       } else {
         storyOver = true;
+        if (storyPhaseNum == 4) {
+          if (prevMode.equals("Victory")) {
+            currmode = "Victory";
+          } else if (prevMode.equals("Loss")) {
+            currmode = "Loss";
+          } 
+          modeInitialized = false;
+        }
       }
     }
   }
@@ -124,7 +151,11 @@ public class Story {
       platforms.add(new Platforms(1200, 200, 100));
 
     } else if (storyPhaseNum == 2) {
-      story.setDialogue(scene2Dialogue);
+      if (numPlayer.equals("1")) {
+        setDialogue(concat(scene2Dialogue, scene2Dialogue1P));
+      } else {
+        setDialogue(scene2Dialogue);
+      }
       platforms.clear();
       platforms.add(new Platforms(0, height-20, width));
       
@@ -132,13 +163,18 @@ public class Story {
       //enemies.add(new Enemies(width - 220, height-120, 100, 100/1.38));
       //enemies.add(new Enemies(width - 80, height-170, 70, 70/1.38));
     } else if (storyPhaseNum == 3) {
-      story.setDialogue(postFightDialogue);
+      if (numPlayer.equals("1")) {
+        setDialogue(concat(postFightDialogue, postFightDialogue1P));
+      } else {
+        setDialogue(introDialogue);
+      }
     } else if (storyPhaseNum == 4) { //<GLORP>
       if (gameEnd && prevMode.equals("Victory")) {
         story.setDialogue(winDialogue);
       } else if (gameEnd && prevMode.equals("Loss")) {
         story.setDialogue(loseDialogue);
       }
+      storyOver = false;
     }
     phaseTriggered = false; 
   }
@@ -159,8 +195,12 @@ public class Story {
     if (currentSpeaker.equals("P1")) {
       image(p1Char.getPreview(), 20, height - size, size, size); 
       textX = boxX + 300;
-    } else if (currentSpeaker.equals("P2") && p2Char != null) {
-      image(p2Char.getPreview(), width - size - 40, height - size, size, size); 
+    } else if (currentSpeaker.equals("P2")) {
+      if (numPlayer.equals("2") && p2Char != null) {
+        image(p2Char.getPreview(), width - size - 40, height - size, size, size);
+      } else {
+        image(cat1idleL, width - size - 30, height - size, size, size);
+      }
       textX = boxX + 80;
     } 
     fill(255);
