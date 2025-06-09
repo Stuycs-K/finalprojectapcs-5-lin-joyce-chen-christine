@@ -925,6 +925,12 @@ void displayScreen() {
           story.phaseTriggered = false;
           story.updateStoryPhase();
         }
+      } else if (story.storyPhaseNum == 3 && !storyTriggered) {
+        if (prevMode.equals("Loss") || prevMode.equals("Victory")) { // <GLORP>
+          storyTriggered = true;
+          story.phaseTriggered = false;
+          story.updateStoryPhase();
+        }
       }
     }
     if (!modeInitialized) {
@@ -971,7 +977,7 @@ void displayScreen() {
       if (numPlayer.equals("2")) {
         image(loadImage("p2.png"), width-90, 30, 60, 44.4);
       }
-      if (!storyMode && boss.timer % 800 == 0 && boss.timer != 0) {
+      if (boss != null && boss.timer % 800 == 0 && boss.timer != 0) {
         Platforms p = platforms.get((int)(random(0,platforms.size())));
         consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
       }
@@ -1012,6 +1018,10 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
+    if (prevMode.equals("Boss") && storyMode && !storyPhase && story.storyPhaseNum == 3) {
+      prevMode = "Loss";
+      currmode = "Boss";
+    }
     background(bg1);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
@@ -1026,7 +1036,7 @@ void displayScreen() {
       c.display();
     }
 
-    if (!storyMode && boss != null) {
+    if (boss != null) {
       boss.update();
       boss.display();
     }
@@ -1088,7 +1098,7 @@ void displayScreen() {
       if (bossBGM.isPlaying()) {
         bossBGM.pause();
       }
-      if (!storyMode && boss != null) {
+      if (boss != null) {
         boss.update();
         boss.display();
       }

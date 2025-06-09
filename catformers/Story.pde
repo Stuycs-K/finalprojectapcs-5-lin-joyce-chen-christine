@@ -30,7 +30,10 @@ public class Story {
   };
   
   String[] loseDialogue = {
-    ".."
+    "The dog is eating our food!",
+    "Oh no...I don't think it can eat _",
+    "He looks like a sad dog...",
+    "Wait a minue———he's crying! What do we do??"
   };
 
   boolean storyOver;
@@ -130,8 +133,14 @@ public class Story {
       //enemies.add(new Enemies(width - 80, height-170, 70, 70/1.38));
     } else if (storyPhaseNum == 3) {
       story.setDialogue(postFightDialogue);
+    } else if (storyPhaseNum == 4) { //<GLORP>
+      if (prevMode.equals("Victory")) {
+        story.setDialogue(winDialogue);
+      } else if (prevMode.equals("Loss")) {
+        story.setDialogue(loseDialogue);
+      }
     }
-    phaseTriggered = false;
+    phaseTriggered = false; 
   }
 
   void display() {
