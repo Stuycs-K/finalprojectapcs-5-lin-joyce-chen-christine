@@ -16,7 +16,7 @@ boolean modeInitialized, selectScreen, demoMode, p1Chosen, p2Chosen, gameEnd, ga
 boolean storyMode, storyPhase, storyTriggered;
 boolean restarted, transition, fadeOut;
 float transitionTick;
-int spawnTick, versusTick, dialogue, dialogueTick, stage;
+int spawnTick, versusTick;
 screenSelect s;
 Story story;
 
@@ -49,7 +49,7 @@ Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
 //BGM
-SoundFile startBGM, bossBGM, pvpBGM;
+SoundFile startBGM, bossBGM, pvpBGM, storyP1BGM, storyP2BGM;
 float bgmVolume;
 
 // sound effects
@@ -129,6 +129,8 @@ void loadAssets() {
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   bossBGM = new SoundFile(this, "Theme of Astrum Deus.mp3");
   pvpBGM = new SoundFile(this, "cat cafe.mp3");
+  storyP1BGM = new SoundFile(this, "hi.mp3");
+  storyP2BGM = new SoundFile(this, "i drank the wrong potion.mp3");
 
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav");
@@ -169,8 +171,6 @@ void loadState() {
   spawnTick = 0;
   demoMode = false;
   storyMode = false;
-  dialogue = -1;
-  stage = 1;
   pvpBGM.jump(0);
   pvpBGM.pause();
   bossBGM.jump(0);
@@ -439,6 +439,10 @@ void draw() {
       }
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
     } else spawnTick++;
+  }
+  
+  if (currmode.equals("Boss") && storyMode && story.storyPhaseNum == 1) {
+    if (!gamePause && !storyP1BGM.isPlaying()) storyP1BGM.play();
   }
 
   if (transition) {
@@ -1117,9 +1121,6 @@ void restartGame() {
   gamePause = false;
   deathFrame = 0;
   deathFinish = false;
-  dialogue = -1;
-  dialogueTick = 0;
-  stage = 1;
 }
 
 void deathAnimation(Character c) {
@@ -1169,10 +1170,12 @@ void transitionScreen() {
     if (!modeInitialized) currmode = s.selectedMode;
     fadeOut = true;
     transitionTick-=5;
-    if (currmode.equals("Versus")) {
+    if (currmode.equals("Versus") || (currmode.equals("Boss") && 
+          (story.storyPhaseNum == 1 || story.storyPhaseNum == 2))) {
       if (bgmVolume != 0.5) {
         bgmVolume += 0.005;
-        pvpBGM.amp(bgmVolume);
+        if (currmode.equals("Versus")) pvpBGM.amp(bgmVolume);
+        else if (story.storyPhaseNum == 1) storyP1BGM.amp(bgmVolume);
       }
     }
   } else {

@@ -5,7 +5,7 @@ public class Projectiles {
   int bounceCount, size;
   String type;
   Character player;
-  boolean shot, exploded;
+  boolean exploded;
   
   public Projectiles (String type, Character player, float angle, float speed, float xPos, float yPos) {
     this.type = type;
@@ -20,7 +20,6 @@ public class Projectiles {
     
     // unique variables
     exploded = false;
-    shot = false;
     
     size = 20;
     bounceCount = 0;
