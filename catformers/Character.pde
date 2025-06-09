@@ -158,11 +158,31 @@ public class Character {
   }
   
   void mouseAim(PVector mousePos) {
-    aimAngle = degrees(atan2(mousePos.y - yPos, mousePos.x - xPos));
-    if (aimAngle < 0) {
-      aimAngle += 360;
+    float angle = degrees(atan2(mousePos.y - yPos, mousePos.x - xPos));
+    if (angle < 0) {
+      angle += 360;
     }
-    facingRight = mousePos.x - xPos >= 0;
+    if (facingRight) {
+      if (angle > 90 && angle < 270) {
+        if (angle < 180) {
+          aimAngle = 90;
+        } else {
+          aimAngle = 270;
+        }
+      } else {
+        aimAngle = angle;
+      }
+    } else {
+      if (angle < 90 || angle > 270) {
+        if (angle > 180) {
+          aimAngle = 270;
+        } else {
+          aimAngle = 90;
+        }
+      } else {
+        aimAngle = angle;
+      }
+    }
   }
 
   void move(boolean goRight) {
