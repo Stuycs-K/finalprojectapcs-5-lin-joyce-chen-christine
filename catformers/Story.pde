@@ -134,9 +134,9 @@ public class Story {
     } else if (storyPhaseNum == 3) {
       story.setDialogue(postFightDialogue);
     } else if (storyPhaseNum == 4) { //<GLORP>
-      if (prevMode.equals("Victory")) {
+      if (gameEnd && prevMode.equals("Victory")) {
         story.setDialogue(winDialogue);
-      } else if (prevMode.equals("Loss")) {
+      } else if (gameEnd && prevMode.equals("Loss")) {
         story.setDialogue(loseDialogue);
       }
     }

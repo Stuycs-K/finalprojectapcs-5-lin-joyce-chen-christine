@@ -443,7 +443,7 @@ void draw() {
         boss.spawnAnim();
       }
       else boss.update();
-      if (!bossBGM.isPlaying() && !gamePause) {
+      if (!bossBGM.isPlaying() && !gamePause && !gameEnd) {
         bossBGM.amp(0.2);
         bossBGM.play();
       }
@@ -472,6 +472,8 @@ void draw() {
       if (storyP1BGM.isPlaying()) storyP1BGM.pause();
       storyP2BGM.amp(0.5);
       if (!storyP2BGM.isPlaying()) storyP2BGM.play();
+    } else {
+      if (storyP2BGM.isPlaying()) storyP2BGM.pause();
     }
   }
 
@@ -1015,18 +1017,32 @@ void displayScreen() {
       }
       if (deathCount == chars.size()) {
         gameEnd = true;
-        currmode = "Loss";
-        lose.amp(0.5);
-        lose.play();
+        if (!storyMode || story.storyPhaseNum <= 2) {
+          currmode = "Loss";
+          lose.amp(0.5);
+          lose.play();
+        } else {
+          story.storyPhaseNum = 4;
+          // change this if no need
+          background(bg1);
+          if (bossBGM.isPlaying()) {
+            bossBGM.pause();
+          }
+          platforms.clear();
+          boss = null;
+          story.setDialogue(story.loseDialogue);
+        }
       } else {
         deathCount = 0;
       }
 
-      if (!storyMode && boss.lives <= 0) {
+      if (boss != null && boss.lives <= 0) {
         gameEnd = true;
-        currmode = "Victory";
-        win.amp(0.5);
-        win.play();
+        if (!storyMode) {
+          currmode = "Victory";
+          win.amp(0.5);
+          win.play();
+        } else prevMode = "Victory";
       }
     }
   }
@@ -1034,10 +1050,7 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
-    if (prevMode.equals("Boss") && storyMode && !storyPhase && story.storyPhaseNum == 3) {
-      prevMode = "Loss";
-      currmode = "Boss";
-    }
+    
     background(bg1);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
@@ -1225,7 +1238,7 @@ void transitionScreen() {
     if (!modeInitialized) currmode = s.selectedMode;
     fadeOut = true;
     transitionTick-=5;
-    if (currmode.equals("Versus") || (currmode.equals("Boss") && 
+    if (currmode.equals("Versus") || (currmode.equals("Boss") && storyMode &&
           (story.storyPhaseNum == 1 || story.storyPhaseNum == 2))) {
       if (bgmVolume != 0.5) {
         bgmVolume += 0.005;
