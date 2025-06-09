@@ -45,7 +45,20 @@ public class Enemies {
   }
   
   void shoot() {
-    
+    Character c = chars.get((int)(random(0,chars.size())));
+    float mouthY = yPos + hitboxLength/2;
+    projectiles.add(new Projectiles("enemy", null, getAngle(c), 15, xPos, mouthY)); 
+  }
+  
+  float getAngle(Character c) {
+    float refAngle = atan(abs(c.yPos/c.xPos));
+    if (c.xPos < 0) {
+      if (c.yPos < 0) return 180 + refAngle;
+      else return 180 - refAngle;
+    } else {
+      if (c.yPos < 0) return 360 - refAngle;
+      else return refAngle;
+    }
   }
   
   void display() {
