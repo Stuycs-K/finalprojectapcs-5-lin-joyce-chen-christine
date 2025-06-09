@@ -51,7 +51,7 @@ public class Story {
     "Wait a minue———he's crying! What do we do??"
   };
 
-  boolean storyOver;
+  boolean storyOver, finalDialogue = false;
   
   int storyPhaseNum = 0;
   boolean phaseTriggered = false;
@@ -102,11 +102,7 @@ public class Story {
       } else {
         storyOver = true;
         if (storyPhaseNum == 4) {
-          if (prevMode.equals("Victory")) {
-            currmode = "Victory";
-          } else if (prevMode.equals("Loss")) {
-            currmode = "Loss";
-          } 
+          currmode = "Loss";
           modeInitialized = false;
         }
       }
@@ -159,9 +155,9 @@ public class Story {
       platforms.clear();
       platforms.add(new Platforms(0, height-20, width));
       
-      //enemies.add(new Enemies(width - 320, height-90, 70, 70/1.38));
-      //enemies.add(new Enemies(width - 220, height-120, 100, 100/1.38));
-      //enemies.add(new Enemies(width - 80, height-170, 70, 70/1.38));
+      enemies.add(new Enemies(width - 320, height-90, 70, 70/1.38));
+      enemies.add(new Enemies(width - 220, height-120, 100, 100/1.38));
+      enemies.add(new Enemies(width - 80, height-170, 70, 70/1.38));
     } else if (storyPhaseNum == 3) {
       if (numPlayer.equals("1")) {
         setDialogue(concat(postFightDialogue, postFightDialogue1P));
@@ -169,10 +165,13 @@ public class Story {
         setDialogue(introDialogue);
       }
     } else if (storyPhaseNum == 4) { //<GLORP>
-      if (gameEnd && prevMode.equals("Victory")) {
-        story.setDialogue(winDialogue);
-      } else if (gameEnd && prevMode.equals("Loss")) {
-        story.setDialogue(loseDialogue);
+      if (!finalDialogue) {
+        if (gameEnd && prevMode.equals("Victory")) {
+          setDialogue(winDialogue);
+        } else if (gameEnd && prevMode.equals("Loss")) {
+          setDialogue(loseDialogue);
+        }
+        finalDialogue = true;
       }
       storyOver = false;
     }
