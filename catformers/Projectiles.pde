@@ -147,6 +147,30 @@ public class Projectiles {
       }
     }
     
+    if (currmode.equals("Boss") && storyMode && enemies.size() > 0) {
+      for (Enemies e : enemies) {
+        if (!type.equals("grenade") || !exploded) {
+          if(xPos >= e.xPos && xPos <= e.xPos + e.hitboxWidth &&
+              yPos >= e.yPos && yPos <= e.yPos + e.hitboxLength) {
+            e.lives -= 1;
+            hitSound.play();
+            if (type.equals("grenade")) {
+              exploded = true;
+            }
+            return true;
+          }
+        }
+        else if (exploded) {
+          if(xPos + size*2 > e.xPos && xPos < e.xPos + e.hitboxWidth &&
+              yPos + size*2 > e.yPos && yPos < e.yPos + e.hitboxLength) {
+            e.lives -= 1;
+            hitSound.play();
+            return true;
+          }
+        }
+      }
+    }
+    
     if (currmode.equals("Boss") && !storyMode && !boss.immune && player != null && boss != null) {
       if (!type.equals("grenade") || !exploded) {
         if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&

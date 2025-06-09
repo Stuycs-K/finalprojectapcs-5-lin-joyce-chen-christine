@@ -3,7 +3,7 @@ public class Enemies {
   float hitboxWidth, hitboxLength;
   float walkspeed;
   float moveX, moveY;
-  int lives, moveTick;
+  int lives, maxLives, moveTick;
   boolean facingRight, isAlive;
   PImage sprite;
   ArrayList<Projectiles> projectiles;
@@ -13,6 +13,9 @@ public class Enemies {
     this.yPos = yPos;
     this.hitboxWidth = hitboxWidth;
     this.hitboxLength = hitboxLength;
+    
+    lives = 3;
+    maxLives = lives;
     
     walkspeed = 6;
     moveTick = 0;
@@ -48,6 +51,24 @@ public class Enemies {
   
   void display() {
     move();
+    
+    pushStyle();
+    int hpBarWidth = (int)(hitboxWidth+20);
+    int hpBarHeight = 10;
+    lives = max(0, lives);
+    float hpPercent = (float) lives / maxLives;
+    float hpY;
+    if (yPos - hitboxLength/2 - 20 < 0) {
+      hpY = yPos + hitboxLength/2 + 10;
+    } else {
+      hpY = yPos - hitboxLength/2 - 20;
+    }
+    fill (100);
+    rect(xPos - hpBarWidth/2, hpY, hpBarWidth, hpBarHeight);
+    fill(50, 205, 50);
+    rect(xPos - hpBarWidth/2, hpY, hpBarWidth * hpPercent, hpBarHeight);
+    popStyle();
+    
     image(sprite, xPos - hitboxWidth/2, yPos - hitboxLength/2, hitboxWidth, hitboxLength);
   }
 }
