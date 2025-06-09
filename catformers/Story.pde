@@ -7,8 +7,8 @@ public class Story {
 
   // ==== Dialogue ====
   String[] introDialogue = {
-    "I'm so hungry!! The big bad dog stole our _ :(",
-    "Wait...can dogs even eat _??",
+    "I'm so hungry!! The big bad dog stole our catnip :(",
+    "Wait...can dogs even eat catnip??",
     "Um...I smell dog in that direction!",
     "Let's go look for them!!"
   };
@@ -22,7 +22,7 @@ public class Story {
   
   String[] postFightDialogue = {
     "Dogs are strong...",
-    ".."
+    "Wait, look! What is that??"
   };
   
   String[] winDialogue = {
@@ -31,7 +31,7 @@ public class Story {
   
   String[] loseDialogue = {
     "The dog is eating our food!",
-    "Oh no...I don't think it can eat _",
+    "Oh no...I don't think it can eat catnip",
     "He looks like a sad dog...",
     "Wait a minue———he's crying! What do we do??"
   };
