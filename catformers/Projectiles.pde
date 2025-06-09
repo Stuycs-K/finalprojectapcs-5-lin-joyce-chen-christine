@@ -110,8 +110,10 @@ public class Projectiles {
       }
     }
     else if (type.equals("boss") || type.equals("enemy")) {
+      pushStyle();
       fill(255, 100, 100);
       circle(xPos,yPos,size);
+      popStyle();
     }
   }
   

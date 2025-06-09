@@ -1157,7 +1157,7 @@ void displayScreen() {
 
     textSize(20);
     text("press [enter] to return to start screen",width/2, height/1.50);
-  }
+  } 
 }
 
 void restartGame() {
