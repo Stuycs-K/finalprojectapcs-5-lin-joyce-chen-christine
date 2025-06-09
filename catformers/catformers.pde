@@ -177,6 +177,10 @@ void loadState() {
   bossBGM.pause();
   chargeSound.jump(0);
   chargeSound.pause();
+  storyP1BGM.jump(0);
+  storyP1BGM.pause();
+  storyP2BGM.jump(0);
+  storyP2BGM.pause();
 
 }
 
@@ -300,13 +304,13 @@ void draw() {
           x--;
         }
       }
-      if (x >= 0 && x < projectiles.size()) {
+      if (x >= 0 && x < projectiles.size() && !gameOver) {
         projectiles.get(x).display();
       }
     }
   }
 
-  for (int x = 0; x < consumables.size(); x++) {
+  for (int x = 0; x < consumables.size() && !gameOver; x++) {
     Consumable C = consumables.get(x);
     C.display();
     for (Character c : chars) {
@@ -919,7 +923,9 @@ void displayScreen() {
       consumables.add(new Consumable(consumableTypes.get((int)(random(0,consumableTypes.size()))),
                         random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-41, 20, 27));
     }
-
+    for (Character c : chars) {
+      if (!c.isAlive) gameEnd = true;
+    }
     if (gameEnd) {
       currmode = "Victory";
       win.amp(0.5);
@@ -1100,9 +1106,15 @@ void displayScreen() {
     for (Character c : chars) {
       c.display();
     }
+    for (Projectiles p : projectiles) {
+      p.display();
+    }
     if (prevMode.equals("Versus")) {
       if (pvpBGM.isPlaying()) {
         pvpBGM.pause();
+      }
+      for (Consumable c : consumables) {
+        c.display();
       }
       String winText = "Player ";
       fill(0);

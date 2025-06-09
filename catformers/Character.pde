@@ -393,6 +393,7 @@ public class Character {
       bulletTimer++;
     } else {
       bulletMode = false;
+      bulletTimer = 0;
       shootCount = 0;
     }
   }
