@@ -240,11 +240,33 @@ void draw() {
     }
   }
   
-  if (!gameEnd && !storyPhase) {
+  if (!gameEnd && !storyPhase && !gamePause) {
     for (int x = 0; x < enemies.size(); x++) {
       Enemies e = enemies.get(x);
       if (e.lives > 0) {
         e.display();
+        for (int i = e.enemyProjectiles.size() - 1; i >= 0; i--) {
+          Projectiles p = e.enemyProjectiles.get(i);
+          if (!gamePause && !gameEnd) {
+            p.move();
+          }
+          p.display();
+          if (p.type.equals("enemy") && !gamePause) {
+            for (Character c : chars) {
+              if (c.damageCD == 0 && c.isAlive &&
+              p.xPos >= c.xPos && p.xPos <= c.xPos + c.hitboxWidth &&
+              p.yPos >= c.yPos && p.yPos <= c.yPos + c.hitboxLength) {
+                c.lives--;
+                hitSound.play();
+                c.damageCD = 30;
+                c.isAlive = c.lives > 0;
+                e.enemyProjectiles.remove(i);
+              }
+            }
+          } else if (p.xPos < 0 || p.xPos > width || p.yPos < 0 || p.yPos > height) {
+            e.enemyProjectiles.remove(i);
+          }
+        }
       } else {
         enemies.remove(e);
         x--;
@@ -913,6 +935,18 @@ void displayScreen() {
           story.phaseTriggered = false;
           story.updateStoryPhase();
         }
+      } else if (story.storyPhaseNum == 2) {
+        if (enemies.size() == 0) {
+          storyTriggered = true;
+          story.phaseTriggered = false;
+          story.updateStoryPhase();
+        }
+      } else if (story.storyPhaseNum == 3 && !storyTriggered) {
+        if (prevMode.equals("Loss") || prevMode.equals("Victory")) { // <GLORP>
+          storyTriggered = true;
+          story.phaseTriggered = false;
+          story.updateStoryPhase();
+        }
       }
     }
     if (!modeInitialized) {
@@ -921,7 +955,7 @@ void displayScreen() {
       }
       modeInitialized = true;
 
-      if (!storyMode || (storyMode && story.storyPhaseNum >= 5)) {
+      if ((!storyMode || (storyMode && story.storyPhaseNum == 3 && !storyPhase)) && boss == null) {
         boss = new Boss(640, height - 522);
 
         platforms.add(new Platforms(0, height - 20, width)); // floor
@@ -959,7 +993,7 @@ void displayScreen() {
       if (numPlayer.equals("2")) {
         image(loadImage("p2.png"), width-90, 30, 60, 44.4);
       }
-      if (!storyMode && boss.timer % 800 == 0 && boss.timer != 0) {
+      if (boss != null && boss.timer % 800 == 0 && boss.timer != 0) {
         Platforms p = platforms.get((int)(random(0,platforms.size())));
         consumables.add(new Consumable("hpPotion", random(p.xPos,p.xPos+p.platformWidth+1), p.yPos-42, 20, 28));
       }
@@ -1000,6 +1034,10 @@ void displayScreen() {
     if (bossBGM.isPlaying()) {
       bossBGM.pause();
     }
+    if (prevMode.equals("Boss") && storyMode && !storyPhase && story.storyPhaseNum == 3) {
+      prevMode = "Loss";
+      currmode = "Boss";
+    }
     background(bg1);
     image(loadImage("p1.png"), 20, 30, 60, 44.4);
     if (numPlayer.equals("2")) {
@@ -1014,7 +1052,7 @@ void displayScreen() {
       c.display();
     }
 
-    if (!storyMode && boss != null) {
+    if (boss != null) {
       boss.update();
       boss.display();
     }
@@ -1076,7 +1114,7 @@ void displayScreen() {
       if (bossBGM.isPlaying()) {
         bossBGM.pause();
       }
-      if (!storyMode && boss != null) {
+      if (boss != null) {
         boss.update();
         boss.display();
       }

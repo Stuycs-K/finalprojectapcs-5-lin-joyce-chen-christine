@@ -6,6 +6,7 @@ public class Enemies {
   int lives, maxLives, moveTick, shootTick;
   boolean facingRight, isAlive;
   PImage sprite;
+  ArrayList<Projectiles> enemyProjectiles; 
   
   public Enemies (float xPos, float yPos, float hitboxWidth, float hitboxLength) {
     this.xPos = xPos;
@@ -20,6 +21,7 @@ public class Enemies {
     moveTick = 0;
     facingRight = false;
     
+    enemyProjectiles = new ArrayList<Projectiles>();
     sprite = loadImage("enemyIdle.png");
   }
   
@@ -35,6 +37,11 @@ public class Enemies {
       moveTick = 0;
     }
     checkBorder();
+    
+    shootTick++;
+    if (shootTick % 150 == 0) {
+      shoot();
+    }
   }
   
   void checkBorder() {
@@ -45,18 +52,11 @@ public class Enemies {
   void shoot() {
     Character c = chars.get((int)(random(0,chars.size())));
     float mouthY = yPos + hitboxLength/2;
-    projectiles.add(new Projectiles("enemy", null, getAngle(c), 15, xPos, mouthY)); 
+    enemyProjectiles.add(new Projectiles("enemy", null, getAngle(c), 7, xPos, mouthY)); 
   }
   
   float getAngle(Character c) {
-    float refAngle = atan(abs(c.yPos/c.xPos));
-    if (c.xPos < 0) {
-      if (c.yPos < 0) return 180 + refAngle;
-      else return 180 - refAngle;
-    } else {
-      if (c.yPos < 0) return 360 - refAngle;
-      else return refAngle;
-    }
+    return atan2(c.yPos - yPos, c.xPos - xPos);
   }
   
   void display() {

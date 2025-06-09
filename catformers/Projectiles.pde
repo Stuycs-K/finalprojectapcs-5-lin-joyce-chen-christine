@@ -85,7 +85,7 @@ public class Projectiles {
       xPos += xVelocity;
       yPos += yVelocity;
     }
-    else if (type.equals("boss")) {
+    else if (type.equals("boss") || type.equals("enemy")) {
       xPos += xVelocity;
       yPos += yVelocity;
     }
@@ -181,7 +181,7 @@ public class Projectiles {
       }
     }
     
-    if (currmode.equals("Boss") && !storyMode && !boss.immune && player != null && boss != null) {
+    if (currmode.equals("Boss") && boss != null && !boss.immune && player != null) {
       if (!type.equals("grenade") || !exploded) {
         if (xPos >= boss.xPos - boss.hitboxWidth/2 && xPos <= boss.xPos + boss.hitboxWidth/2 &&
               yPos >= boss.yPos - boss.hitboxLength/2 && yPos <= boss.yPos + boss.hitboxLength/2) {
