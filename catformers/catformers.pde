@@ -949,7 +949,7 @@ void displayScreen() {
           story.updateStoryPhase();
         }
       } else if (story.storyPhaseNum == 3 && !storyTriggered) {
-        if (prevMode.equals("Loss") || prevMode.equals("Victory")) { // <GLORP>
+        if (prevMode.equals("Loss")) { // <GLORP>
           storyTriggered = true;
           story.phaseTriggered = false;
           story.updateStoryPhase();
@@ -1043,11 +1043,9 @@ void displayScreen() {
 
       if (boss != null && boss.lives <= 0) {
         gameEnd = true;
-        if (!storyMode) {
-          currmode = "Victory";
-          win.amp(0.5);
-          win.play();
-        } else prevMode = "Victory";
+        currmode = "Victory";
+        win.amp(0.5);
+        win.play();
       }
     }
   }
