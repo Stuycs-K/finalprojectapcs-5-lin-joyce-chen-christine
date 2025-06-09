@@ -629,7 +629,6 @@ void keyPressed() {
         currmode = "Boss";
       } else {
         storyPhase = false;
-        currmode = s.selectedMode;
       }
       selectScreen = false;
       modeInitialized = false;
