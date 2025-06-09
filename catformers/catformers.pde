@@ -731,9 +731,9 @@ void keyReleased() {
           if (bossBGM.isPlaying()) bossBGM.pause();
           else if (boss != null && boss.spawned) bossBGM.play();
           if (storyP1BGM.isPlaying()) storyP1BGM.pause();
-          else if (story.storyPhaseNum == 1) storyP1BGM.play();
+          else if (storyMode && story.storyPhaseNum == 1) storyP1BGM.play();
           if (storyP2BGM.isPlaying()) storyP2BGM.pause();
-          else if (story.storyPhaseNum == 2) storyP2BGM.play();
+          else if (storyMode && story.storyPhaseNum == 2) storyP2BGM.play();
         }
       }
      if (!gamePause && !transition) {

@@ -12,7 +12,7 @@ public class Boss {
   Boss(float xPos, float yPos) {
     this.xPos = xPos;
     this.yPos = yPos;
-    maxLives = 1*chars.size();
+    maxLives = 10*chars.size();
     lives = maxLives;
     hitboxWidth = 200;
     maxWidth = hitboxWidth;

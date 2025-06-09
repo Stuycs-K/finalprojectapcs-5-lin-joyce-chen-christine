@@ -158,9 +158,9 @@ public class screenSelect {
     if (index == 0) {
       return new catFirst(15, 15, 60, 0, height - 125);  // Chill Cat
     } else if (index == 1) {
-      return new catSecond(10, 10, 60, 0, height - 125); // Alien Cat
+      return new catSecond(13, 13, 60, 0, height - 125); // Alien Cat
     } else if (index == 2) {
-      return new catThird(10, 20, 60, 0, height - 125);  // Bomber Cat
+      return new catThird(13, 20, 60, 0, height - 125);  // Bomber Cat
     }
     return new catFirst(15, 15, 60, 0, height - 125);
   }
