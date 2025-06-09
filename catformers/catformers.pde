@@ -168,6 +168,7 @@ void loadState() {
   storyMode = false;
   dialogue = -1;
   stage = 1;
+  bossBGM.jump(0);
 
   if (bossBGM.isPlaying()) bossBGM.pause();
 
@@ -409,17 +410,22 @@ void draw() {
         boss.spawnAnim();
       }
       else boss.update();
-      if (!bossBGM.isPlaying()) {
+      if (!bossBGM.isPlaying() && !gamePause) {
         bossBGM.amp(0.2);
         bossBGM.play();
       }
       boss.display();
     } else if (spawnTick > 40) {
-      if (!chargeSound.isPlaying()) {
-        chargeSound.play();
+      if (!gamePause) {
+        if (!chargeSound.isPlaying()) {
+          chargeSound.play();
+        }
+        spawnTick++;
+      } else {
+        spawnAnim.jump(spawnAnim.currentFrame());
+        if (chargeSound.isPlaying()) chargeSound.pause();
       }
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
-      spawnTick++;
     } else spawnTick++;
   }
 
@@ -681,7 +687,7 @@ void keyReleased() {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
           if (bossBGM.isPlaying()) bossBGM.pause();
-          else bossBGM.play();
+          else if (boss.spawned) bossBGM.play();
         }
       }
      if (!gamePause && !transition) {

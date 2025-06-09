@@ -341,7 +341,7 @@ public class Boss {
     hitboxLength = maxLength;
     hitboxWidth*=dilationScale;
     hitboxLength*=dilationScale;
-    dilationScale+=0.1;
+    if (!gamePause) dilationScale+=0.1;
     if (dilationScale > 1.0) {
       dilationScale = 1.0;
     }
