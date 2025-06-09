@@ -63,9 +63,9 @@ From the pause screen, players can choose to:
 | Potion Name       | Appearance                                | Effect                                                  | Duration     | Mode(s)            |
 |------------------|--------------------------------------------|---------------------------------------------------------|--------------|--------------------|
 | **HP Potion**    | ![HP](catformers/data/hpPotion.png)         | Restores 1 life (if not at max)                        | Instant      | Versus, Boss       |
-| **Mini Potion**  | ![Mini](catformers/data/miniPotion.png)     | Shrinks hitbox to 50% (Mini Mode)                      | 400 frames   | Versus only        |
-| **Bullet Potion**| ![Bullet](catformers/data/bulletPotion.png) | Fires 2 extra auto-shots per manual shot (Bullet Mode) | 400 frames   | Versus only        |
-| **Slow Potion**  | ![Slow](catformers/data/slowPotion.png)     | Slows all other players to 25% speed (2P only)         | 400 frames   | Versus only        |
+| **Mini Potion**  | ![Mini](catformers/data/miniPotion.png)     | Shrinks hitbox to 50%                                  | 400 frames   | Versus only        |
+| **Bullet Potion**| ![Bullet](catformers/data/bulletPotion.png) | Fires 2 extra auto-shots per manual shot               | 400 frames   | Versus only        |
+| **Slow Potion**  | ![Slow](catformers/data/slowPotion.png)     | Slows opposing player to 25% speed                     | 400 frames   | Versus only        |
 
 ### Boss Mode: Additional Mechanics
 
