@@ -58,12 +58,18 @@ revive feature in boss mode when your character dies and your teammate is alive
 
 
 # Project Design
-### Old UML
+### Old UMLS
 <img width="474" alt="UML" src="https://github.com/user-attachments/assets/b16b00d4-019d-49ea-ab8d-466e96a551e8" />
 
-### Updated UML
+---
+
 <img width="494" alt="UML pt1" src="https://github.com/user-attachments/assets/cd1aa8bc-d6e8-4d8b-b1ca-739ee0241bea" />
 <img width="416" alt="UML pt2" src="https://github.com/user-attachments/assets/0597e48f-8ab9-4b21-b6ab-6030e0e68d63" />
+
+### Updated UML
+<img width="499" alt="UML pt1" src="https://github.com/user-attachments/assets/9a0f33db-ef41-4918-bd8c-12ac4e63e493" />
+<img width="428" alt="UML pt2" src="https://github.com/user-attachments/assets/e42316db-59e8-4715-b2d8-c536826a2bbe" />
+
 
 
 |  Key Stuff           |  Description  |
