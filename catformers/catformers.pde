@@ -448,7 +448,6 @@ void draw() {
       }
       else boss.update();
       if (!bossBGM.isPlaying() && !gamePause && !gameEnd) {
-        bossBGM.amp(0.2);
         bossBGM.play();
       }
       boss.display();
