@@ -177,6 +177,10 @@ void loadState() {
   bossBGM.pause();
   chargeSound.jump(0);
   chargeSound.pause();
+  storyP1BGM.jump(0);
+  storyP1BGM.pause();
+  storyP2BGM.jump(0);
+  storyP2BGM.pause();
 
 }
 
