@@ -1089,6 +1089,7 @@ void restartGame() {
   projectiles.clear();
   platforms.clear();
   consumables.clear();
+  enemies.clear();
 
   if (currmode.equals("Boss")) {
     boss = null;

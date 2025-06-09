@@ -20,21 +20,19 @@ public class Enemies {
     moveTick = 0;
     facingRight = false;
     
-    
     sprite = loadImage("enemyIdle.png");
   }
   
   void move() {
-    if (moveTick < 150) {
-      xPos += moveX;
-      yPos += moveY;
-      moveTick++;
-    } else {
-      moveTick = 0;
+    if (moveTick == 0) { 
       moveX = walkspeed * (-1 + random(0,2));
       moveY = walkspeed * (-1 + random(0,2));
-      xPos += moveX;
-      yPos += moveY;
+    }
+    xPos += moveX;
+    yPos += moveY;
+    moveTick++;
+    if (moveTick >= 150) {
+      moveTick = 0;
     }
     checkBorder();
   }
