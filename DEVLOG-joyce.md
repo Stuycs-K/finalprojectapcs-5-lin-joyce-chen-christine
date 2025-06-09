@@ -114,3 +114,5 @@ Implemented a multi bullet potion (increase number of projectiles shot out at a 
 
 ### 2025-06-07 - Final Stretch - 9 hours
 Bug fixing, mostly fixing audio repeat problems with the different BGMs as well as with the gamePause feature and story mode for boss mode. Additionally the rest of the BGMs were added (i.e. versus mode and story mode). UML diagrams and prototype was updated and video was recorded!!
+
+Christine Chen: I believe this document accurately reflects the contributions of my teamate.
