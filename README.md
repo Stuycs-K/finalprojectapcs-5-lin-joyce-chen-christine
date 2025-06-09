@@ -8,9 +8,14 @@
 After launching and entering *Catformers*, players are prompted to choose between two game modes: **Versus Mode** and **Boss Mode**.
 
 - In **Versus Mode**, two players compete to deplete each other's lives through strategic movements and precise shots——the last Catformer standing wins.
+  - After selecting this mode, players will proceed to a **map selection screen**, where they can choose a themed background——each featuring an unique platform arrangement——or opt for a randomnized stage.
 - In **Boss Mode**, players team up or play solo to defeat a powerful, multi-phase boss. Victory is achieved by reducing the boss's health to zero before all players are eliminated.
+ - After selecting this mode, players are prompted to choose between **1-player** or **2-player co-op**.
+ - Players also have the option to enable 2 toggles at the top right of the screen:
+  1. **Demo Mode**: sets lives to **33 lives** in **1-player** and **15 lives** each in **2-player co-op**.
+  2. **Story Mode**: adds narrative sequences to Boss Mode, featuring a platforming challenge, additional enemies, and a plotline attached to the boss fight.
 
-Once a mode is selected, players are taken to the **character selection screen**, where each player chooses their Catformer using the displayed keyboard controls.
+Once all selections are made, players are taken to the **character selection screen**, where each player chooses their Catformer using the displayed keyboard controls.
 
 During gameplay, all actions are controlled via the keyboard. The controls for each player are as follow:
 
