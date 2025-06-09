@@ -240,7 +240,7 @@ void draw() {
     }
   }
   
-  if (!gameEnd && !storyPhase && (!transition || fadeOut)) {
+  if (!gameEnd && !storyPhase) {
     for (Enemies e : enemies) {
       e.display();
     }
@@ -1187,10 +1187,6 @@ void loadPreBoss() {
   } else {
     modeInitialized = false;
     currmode = "Boss";
-  }
-
-  for (Enemies e : enemies) {
-    e.display();
   }
 
   if (currmode.equals("preBoss")) {
