@@ -110,7 +110,7 @@ public class Projectiles {
         fill(255);
       }
     }
-    else if (type.equals("boss")) {
+    else if (type.equals("boss") || type.equals("enemy")) {
       fill(255, 100, 100);
       circle(xPos,yPos,size);
     }
@@ -143,6 +143,41 @@ public class Projectiles {
               }
             }
           }
+        }
+      }
+    }
+    
+    if (currmode.equals("Boss") && storyMode && enemies.size() > 0 && player != null) {
+      for (Enemies e : enemies) {
+        if (!type.equals("grenade") || !exploded) {
+          if(xPos >= e.xPos && xPos <= e.xPos + e.hitboxWidth &&
+              yPos >= e.yPos && yPos <= e.yPos + e.hitboxLength) {
+            e.lives -= 1;
+            hitSound.play();
+            if (type.equals("grenade")) {
+              exploded = true;
+            }
+            return true;
+          }
+        }
+        else if (exploded) {
+          if(xPos + size*2 > e.xPos && xPos < e.xPos + e.hitboxWidth &&
+              yPos + size*2 > e.yPos && yPos < e.yPos + e.hitboxLength) {
+            e.lives -= 1;
+            hitSound.play();
+            return true;
+          }
+        }
+      }
+    }
+    
+    if (currmode.equals("Boss") && storyMode && player == null) {
+      for (Character c : chars) {
+        if(xPos >= c.xPos && xPos <= c.xPos + c.hitboxWidth &&
+            yPos >= c.yPos && yPos <= c.yPos + c.hitboxLength) {
+          c.lives -= 1;
+          hitSound.play();
+          return true;
         }
       }
     }
