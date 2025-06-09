@@ -101,6 +101,14 @@ public class Story {
         }
       } else {
         storyOver = true;
+        if (storyPhaseNum == 4) {
+          if (prevMode.equals("Victory")) {
+            currmode = "Victory";
+          } else if (prevMode.equals("Loss")) {
+            currmode = "Loss";
+          } 
+          modeInitialized = false;
+        }
       }
     }
   }
@@ -166,6 +174,7 @@ public class Story {
       } else if (gameEnd && prevMode.equals("Loss")) {
         story.setDialogue(loseDialogue);
       }
+      storyOver = false;
     }
     phaseTriggered = false; 
   }
