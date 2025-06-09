@@ -117,7 +117,8 @@ Worked for 30 minutes. Fixed bug with decreased hitboxes in Mini Mode leading to
 Future-Improvements:
 - Start storyline for Boss Mode; google doc list
 
-### 2025-06-07 -
-Worked for _.
+### 2025-06-07 - Story Mode
+Worked for 2 hours. Implemented story class with typewriter dialogue effect and displayed corresponding characters chosen in character selection (Miscommunication: Joyce did this too!). Fixed bugs (null pointer, fps drop) related to additional story mode. Added ENTER/mouse press input for dialogue. Implemented story phase system after walking to edge of screen + added story logic to restartGame() and loadState(). Restricted movement during dialogue.  
 
 ### 2025-06-08 -
+Worked for _ hours. Modified spawn directions and positions in Story Mode; added platforms for first phase and added y-val checks before next story phase triggers. Edited boss sprite and added as enemy sprite. Restricted input during transition phase for dialogue. Updated README with new information (Boss mode toggles, map selection, buff potions, i-frames, falling off map, revive, )
