@@ -131,7 +131,7 @@ public class Story {
 
   void display() {
     background(bg1);
-    typeDialogue();
+    if (!transition && !gamePause) typeDialogue();
     
     pushStyle();
     int boxH = 200, boxW = 900;

@@ -431,14 +431,6 @@ void draw() {
     } else spawnTick++;
   }
 
-  if (dialogue > 0 && dialogue < 2) {
-    String text = "";
-    if (dialogue == 1) text = "wahhwafawgwagawgges";
-    if (printDialogue(text)) {
-      dialogue++;
-    }
-  }
-
   if (transition) {
     transitionScreen();
   }
@@ -626,7 +618,6 @@ void keyPressed() {
         story = new Story();
         storyPhase = true;
         storyTriggered = false;
-        currmode = "Boss";
       } else {
         storyPhase = false;
       }
@@ -688,7 +679,7 @@ void keyReleased() {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
           if (bossBGM.isPlaying()) bossBGM.pause();
-          else if (boss.spawned) bossBGM.play();
+          else if (boss != null && boss.spawned) bossBGM.play();
         }
       }
      if (!gamePause && !transition) {
@@ -1194,30 +1185,4 @@ void loadPreBoss() {
       stage++;
     }*/
   }
-}
-
-boolean printDialogue(String text) {
-  image(p1Char.getPreview(),20, height-(7*height/12), p1Char.hitboxWidth*5, p1Char.hitboxLength*5);
-  if (keyPressed) {
-    if (keyCode == SHIFT) {
-      if (dialogueTick < text.length()*15) {
-        dialogueTick = text.length()*15;
-      } else if (dialogueTick > text.length()*15+15) {
-        dialogueTick = text.length()*20;
-      }
-    }
-  }
-  strokeWeight(4);
-  fill(255);
-  rect(-5, height - (height/4), width+5, height/4);
-  strokeWeight(1);
-  fill(0);
-  textSize(20);
-  textAlign(LEFT,CENTER);
-  if (dialogueTick/15 < text.length()) {
-    text(text.substring(0, dialogueTick/15), 20, height - (height/8));
-  } else text(text, 20, height - (height/8));
-  textAlign(BASELINE,BASELINE);
-  if (!gamePause) dialogueTick++;
-  return (dialogueTick/20) == text.length();
 }
