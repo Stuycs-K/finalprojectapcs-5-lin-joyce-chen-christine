@@ -301,7 +301,6 @@ void draw() {
       }
       c.deathX = c.xPos;
       c.deathY = c.yPos;
-      gameEnd = true;
     }
 
     if (!gameEnd) {
