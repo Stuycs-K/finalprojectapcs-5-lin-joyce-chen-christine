@@ -112,4 +112,5 @@ stuff to do + consider for next session
 ### 2025-06-07 - Potions - 4.5 hours
 Implemented a multi bullet potion (increase number of projectiles shot out at a time) and a slow potion (slows enemy walkspeed down). Began working on the little storyline part before boss mode and implemented a dialogue system.
 
-stuff to do + consider for next session
+### 2025-06-07 - Final Stretch - 9 hours
+Bug fixing, mostly fixing audio repeat problems with the different BGMs as well as with the gamePause feature and story mode for boss mode. Additionally the rest of the BGMs were added (i.e. versus mode and story mode). UML diagrams and prototype was updated and video was recorded!!
