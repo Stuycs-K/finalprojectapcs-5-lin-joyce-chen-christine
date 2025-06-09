@@ -49,7 +49,7 @@ Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
 //BGM
-SoundFile startBGM, bossBGM;
+SoundFile startBGM, bossBGM, pvpBGM;
 float bgmVolume;
 
 // sound effects
@@ -128,6 +128,7 @@ void loadAssets() {
   // BGM
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   bossBGM = new SoundFile(this, "Theme of Astrum Deus.mp3");
+  pvpBGM = new SoundFile(this, "cat cafe.mp3");
 
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav");
@@ -168,8 +169,12 @@ void loadState() {
   storyMode = false;
   dialogue = -1;
   stage = 1;
-
-  if (bossBGM.isPlaying()) bossBGM.pause();
+  pvpBGM.jump(0);
+  pvpBGM.pause();
+  bossBGM.jump(0);
+  bossBGM.pause();
+  chargeSound.jump(0);
+  chargeSound.pause();
 
 }
 
@@ -409,26 +414,24 @@ void draw() {
         boss.spawnAnim();
       }
       else boss.update();
-      if (!bossBGM.isPlaying()) {
+      if (!bossBGM.isPlaying() && !gamePause) {
         bossBGM.amp(0.2);
         bossBGM.play();
       }
       boss.display();
     } else if (spawnTick > 40) {
-      if (!chargeSound.isPlaying()) {
-        chargeSound.play();
+      if (!gamePause) {
+        if (!chargeSound.isPlaying()) {
+          chargeSound.play();
+        }
+        spawnTick++;
+      } else {
+        spawnAnim.jump(spawnAnim.currentFrame());
+        chargeSound.jump(0);
+        if (chargeSound.isPlaying()) chargeSound.pause();
       }
       image(spawnAnim, boss.xPos-boss.hitboxWidth/2, boss.yPos-boss.hitboxLength/2-25, 200, 200);
-      spawnTick++;
     } else spawnTick++;
-  }
-
-  if (dialogue > 0 && dialogue < 2) {
-    String text = "";
-    if (dialogue == 1) text = "wahhwafawgwagawgges";
-    if (printDialogue(text)) {
-      dialogue++;
-    }
   }
 
   if (transition) {
@@ -618,10 +621,8 @@ void keyPressed() {
         story = new Story();
         storyPhase = true;
         storyTriggered = false;
-        currmode = "Boss";
       } else {
         storyPhase = false;
-        currmode = s.selectedMode;
       }
       selectScreen = false;
       modeInitialized = false;
@@ -681,7 +682,7 @@ void keyReleased() {
         gamePause = !gamePause;
         if (currmode.equals("Boss")) {
           if (bossBGM.isPlaying()) bossBGM.pause();
-          else bossBGM.play();
+          else if (boss != null && boss.spawned) bossBGM.play();
         }
       }
      if (!gamePause && !transition) {
@@ -777,6 +778,8 @@ void displayScreen() {
   }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
+    if (!gamePause && !pvpBGM.isPlaying()) pvpBGM.play();
+    else if (gamePause && pvpBGM.isPlaying())  pvpBGM.pause();
     if (s.selectedMap.equals("Map2")) {
       background(bg2);
     } else if (s.selectedMap.equals("Map3")) {
@@ -1021,6 +1024,9 @@ void displayScreen() {
       c.display();
     }
     if (prevMode.equals("Versus")) {
+      if (pvpBGM.isPlaying()) {
+        pvpBGM.pause();
+      }
       String winText = "Player ";
       fill(0);
       stroke(255);
@@ -1072,17 +1078,29 @@ void restartGame() {
 
   if (currmode.equals("Boss")) {
     boss = null;
+    spawnTick = 0;
+    chargeSound.jump(0);
+    chargeSound.pause();
+    bossBGM.jump(0);
+    bossBGM.pause();
+  }
+  
+  if (currmode.equals("Versus")) {
+    pvpBGM.jump(0);
+    pvpBGM.pause();
   }
 
   for (Character c : chars) {
     c.reset(true);
   }
 
-  story = new Story();
-  storyTriggered = false;
-  storyPhase = true;
-  story.storyPhaseNum = 0;
-  story.phaseTriggered = false;
+  if (storyMode) {
+    story = new Story();
+    storyTriggered = false;
+    storyPhase = true;
+    story.storyPhaseNum = 0;
+    story.phaseTriggered = false;
+  }
 
   modeInitialized = false;
   gameEnd = false;
@@ -1092,8 +1110,6 @@ void restartGame() {
   dialogue = -1;
   dialogueTick = 0;
   stage = 1;
-  bossBGM.jump(0);
-  if (!currmode.equals("Boss")) bossBGM.pause();
 }
 
 void deathAnimation(Character c) {
@@ -1143,6 +1159,12 @@ void transitionScreen() {
     if (!modeInitialized) currmode = s.selectedMode;
     fadeOut = true;
     transitionTick-=5;
+    if (currmode.equals("Versus")) {
+      if (bgmVolume != 0.5) {
+        bgmVolume += 0.005;
+        pvpBGM.amp(bgmVolume);
+      }
+    }
   } else {
     transition = false;
     fadeOut = false;
@@ -1182,30 +1204,4 @@ void loadPreBoss() {
       stage++;
     }*/
   }
-}
-
-boolean printDialogue(String text) {
-  image(p1Char.getPreview(),20, height-(7*height/12), p1Char.hitboxWidth*5, p1Char.hitboxLength*5);
-  if (keyPressed) {
-    if (keyCode == SHIFT) {
-      if (dialogueTick < text.length()*15) {
-        dialogueTick = text.length()*15;
-      } else if (dialogueTick > text.length()*15+15) {
-        dialogueTick = text.length()*20;
-      }
-    }
-  }
-  strokeWeight(4);
-  fill(255);
-  rect(-5, height - (height/4), width+5, height/4);
-  strokeWeight(1);
-  fill(0);
-  textSize(20);
-  textAlign(LEFT,CENTER);
-  if (dialogueTick/15 < text.length()) {
-    text(text.substring(0, dialogueTick/15), 20, height - (height/8));
-  } else text(text, 20, height - (height/8));
-  textAlign(BASELINE,BASELINE);
-  if (!gamePause) dialogueTick++;
-  return (dialogueTick/20) == text.length();
 }
