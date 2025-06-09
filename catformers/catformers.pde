@@ -240,7 +240,7 @@ void draw() {
     }
   }
   
-  if (!gameEnd && !storyPhase) {
+  if (!gameEnd && !storyPhase && !gamePause) {
     for (int x = 0; x < enemies.size(); x++) {
       Enemies e = enemies.get(x);
       if (e.lives > 0) {
@@ -919,6 +919,12 @@ void displayScreen() {
           story.phaseTriggered = false;
           story.updateStoryPhase();
         }
+      } else if (story.storyPhaseNum == 2) {
+        if (enemies.size() == 0) {
+          storyTriggered = true;
+          story.phaseTriggered = false;
+          story.updateStoryPhase();
+        }
       }
     }
     if (!modeInitialized) {
@@ -927,7 +933,7 @@ void displayScreen() {
       }
       modeInitialized = true;
 
-      if (!storyMode || (storyMode && story.storyPhaseNum >= 5)) {
+      if ((!storyMode || (storyMode && story.storyPhaseNum == 3 && !storyPhase)) && boss == null) {
         boss = new Boss(640, height - 522);
 
         platforms.add(new Platforms(0, height - 20, width)); // floor

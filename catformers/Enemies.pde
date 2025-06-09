@@ -39,7 +39,7 @@ public class Enemies {
     checkBorder();
     
     shootTick++;
-    if (shootTick % 90 == 0) {
+    if (shootTick % 150 == 0) {
       shoot();
     }
   }
@@ -52,7 +52,7 @@ public class Enemies {
   void shoot() {
     Character c = chars.get((int)(random(0,chars.size())));
     float mouthY = yPos + hitboxLength/2;
-    enemyProjectiles.add(new Projectiles("enemy", null, getAngle(c), 10, xPos, mouthY)); 
+    enemyProjectiles.add(new Projectiles("enemy", null, getAngle(c), 7, xPos, mouthY)); 
   }
   
   float getAngle(Character c) {

@@ -14,11 +14,14 @@ public class Story {
   };
   
   String[] scene2Dialogue = {
-    "Look it's the Dog Gang!",
-    "We'll beat them and get our food back!!"
+    "That was so exciting!",
+    "We made it!——And look, it's the Dog Gang!",
+    "The food stealers!!",
+    "We'll beat them and get our food back."
   };
   
   String[] postFightDialogue = {
+    "Dogs are strong...",
     ".."
   };
   
@@ -96,6 +99,8 @@ public class Story {
         p2Char.facingRight = true;
         p2Char.aimAngle = p1Char.aimAngle;
       }
+      
+      storyTriggered = false;
     }
   }
   
@@ -120,10 +125,11 @@ public class Story {
       platforms.clear();
       platforms.add(new Platforms(0, height-20, width));
       
-      enemies.add(new Enemies(width - 320, height-90, 70, 70/1.38));
-      enemies.add(new Enemies(width - 220, height-120, 100, 100/1.38));
-      enemies.add(new Enemies(width - 80, height-170, 70, 70/1.38));
+      //enemies.add(new Enemies(width - 320, height-90, 70, 70/1.38));
+      //enemies.add(new Enemies(width - 220, height-120, 100, 100/1.38));
+      //enemies.add(new Enemies(width - 80, height-170, 70, 70/1.38));
     } else if (storyPhaseNum == 3) {
+      story.setDialogue(postFightDialogue);
     }
     phaseTriggered = false;
   }
