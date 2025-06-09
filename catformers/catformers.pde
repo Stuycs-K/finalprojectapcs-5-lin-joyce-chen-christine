@@ -49,7 +49,7 @@ Gif cat3walkOpenR;
 Gif cat3walkOpenL;
 
 //BGM
-SoundFile startBGM, bossBGM;
+SoundFile startBGM, bossBGM, pvpBGM;
 float bgmVolume;
 
 // sound effects
@@ -128,6 +128,7 @@ void loadAssets() {
   // BGM
   startBGM = new SoundFile(this, "Bunny Bistro.mp3");
   bossBGM = new SoundFile(this, "Theme of Astrum Deus.mp3");
+  pvpBGM = new SoundFile(this, "cat cafe.mp3");
 
   // sound effects
   shootSound = new SoundFile(this, "popCat.wav");
@@ -168,6 +169,8 @@ void loadState() {
   storyMode = false;
   dialogue = -1;
   stage = 1;
+  pvpBGM.jump(0);
+  pvpBGM.pause();
   bossBGM.jump(0);
   bossBGM.pause();
   chargeSound.jump(0);
@@ -775,6 +778,8 @@ void displayScreen() {
   }
   else if (currmode.equals("Versus")) {
     prevMode = "Versus";
+    if (!gamePause && !pvpBGM.isPlaying()) pvpBGM.play();
+    else if (gamePause && pvpBGM.isPlaying())  pvpBGM.pause();
     if (s.selectedMap.equals("Map2")) {
       background(bg2);
     } else if (s.selectedMap.equals("Map3")) {
@@ -1019,6 +1024,9 @@ void displayScreen() {
       c.display();
     }
     if (prevMode.equals("Versus")) {
+      if (pvpBGM.isPlaying()) {
+        pvpBGM.pause();
+      }
       String winText = "Player ";
       fill(0);
       stroke(255);
@@ -1075,6 +1083,11 @@ void restartGame() {
     chargeSound.pause();
     bossBGM.jump(0);
     bossBGM.pause();
+  }
+  
+  if (currmode.equals("Versus")) {
+    pvpBGM.jump(0);
+    pvpBGM.pause();
   }
 
   for (Character c : chars) {
@@ -1146,6 +1159,12 @@ void transitionScreen() {
     if (!modeInitialized) currmode = s.selectedMode;
     fadeOut = true;
     transitionTick-=5;
+    if (currmode.equals("Versus")) {
+      if (bgmVolume != 0.5) {
+        bgmVolume += 0.005;
+        pvpBGM.amp(bgmVolume);
+      }
+    }
   } else {
     transition = false;
     fadeOut = false;
