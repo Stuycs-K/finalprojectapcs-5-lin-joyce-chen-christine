@@ -40,15 +40,13 @@ public class Story {
     "You already are. But, okay, I'll watch you then!"
   };
   
-  String[] winDialogue = {
-    "We did it!"
-  };
-  
   String[] loseDialogue = {
     "The dog is eating our food!",
-    "Oh no...I don't think it can eat catnip",
+    "Oh no...I don't think it can eat catnip.",
     "He looks like a sad dog...",
-    "Wait a minue———he's crying! What do we do??"
+    "Wait a minue———he's crying! What do we do??",
+    "...I'm a sad cat now.",
+    "Let's just go back to the start..."
   };
 
   boolean storyOver, finalDialogue = false;
@@ -166,9 +164,7 @@ public class Story {
       }
     } else if (storyPhaseNum == 4) { //<GLORP>
       if (!finalDialogue) {
-        if (gameEnd && prevMode.equals("Victory")) {
-          setDialogue(winDialogue);
-        } else if (gameEnd && prevMode.equals("Loss")) {
+        if (gameEnd && prevMode.equals("Loss")) {
           setDialogue(loseDialogue);
         }
         finalDialogue = true;
